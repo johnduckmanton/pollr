@@ -23,6 +23,10 @@ namespace Pollr.Api.Dal
             _context = new DatabaseContext(settings);
         }
 
+        /// <summary>
+        /// Return all polls
+        /// </summary>
+        /// <returns></returns>
         public async Task<IEnumerable<Poll>> GetAllPolls()
         {
             try {
@@ -30,11 +34,15 @@ namespace Pollr.Api.Dal
                         .Find(_ => true).ToListAsync();
             }
             catch (Exception ex) {
-                // log or manage the exception
                 throw ex;
             }
         }
 
+        /// <summary>
+        /// Return all polls with the given status
+        /// </summary>
+        /// <param name="status"></param>
+        /// <returns></returns>
         public async Task<IEnumerable<Poll>> GetPollsByStatus(string status)
         {
             var filter = Builders<Poll>.Filter.Eq("status", status);
@@ -44,14 +52,18 @@ namespace Pollr.Api.Dal
                         .Find(filter).ToListAsync();
             }
             catch (Exception ex) {
-                // log or manage the exception
                 throw ex;
             }
         }
 
+        /// <summary>
+        /// Return the poll matching the specified id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public async Task<Poll> GetPoll(string id)
         {
-            var filter = Builders<Poll>.Filter.Eq(s => s._Id, ObjectId.Parse(id));
+            var filter = Builders<Poll>.Filter.Eq(s => s.Id, ObjectId.Parse(id));
 
             try {
                 return await _context.Polls
@@ -59,65 +71,83 @@ namespace Pollr.Api.Dal
                                 .FirstOrDefaultAsync();
             }
             catch (Exception ex) {
-                // log or manage the exception
                 throw ex;
             }
         }
 
+        /// <summary>
+        /// Return the poll matching the specified handle
+        /// </summary>
+        /// <param name="handle"></param>
+        /// <returns></returns>
+        public async Task<Poll> GetPollByHandle(string handle)
+        {
+            var filter = Builders<Poll>.Filter.Eq(s => s.Handle, handle);
+
+            try {
+                return await _context.Polls
+                                .Find(filter)
+                                .FirstOrDefaultAsync();
+            }
+            catch (Exception ex) {
+                throw ex;
+            }
+        }
+
+        /// <summary>
+        /// Add a new poll
+        /// </summary>
+        /// <param name="item"></param>
+        /// <returns></returns>
         public async Task AddPoll(Poll item)
         {
             try {
+                item.Id = ObjectId.GenerateNewId();
+
                 await _context.Polls.InsertOneAsync(item);
             }
             catch (Exception ex) {
-                // log or manage the exception
                 throw ex;
             }
         }
 
+        /// <summary>
+        /// Delete a poll
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public async Task<bool> RemovePoll(string id)
         {
             try {
                 DeleteResult actionResult = await _context.Polls.DeleteOneAsync(
-                        Builders<Poll>.Filter.Eq(s => s._Id, ObjectId.Parse(id)));
+                        Builders<Poll>.Filter.Eq(s => s.Id, ObjectId.Parse(id)));
 
                 return actionResult.IsAcknowledged
                     && actionResult.DeletedCount > 0;
             }
             catch (Exception ex) {
-                // log or manage the exception
                 throw ex;
             }
         }
 
+        /// <summary>
+        /// Update a poll
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="item"></param>
+        /// <returns></returns>
         public async Task<bool> UpdatePoll(string id, Poll item)
         {
             try {
                 ReplaceOneResult actionResult
                     = await _context.Polls
-                                    .ReplaceOneAsync(n => n._Id.Equals(ObjectId.Parse(id))
+                                    .ReplaceOneAsync(n => n.Id.Equals(ObjectId.Parse(id))
                                             , item
                                             , new UpdateOptions { IsUpsert = true });
                 return actionResult.IsAcknowledged
                     && actionResult.ModifiedCount > 0;
             }
             catch (Exception ex) {
-                // log or manage the exception
-                throw ex;
-            }
-        }
-
-        public async Task<bool> RemoveAllPolls()
-        {
-            try {
-                DeleteResult actionResult
-                    = await _context.Polls.DeleteManyAsync(new BsonDocument());
-
-                return actionResult.IsAcknowledged
-                    && actionResult.DeletedCount > 0;
-            }
-            catch (Exception ex) {
-                // log or manage the exception
                 throw ex;
             }
         }
@@ -133,7 +163,7 @@ namespace Pollr.Api.Dal
         {
             // First retrieve the poll definition
             var builder = Builders<PollDefinition>.Filter;
-            var filter = builder.Eq(s => s._Id, ObjectId.Parse(pollDefinitionId));
+            var filter = builder.Eq(s => s.Id, ObjectId.Parse(pollDefinitionId));
             //& builder.Eq(s => s.IsPublished, true);
 
             PollDefinition def = await _context.PollDefinitions
@@ -146,9 +176,10 @@ namespace Pollr.Api.Dal
 
             // Then create a new poll based on the poll definition
             Poll poll = new Poll {
-                _Id = ObjectId.GenerateNewId(),
+                Id = ObjectId.GenerateNewId(),
                 Name = name,
-                PollDefinition = def._Id,
+                Description = def.Description,
+                PollDefinitionId = def.Id,
                 Status = (isOpen ? "open" : "closed"),
                 PollDate = DateTime.Now,
                 CurrentQuestion = 1
@@ -191,12 +222,17 @@ namespace Pollr.Api.Dal
 
         }
 
+        /// <summary>
+        /// Set the poll status to open to voting
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public async Task<bool> OpenPoll(string id)
         {
             // Only set the status to 'open' if it's not set already as to do so
             // would reset the current question index
             var builder = Builders<Poll>.Filter;
-            var filter = builder.Eq(s => s._Id, ObjectId.Parse(id))
+            var filter = builder.Eq(s => s.Id, ObjectId.Parse(id))
                 & builder.Where(s => s.Status != "open");
             var update = Builders<Poll>.Update
                             .Set(s => s.Status, "open")
@@ -216,9 +252,14 @@ namespace Pollr.Api.Dal
 
         }
 
+        /// <summary>
+        /// Set the poll status to closed to new votes
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public async Task<bool> ClosePoll(string id)
         {
-            var filter = Builders<Poll>.Filter.Eq(s => s._Id, ObjectId.Parse(id));
+            var filter = Builders<Poll>.Filter.Eq(s => s.Id, ObjectId.Parse(id));
             var update = Builders<Poll>.Update
                             .Set(s => s.Status, "closed");
 
@@ -236,13 +277,20 @@ namespace Pollr.Api.Dal
 
         }
 
-        public async Task<bool> NextQuestion(string id)
+        /// <summary>
+        /// Increments the poll's current question counter to the next question
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public async Task<bool> SetNextQuestion(string id)
         {
             // Only update the next question if 
             // the poll status is 'open' 
             var builder = Builders<Poll>.Filter;
-            var filter = builder.Eq(s => s._Id, ObjectId.Parse(id))
+            var filter = builder.Eq(s => s.Id, ObjectId.Parse(id))
                 & builder.Eq(s => s.Status, "open");
+
+            // TODO: Check that we don't increment the counter beyond the number of questions in the poll
 
             var update = Builders<Poll>.Update
                             .Inc(s => s.CurrentQuestion, 1);
@@ -255,17 +303,23 @@ namespace Pollr.Api.Dal
                     && actionResult.ModifiedCount > 0;
             }
             catch (Exception ex) {
-                // log or manage the exception
                 throw ex;
             }
 
         }
 
+        /// <summary>
+        /// Vote on a question in the poll
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="question"></param>
+        /// <param name="answer"></param>
+        /// <returns></returns>
         public async Task<bool> Vote(string id, int question, int answer)
         {
             // We only allow votes on polls that are 'open'
             var builder = Builders<Poll>.Filter;
-            var filter = builder.Eq(s => s._Id, ObjectId.Parse(id))
+            var filter = builder.Eq(s => s.Id, ObjectId.Parse(id))
                 & builder.Eq(s => s.Status, "open");
             var update = Builders<Poll>.Update
                             .Inc(s => s.Questions[question - 1].Answers[answer - 1].VoteCount, 1);
@@ -278,7 +332,6 @@ namespace Pollr.Api.Dal
                     && actionResult.ModifiedCount > 0;
             }
             catch (Exception ex) {
-                // log or manage the exception
                 throw ex;
             }
 

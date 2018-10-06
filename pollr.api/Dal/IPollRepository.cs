@@ -13,9 +13,11 @@ namespace Pollr.Api.Dal
     {
         Task AddPoll(Poll item);
         Task<IEnumerable<Poll>> GetAllPolls();
+        Task<IEnumerable<Poll>> GetPollsByStatus(string status);
+
         Task<Poll> GetPoll(string id);
-        Task<bool> NextQuestion(string id);
-        Task<bool> RemoveAllPolls();
+        Task<Poll> GetPollByHandle(string handl);
+        Task<bool> SetNextQuestion(string id);
         Task<bool> RemovePoll(string id);
         Task<Poll> CreatePoll(string pollDefinitionId, string name, bool isOpen);
         Task<bool> OpenPoll(string id);

@@ -17,16 +17,22 @@ namespace Pollr.Api.Models
     {
         [BsonRepresentation(BsonType.ObjectId)]
         [BsonElement("_id")]
-        public ObjectId _Id { get; set; }
+        public ObjectId Id { get; set; }
 
         [BsonElement("name")]
         public string Name { get; set; }
 
+        [BsonElement("handle")]
+        public string Handle { get; set; }
+
+        [BsonElement("description")]
+        public string Description { get; set; }
+
         [BsonElement("status")]
         public string Status { get; set; } = "closed";
 
-        [BsonElement("pollDefinition")]
-        public ObjectId PollDefinition { get; set; }
+        [BsonElement("pollDefinitionId")]
+        public ObjectId PollDefinitionId { get; set; }
 
         [BsonElement("pollDate")]
         public DateTime PollDate { get; set; } = DateTime.Now;

@@ -1,0 +1,15 @@
+<div>
+  <div style="display: block" *ngIf="results">
+    <canvas baseChart
+            [data]="barChartData"
+            [labels]="barChartLabels"
+            [options]="barChartOptions"
+            [chartType]="barChartType"
+            (chartHover)="chartHovered($event)"
+            (chartClick)="chartClicked($event)"></canvas>
+  </div>
+
+  <p><ngb-progressbar showValue="true" type="success" [value]="value1" [max]="maxValue"></ngb-progressbar></p>
+  <p><ngb-progressbar [showValue]="true" type="info" [value]="value2" [max]="maxValue"></ngb-progressbar></p>
+  <p><ngb-progressbar showValue="true" type="warning" [value]="value3" [max]="maxValue"></ngb-progressbar></p>
+</div>

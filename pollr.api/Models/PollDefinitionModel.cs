@@ -18,7 +18,7 @@ namespace Pollr.Api.Models
     {
         [BsonRepresentation(BsonType.ObjectId)]
         [BsonElement("_id")]
-        public ObjectId _Id { get; set; }
+        public ObjectId Id { get; set; }
 
         [BsonElement("name")]
         public string Name { get; set; }
@@ -51,9 +51,6 @@ namespace Pollr.Api.Models
 
     public class QuestionDefinition
     {
-        [BsonRepresentation(BsonType.ObjectId)]
-        public ObjectId _id { get; set; }
-
         [BsonElement("questionText")]
         public string QuestionText { get; set; }
 
@@ -69,9 +66,6 @@ namespace Pollr.Api.Models
 
     public class CandidateAnswer
     {
-        [BsonRepresentation(BsonType.ObjectId)]
-        public ObjectId _id { get; set; }
-
         [BsonElement("answerText")]
         public string AnswerText { get; set; }
 

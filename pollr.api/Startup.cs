@@ -34,6 +34,12 @@ namespace pollr.api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors(o => o.AddPolicy("AllowAny", builder => {
+                builder.AllowAnyOrigin()
+                       .AllowAnyMethod()
+                       .AllowAnyHeader();
+            }));
+
             services.AddAuthentication(AzureADDefaults.BearerAuthenticationScheme)
                 .AddAzureADBearer(options => Configuration.Bind("AzureAd", options));
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
@@ -59,6 +65,9 @@ namespace pollr.api
             else {
                 app.UseHsts();
             }
+
+            // Enable Cors: Don't do this is a real production app!
+            app.UseCors("AllowAny");
 
             app.UseHttpsRedirection();
             app.UseAuthentication();

@@ -18,7 +18,7 @@ namespace Pollr.Api.Dal
         Task AddPollDefinition(PollDefinition item);
         Task<bool> RemovePollDefinition(string id);
         Task<bool> UpdatePollDefinition(string id, PollDefinition item);
-        Task<bool> RemoveAllPollDefinitions();
         Task<bool> PublishPollDefinition(string id);
+        Task<bool> UnpublishPollDefinition(string id);
     }
 }

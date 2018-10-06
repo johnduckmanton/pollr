@@ -5,6 +5,8 @@ VisualStudioVersion = 15.0.28010.2036
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pollr.Api", "pollr.api\Pollr.Api.csproj", "{3B33B7CE-6A33-459C-B5F7-8DA073220058}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pollr.UI", "Pollr.UI\Pollr.UI.csproj", "{96D67FF5-7D59-4721-BA18-99A5B5F2724A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{3B33B7CE-6A33-459C-B5F7-8DA073220058}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3B33B7CE-6A33-459C-B5F7-8DA073220058}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3B33B7CE-6A33-459C-B5F7-8DA073220058}.Release|Any CPU.Build.0 = Release|Any CPU
+		{96D67FF5-7D59-4721-BA18-99A5B5F2724A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{96D67FF5-7D59-4721-BA18-99A5B5F2724A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{96D67FF5-7D59-4721-BA18-99A5B5F2724A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{96D67FF5-7D59-4721-BA18-99A5B5F2724A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

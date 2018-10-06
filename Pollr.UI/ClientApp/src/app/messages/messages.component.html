@@ -1,0 +1,11 @@
+<div class="ui-g" *ngIf="messageService.messages.length">
+  <div class="row">
+    <div class="col-md-12">
+      <div *ngFor='let message of messageService.messages'>
+        <ngb-alert [dismissible]="false">
+          {{message}}
+        </ngb-alert>
+      </div>
+    </div>
+  </div>
+</div>

@@ -4,6 +4,7 @@
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Pollr.Api.Dal;
@@ -22,16 +23,25 @@ namespace pollr.api.Controllers
             _pollRepository = pollRepository;
         }
 
+    
         /// <summary>
-        /// Get all polls
+        /// Get all polls matching the specified status
         /// </summary>
         /// <returns></returns>
-        [HttpGet]
+        [HttpGet()]
         [ProducesResponseType(200, Type = typeof(Poll[]))]
-        public async Task<ActionResult> Get()
+        public async Task<ActionResult> GetPolls([FromQuery]string status)
         {
 
-            var polls = await _pollRepository.GetAllPolls();
+            IEnumerable<Poll> polls;
+
+            if (status != null) {
+                polls = await _pollRepository.GetPollsByStatus(status);
+            }
+            else { 
+                polls = await _pollRepository.GetAllPolls();
+            }
+            
             return Ok(polls);
         }
 
@@ -42,10 +52,23 @@ namespace pollr.api.Controllers
         /// <returns></returns>
         [HttpGet("{id}")]
         [ProducesResponseType(200, Type = typeof(Poll))]
-        public async Task<ActionResult> Get(string id)
+        public async Task<ActionResult> GetPoll(string id)
         {
-            //return GetPollByIdInternal(id);
             var poll = await _pollRepository.GetPoll(id) ?? new Poll();
+
+            return Ok(poll);
+        }
+
+        /// <summary>
+        /// Get a poll using its handle
+        /// </summary>
+        /// <param name="handle"></param>
+        /// <returns></returns>
+        [HttpGet("handle='{handle}'")]
+        [ProducesResponseType(200, Type = typeof(Poll))]
+        public async Task<ActionResult> GetPollByHandle([FromQuery]string handle)
+        {
+            var poll = await _pollRepository.GetPollByHandle(handle) ?? new Poll();
 
             return Ok(poll);
         }
@@ -64,8 +87,13 @@ namespace pollr.api.Controllers
                 return BadRequest(ModelState);
             }
 
-            Poll poll = await _pollRepository.CreatePoll(request.Name, request.PollDefinitionId, request.IsOpen); ;
-            return CreatedAtAction(nameof(Get), poll);
+            try {
+                Poll poll = await _pollRepository.CreatePoll(request.Name, request.PollDefinitionId, request.IsOpen); ;
+                return CreatedAtAction(nameof(GetPoll), poll);
+            }
+            catch (Exception e) {
+                return StatusCode(500, e.Message);
+            }
         }
 
         /// <summary>
@@ -146,7 +174,7 @@ namespace pollr.api.Controllers
         public async Task<ActionResult> NextQuestion(string id)
         {
             try {
-                bool result = await _pollRepository.NextQuestion(id);
+                bool result = await _pollRepository.SetNextQuestion(id);
                 if (result)
                     return Ok();
                 else
@@ -207,6 +235,53 @@ namespace pollr.api.Controllers
             catch (Exception e) {
                 return StatusCode(500, e.Message);
             }
+        }
+
+        /// <summary>
+        /// Get the results for a poll
+        /// </summary>
+        /// <param name="id">The id of the poll</param>
+        /// <returns></returns>
+        [HttpGet("{id}/results")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(404)]
+        [ProducesResponseType(500)]
+        [Route("{id}/results")]
+        public async Task<ActionResult> GetPollResults(string id)
+        {
+            var poll = await _pollRepository.GetPoll(id) ?? new Poll();
+            if (poll == null)
+                return NotFound();
+
+            PollResult result = new PollResult {
+                Name = poll.Name,
+                PollDate = poll.PollDate,
+                TotalVotes = 0
+            };
+
+            List<QuestionResult> questionList = new List<QuestionResult>();
+            for (int i = 0; i < poll.Questions.Length; i++) {
+                QuestionResult q = new QuestionResult {
+                    QuestionText = poll.Questions[i].QuestionText,
+                    TotalVotes = 0
+                };
+
+                List<AnswerResult> answerList = new List<AnswerResult>();
+                for (int j = 0; j < poll.Questions[i].Answers.Length; j++) {
+                    AnswerResult a = new AnswerResult {
+                        AnswerText = poll.Questions[i].Answers[j].AnswerText,
+                        VoteCount = poll.Questions[i].Answers[j].VoteCount
+                    };
+                    q.TotalVotes += poll.Questions[i].Answers[j].VoteCount;
+                    result.TotalVotes += poll.Questions[i].Answers[j].VoteCount;
+                    answerList.Add(a);
+                }
+                q.Answers = answerList.ToArray();
+                questionList.Add(q);
+            }
+            result.Questions = questionList.ToArray();
+
+            return Ok(result);
         }
     }
 }
