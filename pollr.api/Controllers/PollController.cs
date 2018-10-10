@@ -7,7 +7,13 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
+using Newtonsoft.Json.Serialization;
 using Pollr.Api.Dal;
+using Pollr.Api.Helpers;
+using Pollr.Api.Hubs;
 using Pollr.Api.Models;
 
 namespace pollr.api.Controllers
@@ -17,13 +23,15 @@ namespace pollr.api.Controllers
     public class PollsController : ControllerBase
     {
         private readonly IPollRepository _pollRepository;
+        private IHubContext<VoteHub> _hubContext;
 
-        public PollsController(IPollRepository pollRepository)
+        public PollsController(IPollRepository pollRepository, IHubContext<VoteHub> hubContext)
         {
             _pollRepository = pollRepository;
+            _hubContext = hubContext;
         }
 
-    
+
         /// <summary>
         /// Get all polls matching the specified status
         /// </summary>
@@ -36,12 +44,12 @@ namespace pollr.api.Controllers
             IEnumerable<Poll> polls;
 
             if (status != null) {
-                polls = await _pollRepository.GetPollsByStatus(status);
+                polls = await _pollRepository.GetPollsByStatusAsync(status);
             }
-            else { 
-                polls = await _pollRepository.GetAllPolls();
+            else {
+                polls = await _pollRepository.GetAllPollsAsync();
             }
-            
+
             return Ok(polls);
         }
 
@@ -51,10 +59,11 @@ namespace pollr.api.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpGet("{id}")]
+        [Route("{id}")]
         [ProducesResponseType(200, Type = typeof(Poll))]
         public async Task<ActionResult> GetPoll(string id)
         {
-            var poll = await _pollRepository.GetPoll(id) ?? new Poll();
+            var poll = await _pollRepository.GetPollAsync(id) ?? new Poll();
 
             return Ok(poll);
         }
@@ -64,11 +73,11 @@ namespace pollr.api.Controllers
         /// </summary>
         /// <param name="handle"></param>
         /// <returns></returns>
-        [HttpGet("handle='{handle}'")]
+        [Route("handle/{handle}")]
         [ProducesResponseType(200, Type = typeof(Poll))]
-        public async Task<ActionResult> GetPollByHandle([FromQuery]string handle)
+        public async Task<ActionResult> GetPollByHandle([FromRoute]string handle)
         {
-            var poll = await _pollRepository.GetPollByHandle(handle) ?? new Poll();
+            var poll = await _pollRepository.GetPollByHandleAsync(handle) ?? new Poll();
 
             return Ok(poll);
         }
@@ -88,7 +97,7 @@ namespace pollr.api.Controllers
             }
 
             try {
-                Poll poll = await _pollRepository.CreatePoll(request.Name, request.PollDefinitionId, request.IsOpen); ;
+                Poll poll = await _pollRepository.CreatePollAsync(request.Name, request.PollDefinitionId, request.IsOpen); ;
                 return CreatedAtAction(nameof(GetPoll), poll);
             }
             catch (Exception e) {
@@ -113,7 +122,7 @@ namespace pollr.api.Controllers
             }
 
             try {
-                await _pollRepository.UpdatePoll(id, pollData);
+                await _pollRepository.UpdatePollAsync(id, pollData);
                 return NoContent();
             }
             catch (Exception e) {
@@ -132,7 +141,7 @@ namespace pollr.api.Controllers
         public async Task<ActionResult> Delete(string id)
         {
             try {
-                await _pollRepository.RemovePoll(id);
+                await _pollRepository.RemovePollAsync(id);
                 return NoContent();
             }
             catch (Exception e) {
@@ -152,7 +161,7 @@ namespace pollr.api.Controllers
         public async Task<ActionResult> Open(string id)
         {
             try {
-                bool result = await _pollRepository.OpenPoll(id);
+                bool result = await _pollRepository.OpenPollAsync(id);
                 if (result)
                     return NoContent();
                 else
@@ -174,7 +183,7 @@ namespace pollr.api.Controllers
         public async Task<ActionResult> NextQuestion(string id)
         {
             try {
-                bool result = await _pollRepository.SetNextQuestion(id);
+                bool result = await _pollRepository.SetNextQuestionAsync(id);
                 if (result)
                     return Ok();
                 else
@@ -197,7 +206,7 @@ namespace pollr.api.Controllers
         public async Task<ActionResult> Close(string id)
         {
             try {
-                bool result = await _pollRepository.ClosePoll(id);
+                bool result = await _pollRepository.ClosePollAsync(id);
                 if (result)
                     return NoContent();
                 else
@@ -226,15 +235,33 @@ namespace pollr.api.Controllers
             }
 
             try {
-                bool result = await _pollRepository.Vote(id, question, answer);
-                if (result)
+
+                // Register the vote in the database
+                Poll updatedPoll = await _pollRepository.VoteAsync(id, question, answer);
+                if (updatedPoll != null) {
+
+                    // then notify connected clients of the poll status using SignalR
+                    string message = PollHelper.GetPollResultsAsJson(updatedPoll);
+                    SendToConnectedClients(message);
+
                     return NoContent();
+                }
                 else
                     return BadRequest("Poll does not exist or is closed");
             }
             catch (Exception e) {
                 return StatusCode(500, e.Message);
             }
+        }
+
+        /// <summary>
+        /// Send a message to all connected SignalR clients
+        /// </summary>
+        /// <param name="message"></param>
+        private void SendToConnectedClients(string message)
+        {
+            List<string> groups = new List<string>() { "SignalR Users" };
+            _hubContext.Clients.All.SendAsync("message", message);
         }
 
         /// <summary>
@@ -249,39 +276,14 @@ namespace pollr.api.Controllers
         [Route("{id}/results")]
         public async Task<ActionResult> GetPollResults(string id)
         {
-            var poll = await _pollRepository.GetPoll(id) ?? new Poll();
+            var poll = await _pollRepository.GetPollAsync(id) ?? new Poll();
             if (poll == null)
                 return NotFound();
 
-            PollResult result = new PollResult {
-                Name = poll.Name,
-                PollDate = poll.PollDate,
-                TotalVotes = 0
-            };
-
-            List<QuestionResult> questionList = new List<QuestionResult>();
-            for (int i = 0; i < poll.Questions.Length; i++) {
-                QuestionResult q = new QuestionResult {
-                    QuestionText = poll.Questions[i].QuestionText,
-                    TotalVotes = 0
-                };
-
-                List<AnswerResult> answerList = new List<AnswerResult>();
-                for (int j = 0; j < poll.Questions[i].Answers.Length; j++) {
-                    AnswerResult a = new AnswerResult {
-                        AnswerText = poll.Questions[i].Answers[j].AnswerText,
-                        VoteCount = poll.Questions[i].Answers[j].VoteCount
-                    };
-                    q.TotalVotes += poll.Questions[i].Answers[j].VoteCount;
-                    result.TotalVotes += poll.Questions[i].Answers[j].VoteCount;
-                    answerList.Add(a);
-                }
-                q.Answers = answerList.ToArray();
-                questionList.Add(q);
-            }
-            result.Questions = questionList.ToArray();
+            string result = PollHelper.GetPollResultsAsJson(poll);
 
             return Ok(result);
         }
-    }
+               
+    }    
 }

@@ -42,7 +42,7 @@ export class PollDataService {
   // Get a single poll by its handle. GET /api/polls/?handle={handle}
   //
   public getPollByHandle(handle: string): Observable<Poll> {
-    const url = `${this.apiUrl}/polls/?handle=${handle}`;
+    const url = `${this.apiUrl}/polls/handle/${handle}`;
     return this.http.get<Poll>(url);
   }
 

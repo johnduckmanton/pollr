@@ -1,5 +1,5 @@
 ﻿/*---------------------------------------------------------------------------------------------
- *  Copyright (c) John Duckmanton.
+ *  Copyright Async(c) John Duckmanton.
  *  All rights reserved.
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
@@ -28,7 +28,7 @@ namespace Pollr.Api.Dal
         /// </summary>
         /// <param name="publishedOnly"></param>
         /// <returns></returns>
-        public async Task<IEnumerable<PollDefinition>> GetPollDefinitions(bool publishedOnly = false)
+        public async Task<IEnumerable<PollDefinition>> GetPollDefinitionsAsync(bool publishedOnly = false)
         {
             try {
                 if (publishedOnly) {
@@ -49,7 +49,7 @@ namespace Pollr.Api.Dal
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public async Task<PollDefinition> GetPollDefinition(string id)
+        public async Task<PollDefinition> GetPollDefinitionAsync(string id)
         {
 
             var filter = Builders<PollDefinition>.Filter.Eq("_Id", ObjectId.Parse(id));
@@ -69,7 +69,7 @@ namespace Pollr.Api.Dal
         /// </summary>
         /// <param name="item"></param>
         /// <returns></returns>
-        public async Task AddPollDefinition(PollDefinition item)
+        public async Task AddPollDefinitionAsync(PollDefinition item)
         {
             try {
                 item.Id = ObjectId.GenerateNewId();
@@ -85,7 +85,7 @@ namespace Pollr.Api.Dal
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public async Task<bool> RemovePollDefinition(string id)
+        public async Task<bool> RemovePollDefinitionAsync(string id)
         {
             try {
                 DeleteResult actionResult = await _context.PollDefinitions.DeleteOneAsync(
@@ -105,7 +105,7 @@ namespace Pollr.Api.Dal
         /// <param name="id"></param>
         /// <param name="item"></param>
         /// <returns></returns>
-        public async Task<bool> UpdatePollDefinition(string id, PollDefinition item)
+        public async Task<bool> UpdatePollDefinitionAsync(string id, PollDefinition item)
         {
             try {
                 ReplaceOneResult actionResult
@@ -126,7 +126,7 @@ namespace Pollr.Api.Dal
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public async Task<bool> PublishPollDefinition(string id)
+        public async Task<bool> PublishPollDefinitionAsync(string id)
         {
             var builder = Builders<PollDefinition>.Filter;
             var filter = builder.Eq("_id", ObjectId.Parse(id));
@@ -151,7 +151,7 @@ namespace Pollr.Api.Dal
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public async Task<bool> UnpublishPollDefinition(string id)
+        public async Task<bool> UnpublishPollDefinitionAsync(string id)
         {
             var builder = Builders<PollDefinition>.Filter;
             var filter = builder.Eq("_id", ObjectId.Parse(id));

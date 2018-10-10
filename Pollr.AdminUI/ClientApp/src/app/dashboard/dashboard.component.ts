@@ -48,6 +48,17 @@ export class DashboardComponent implements OnInit {
           this.messageService.add('Error retrieving polls data');
         }
       );
+  }
 
+  startPoll(): void {
+    this.messageService.add('Poll started');
+  }
+
+  stopPoll(): void {
+    this.messageService.add('Poll stopped');
+  }
+
+  nextQuestion(): void {
+    this.messageService.add('Next question loaded');
   }
 }

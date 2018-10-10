@@ -31,7 +31,7 @@ namespace pollr.api.Controllers
         public async Task<ActionResult> Get(bool publishedOnly = false)
         {
 
-            var pollDefinitions = await _pollDefinitionRepository.GetPollDefinitions(publishedOnly);
+            var pollDefinitions = await _pollDefinitionRepository.GetPollDefinitionsAsync(publishedOnly);
             return Ok(pollDefinitions);
         }
 
@@ -45,7 +45,7 @@ namespace pollr.api.Controllers
         public async Task<ActionResult> Get(string id)
         {
             //return GetPollDefinitionByIdInternal(id);
-            var pollDefinition = await _pollDefinitionRepository.GetPollDefinition(id);
+            var pollDefinition = await _pollDefinitionRepository.GetPollDefinitionAsync(id);
             if (pollDefinition == null)
                 return NotFound();
             else
@@ -66,7 +66,7 @@ namespace pollr.api.Controllers
                 return BadRequest(ModelState);
             }
 
-            await _pollDefinitionRepository.AddPollDefinition(value); ;
+            await _pollDefinitionRepository.AddPollDefinitionAsync(value); ;
             return CreatedAtAction(nameof(Get), value);
         }
 
@@ -87,7 +87,7 @@ namespace pollr.api.Controllers
             }
 
             try { 
-                await _pollDefinitionRepository.UpdatePollDefinition(id, value);
+                await _pollDefinitionRepository.UpdatePollDefinitionAsync(id, value);
                 return NoContent();
             }
             catch (Exception e) {
@@ -107,7 +107,7 @@ namespace pollr.api.Controllers
         public async Task<ActionResult> Delete(string id)
         {
             try {
-                await _pollDefinitionRepository.RemovePollDefinition(id);
+                await _pollDefinitionRepository.RemovePollDefinitionAsync(id);
                 return NoContent();
             }
             catch(Exception e) {
@@ -128,7 +128,7 @@ namespace pollr.api.Controllers
         public async Task<ActionResult> Publish(string id)
         {
             try {
-                bool result = await _pollDefinitionRepository.PublishPollDefinition(id);
+                bool result = await _pollDefinitionRepository.PublishPollDefinitionAsync(id);
                 if (result)
                     return Ok();
                 else

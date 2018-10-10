@@ -6,7 +6,7 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgxSpinnerModule } from 'ngx-spinner';
-import { ChartsModule } from 'ng2-charts';
+import { NgxQRCodeModule } from 'ngx-qrcode2';
 
 // import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
 // import { InMemoryDataService } from './in-memory-data.service';
@@ -17,8 +17,8 @@ import { VoteComponent } from './vote/vote.component';
 import { MessagesComponent } from './messages/messages.component';
 import { FooterComponent } from './layout/footer/footer.component';
 import { NavbarComponent } from './layout/navbar/navbar.component';
-import { DashboardComponent } from './dashboard/dashboard.component';
 import { ResultsComponent } from './results/results.component';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 
 @NgModule({
   declarations: [
@@ -27,8 +27,8 @@ import { ResultsComponent } from './results/results.component';
     MessagesComponent,
     FooterComponent,
     NavbarComponent,
-    DashboardComponent,
-    ResultsComponent],
+    ResultsComponent,
+    PageNotFoundComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
@@ -37,7 +37,7 @@ import { ResultsComponent } from './results/results.component';
     FormsModule,
     NgbModule,
     NgxSpinnerModule,
-    ChartsModule,
+    NgxQRCodeModule
     // The HttpClientInMemoryWebApiModule module intercepts HTTP requests
     // and returns simulated server responses.
     // Remove it when a real server is ready to receive requests.

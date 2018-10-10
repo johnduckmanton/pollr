@@ -10,6 +10,7 @@ namespace Pollr.Api.Models
     public class PollResult
     {
 
+        public string Id { get; set; }
         public string Name { get; set; }
 
         public DateTime PollDate { get; set; }

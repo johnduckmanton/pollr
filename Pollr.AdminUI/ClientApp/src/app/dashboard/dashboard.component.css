@@ -16,3 +16,7 @@
 .dashboard-entry a {
   text-decoration: none
 }
+
+.link-list li {
+  list-style-type: none;
+}

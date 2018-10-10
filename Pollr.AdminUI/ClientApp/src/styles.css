@@ -1,0 +1,23 @@
+/* You can add global styles to this file, and also import other style files */
+/*html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: 'Roboto', sans-serif;
+  background-color: red;
+  background-color: #f8f8f8;
+}
+
+html, body { height: 100%; }
+body { margin: 0; font-family: 'Roboto', sans-serif; }*/
+
+body {
+  min-height: 75rem;
+  padding-top: 5rem;
+}
+  
+.bg-dark {
+  background-color: #10639b !important;
+}

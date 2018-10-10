@@ -1,5 +1,5 @@
 ﻿/*---------------------------------------------------------------------------------------------
- *  Copyright (c) John Duckmanton.
+ *  Copyright Async(c) John Duckmanton.
  *  All rights reserved.
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
@@ -11,18 +11,18 @@ namespace Pollr.Api.Dal
 {
     public interface IPollRepository
     {
-        Task AddPoll(Poll item);
-        Task<IEnumerable<Poll>> GetAllPolls();
-        Task<IEnumerable<Poll>> GetPollsByStatus(string status);
+        Task AddPollAsync(Poll item);
+        Task<IEnumerable<Poll>> GetAllPollsAsync();
+        Task<IEnumerable<Poll>> GetPollsByStatusAsync(string status);
 
-        Task<Poll> GetPoll(string id);
-        Task<Poll> GetPollByHandle(string handl);
-        Task<bool> SetNextQuestion(string id);
-        Task<bool> RemovePoll(string id);
-        Task<Poll> CreatePoll(string pollDefinitionId, string name, bool isOpen);
-        Task<bool> OpenPoll(string id);
-        Task<bool> ClosePoll(string id);
-        Task<bool> UpdatePoll(string id, Poll item);
-        Task<bool> Vote(string id, int questionIdx, int answerIdx);
+        Task<Poll> GetPollAsync(string id);
+        Task<Poll> GetPollByHandleAsync(string handl);
+        Task<bool> SetNextQuestionAsync(string id);
+        Task<bool> RemovePollAsync(string id);
+        Task<Poll> CreatePollAsync(string pollDefinitionId, string name, bool isOpen);
+        Task<bool> OpenPollAsync(string id);
+        Task<bool> ClosePollAsync(string id);
+        Task<bool> UpdatePollAsync(string id, Poll item);
+        Task<Poll> VoteAsync(string id, int question, int answer);
     }
 }

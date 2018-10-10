@@ -1,0 +1,26 @@
+<div *ngIf="!isLoading">
+
+  <div class="card">
+    <div class="card-body">
+      <h1 class="card-title">{{poll.name}}</h1>
+      <h6 class="card-subtitle mb-2 text-muted">{{poll.description}}</h6>
+      <p class="lead mt-5">To cast your vote go to</p>
+
+      <div class="row">
+        <div class="col-md-8">
+          <h1><a class="card-link" href="{{pollVoteUrl}}">{{pollVoteUrl}}</a></h1>
+        </div>
+        <div class="col-md-4">
+          <div class="qrcode float-right">
+            <ngx-qrcode [qrc-element-type]="qrcodeElementType"
+                        [qrc-value]="pollVoteUrl"
+                        qrc-class="aclass"
+                        qrc-errorCorrectionLevel="L">
+            </ngx-qrcode>
+          </div>
+        </div>
+        <p>5 users connected</p>
+      </div>
+    </div>
+  </div>
+</div>

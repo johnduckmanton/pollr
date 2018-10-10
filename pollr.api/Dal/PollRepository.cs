@@ -27,7 +27,7 @@ namespace Pollr.Api.Dal
         /// Return all polls
         /// </summary>
         /// <returns></returns>
-        public async Task<IEnumerable<Poll>> GetAllPolls()
+        public async Task<IEnumerable<Poll>> GetAllPollsAsync()
         {
             try {
                 return await _context.Polls
@@ -43,7 +43,7 @@ namespace Pollr.Api.Dal
         /// </summary>
         /// <param name="status"></param>
         /// <returns></returns>
-        public async Task<IEnumerable<Poll>> GetPollsByStatus(string status)
+        public async Task<IEnumerable<Poll>> GetPollsByStatusAsync(string status)
         {
             var filter = Builders<Poll>.Filter.Eq("status", status);
 
@@ -61,7 +61,7 @@ namespace Pollr.Api.Dal
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public async Task<Poll> GetPoll(string id)
+        public async Task<Poll> GetPollAsync(string id)
         {
             var filter = Builders<Poll>.Filter.Eq(s => s.Id, ObjectId.Parse(id));
 
@@ -80,7 +80,7 @@ namespace Pollr.Api.Dal
         /// </summary>
         /// <param name="handle"></param>
         /// <returns></returns>
-        public async Task<Poll> GetPollByHandle(string handle)
+        public async Task<Poll> GetPollByHandleAsync(string handle)
         {
             var filter = Builders<Poll>.Filter.Eq(s => s.Handle, handle);
 
@@ -99,7 +99,7 @@ namespace Pollr.Api.Dal
         /// </summary>
         /// <param name="item"></param>
         /// <returns></returns>
-        public async Task AddPoll(Poll item)
+        public async Task AddPollAsync(Poll item)
         {
             try {
                 item.Id = ObjectId.GenerateNewId();
@@ -116,7 +116,7 @@ namespace Pollr.Api.Dal
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public async Task<bool> RemovePoll(string id)
+        public async Task<bool> RemovePollAsync(string id)
         {
             try {
                 DeleteResult actionResult = await _context.Polls.DeleteOneAsync(
@@ -136,7 +136,7 @@ namespace Pollr.Api.Dal
         /// <param name="id"></param>
         /// <param name="item"></param>
         /// <returns></returns>
-        public async Task<bool> UpdatePoll(string id, Poll item)
+        public async Task<bool> UpdatePollAsync(string id, Poll item)
         {
             try {
                 ReplaceOneResult actionResult
@@ -153,13 +153,39 @@ namespace Pollr.Api.Dal
         }
 
         /// <summary>
+        /// Find and Update a poll
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="item"></param>
+        /// <returns></returns>
+        public async Task<Poll> FindAndUpdatePollAsync(string id, Poll item)
+        {
+            try {
+
+                var updatedPoll = _context.Polls.FindOneAndReplace
+                  (Builders<Poll>.Filter.Eq(r => r.Id, ObjectId.Parse(id)),
+                  item,
+                  new FindOneAndReplaceOptions<Poll>() {
+                      IsUpsert = true,
+                      ReturnDocument = ReturnDocument.After
+                  });
+
+                return updatedPoll;
+            }
+            catch (Exception ex) {
+                throw ex;
+            }
+        }
+
+
+        /// <summary>
         /// Creates a poll for voting based on the specified poll definition
         /// </summary>
         /// <param name="pollDefinitionId">poll definition id</param>
         /// <param name="name">The name of the poll</param>
         /// <param name="isOpen">If true the poll is created in an open state</param>
         /// <returns></returns>
-        public async Task<Poll> CreatePoll(string name, string pollDefinitionId, bool isOpen)
+        public async Task<Poll> CreatePollAsync(string name, string pollDefinitionId, bool isOpen)
         {
             // First retrieve the poll definition
             var builder = Builders<PollDefinition>.Filter;
@@ -227,7 +253,7 @@ namespace Pollr.Api.Dal
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public async Task<bool> OpenPoll(string id)
+        public async Task<bool> OpenPollAsync(string id)
         {
             // Only set the status to 'open' if it's not set already as to do so
             // would reset the current question index
@@ -257,7 +283,7 @@ namespace Pollr.Api.Dal
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public async Task<bool> ClosePoll(string id)
+        public async Task<bool> ClosePollAsync(string id)
         {
             var filter = Builders<Poll>.Filter.Eq(s => s.Id, ObjectId.Parse(id));
             var update = Builders<Poll>.Update
@@ -282,7 +308,7 @@ namespace Pollr.Api.Dal
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public async Task<bool> SetNextQuestion(string id)
+        public async Task<bool> SetNextQuestionAsync(string id)
         {
             // Only update the next question if 
             // the poll status is 'open' 
@@ -314,27 +340,42 @@ namespace Pollr.Api.Dal
         /// <param name="id"></param>
         /// <param name="question"></param>
         /// <param name="answer"></param>
-        /// <returns></returns>
-        public async Task<bool> Vote(string id, int question, int answer)
+        /// <returns>updated poll</returns>
+        public async Task<Poll> VoteAsync(string id, int question, int answer)
         {
             // We only allow votes on polls that are 'open'
+            //var builder = Builders<Poll>.Filter;
+            //var filter = builder.Eq(s => s.Id, ObjectId.Parse(id))
+            //    & builder.Eq(s => s.Status, "open");
+            //var update = Builders<Poll>.Update
+            //                .Inc(s => s.Questions[question - 1].Answers[answer - 1].VoteCount, 1);
+
+            //try {
+            //    UpdateResult actionResult
+            //         = await _context.Polls.UpdateOneAsync(filter, update);
+
+            //    return actionResult.IsAcknowledged
+            //        && actionResult.ModifiedCount > 0;
+            //}
+            //catch (Exception ex) {
+            //    throw ex;
+            //}
+
             var builder = Builders<Poll>.Filter;
-            var filter = builder.Eq(s => s.Id, ObjectId.Parse(id))
+            var filter = Builders<Poll>.Filter.Eq(s => s.Id, ObjectId.Parse(id))
                 & builder.Eq(s => s.Status, "open");
-            var update = Builders<Poll>.Update
-                            .Inc(s => s.Questions[question - 1].Answers[answer - 1].VoteCount, 1);
 
-            try {
-                UpdateResult actionResult
-                     = await _context.Polls.UpdateOneAsync(filter, update);
+            var update = Builders<Poll>.Update.Inc(s => s.Questions[question - 1].Answers[answer - 1].VoteCount, 1);
 
-                return actionResult.IsAcknowledged
-                    && actionResult.ModifiedCount > 0;
-            }
-            catch (Exception ex) {
-                throw ex;
-            }
+            var updatedPoll = _context.Polls.FindOneAndUpdate
+              (filter,
+              update,
+              new FindOneAndUpdateOptions<Poll>() {
+                  IsUpsert = true,
+                  ReturnDocument = ReturnDocument.After
+              });
 
+            return updatedPoll;
         }
 
     }

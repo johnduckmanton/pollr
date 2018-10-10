@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
+import { HubConnection } from '@aspnet/signalr';
+import * as signalR from '@aspnet/signalr';
 
 import { NgxSpinnerService } from 'ngx-spinner';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -32,6 +34,12 @@ export class VoteComponent implements OnInit {
   selectedAnswer: string;
   selectedAnswerIdx: number = -1;
 
+  // SignalR
+  private _hubConnection: HubConnection | undefined;
+  public async: any;
+  message = '';
+  messages: string[] = [];
+
   constructor(
     private spinner: NgxSpinnerService,
     private route: ActivatedRoute,
@@ -42,17 +50,30 @@ export class VoteComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    const id:string = this.route.snapshot.paramMap.get('id');
+    const handle: string = this.route.snapshot.paramMap.get('handle');
 
-    this.getPoll();
+    // Connect to SignalR hub
+    this._hubConnection = new signalR.HubConnectionBuilder()
+      .withUrl('https://localhost:44372/voteHub')
+      .configureLogging(signalR.LogLevel.Information)
+      .build();
+
+    this._hubConnection.start().catch(err => console.error(err.toString()));
+
+    this._hubConnection.on('message', (data: any) => {
+      const received = `Received: ${data}`;
+      this.messageService.add(received);
+    });
+
+    // Get the poll Data
+    this.getPoll(handle);
     this.spinner.hide();
   }
 
-  getPoll(): void {
+  getPoll(handle: string): void {
     this.spinner.show();
 
-    const id = this.route.snapshot.paramMap.get('id');
-    this.pollDataService.getPoll(id)
+    this.pollDataService.getPollByHandle(handle)
       .subscribe(poll => {
         this.poll = poll;
         console.log(this.poll);
@@ -64,7 +85,7 @@ export class VoteComponent implements OnInit {
             this.messageService.add('Sorry. This poll is now closed.');
           }
           else {
-            // load the first question in the poll
+            // load the current question in the poll
             this.currentQuestionIndex = this.poll.currentQuestion;
             this.currentQuestion = this.poll.questions[
               this.currentQuestionIndex - 1
@@ -82,16 +103,28 @@ export class VoteComponent implements OnInit {
   vote(votedMessageDlg) {
     this.spinner.show();
 
-    this.pollDataService.vote(
-      this.poll.id,
-      this.currentQuestionIndex,
-      this.selectedAnswerIdx+1)
-      .subscribe(() => {
-        this.hasVoted = true;
-        this.votedMessage = `You have voted for ${this.currentQuestion.answers[this.selectedAnswerIdx].answerText}.`;
-        this.modalService.open(votedMessageDlg, { size: 'sm', centered: true });
-      });
+    // Vote via SignalR
+    const data = `Sent: I voted for ${this.currentQuestion.answers[this.selectedAnswerIdx].answerText}.`;
 
-    this.spinner.hide();
+    if (this._hubConnection) {
+      this._hubConnection.invoke('Vote', this.poll.id, this.currentQuestionIndex, this.selectedAnswerIdx);
+      this.hasVoted = true;
+      this.spinner.hide();
+      this.votedMessage = `You have voted for ${this.currentQuestion.answers[this.selectedAnswerIdx].answerText}.`;
+      this.modalService.open(votedMessageDlg, { size: 'sm', centered: true });
+    }
+
+    // Vote via REST API
+    //this.pollDataService.vote(
+    //  this.poll.id,
+    //  this.currentQuestionIndex,
+    //  this.selectedAnswerIdx+1)
+    //  .subscribe(() => {
+    //    this.hasVoted = true;
+    //    this.votedMessage = `You have voted for ${this.currentQuestion.answers[this.selectedAnswerIdx].answerText}.`;
+    //    this.modalService.open(votedMessageDlg, { size: 'sm', centered: true });
+    //  });
+
+    //this.spinner.hide();
   }
 }

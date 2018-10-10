@@ -19,6 +19,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Pollr.Api;
 using Pollr.Api.Dal;
+using Pollr.Api.Hubs;
 
 namespace pollr.api
 {
@@ -34,10 +35,12 @@ namespace pollr.api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddCors(o => o.AddPolicy("AllowAny", builder => {
+            services.AddCors(o => o.AddPolicy("AllowLocalhost", builder => {
                 builder.AllowAnyOrigin()
-                       .AllowAnyMethod()
-                       .AllowAnyHeader();
+                    .AllowAnyOrigin()
+                    .AllowAnyMethod()
+                    .AllowAnyHeader()
+                    .AllowCredentials();
             }));
 
             services.AddAuthentication(AzureADDefaults.BearerAuthenticationScheme)
@@ -49,6 +52,9 @@ namespace pollr.api
                 options.ConnectionString = Configuration.GetSection("MongoConnection:ConnectionString").Value;
                 options.Database = Configuration.GetSection("MongoConnection:Database").Value;
             });
+
+            // Add a SignalR hub
+            services.AddSignalR();
 
             services.AddTransient<IPollDefinitionRepository, PollDefinitionRepository>();
             services.AddTransient<IPollRepository, PollRepository>();
@@ -67,11 +73,16 @@ namespace pollr.api
             }
 
             // Enable Cors: Don't do this is a real production app!
-            app.UseCors("AllowAny");
+            app.UseCors("AllowLocalhost");
 
             app.UseHttpsRedirection();
             app.UseAuthentication();
             app.UseMvc();
+
+            // Configure Signalr
+            app.UseSignalR(routes => {
+                routes.MapHub<VoteHub>("/voteHub");
+            });
         }
     }
 }

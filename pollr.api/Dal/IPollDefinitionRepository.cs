@@ -1,5 +1,5 @@
 ﻿/*---------------------------------------------------------------------------------------------
- *  Copyright (c) John Duckmanton.
+ *  Copyright Async(c) John Duckmanton.
  *  All rights reserved.
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
@@ -13,12 +13,12 @@ namespace Pollr.Api.Dal
 {
     public interface IPollDefinitionRepository
     {
-        Task<IEnumerable<PollDefinition>> GetPollDefinitions(bool publishedOnly);
-        Task<PollDefinition> GetPollDefinition(string id);
-        Task AddPollDefinition(PollDefinition item);
-        Task<bool> RemovePollDefinition(string id);
-        Task<bool> UpdatePollDefinition(string id, PollDefinition item);
-        Task<bool> PublishPollDefinition(string id);
-        Task<bool> UnpublishPollDefinition(string id);
+        Task<IEnumerable<PollDefinition>> GetPollDefinitionsAsync(bool publishedOnly);
+        Task<PollDefinition> GetPollDefinitionAsync(string id);
+        Task AddPollDefinitionAsync(PollDefinition item);
+        Task<bool> RemovePollDefinitionAsync(string id);
+        Task<bool> UpdatePollDefinitionAsync(string id, PollDefinition item);
+        Task<bool> PublishPollDefinitionAsync(string id);
+        Task<bool> UnpublishPollDefinitionAsync(string id);
     }
 }
