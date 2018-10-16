@@ -3,18 +3,13 @@
  *  All rights reserved.
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
- using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using MongoDB.Bson.Serialization.Attributes;
-using MongoDB.Bson.Serialization.IdGenerators;
 using MongoDB.Bson;
+using MongoDB.Bson.Serialization.Attributes;
+using System;
 
 namespace Pollr.Api.Models
 {
-    [BsonIgnoreExtraElements]
-    public class PollDefinition
+    public class Poll
     {
         [BsonRepresentation(BsonType.ObjectId)]
         [BsonElement("_id")]
@@ -23,48 +18,42 @@ namespace Pollr.Api.Models
         [BsonElement("name")]
         public string Name { get; set; }
 
+        [BsonElement("handle")]
+        public string Handle { get; set; }
+
         [BsonElement("description")]
         public string Description { get; set; }
 
-        [BsonElement("theme")]
-        public string Theme { get; set; }
+        [BsonElement("status")]
+        public string Status { get; set; } = "closed";
 
-        [BsonElement("owner")]
-        public string Owner { get; set; }
+        [BsonElement("pollDefinitionId")]
+        public ObjectId PollDefinitionId { get; set; }
 
-        [BsonElement("isPublished")]
-        public bool IsPublished { get; set; } = false;
+        [BsonElement("pollDate")]
+        public DateTime PollDate { get; set; } = DateTime.Now;
 
-        [BsonElement("createDate")]
-        public DateTime? CreatedDate { get; set; } = DateTime.Now;
-
-        [BsonElement("expiryDate")]
-        public DateTime? ExpiryDate { get; set; }
-
-        [BsonElement("tags")]
-        public string[] Tags { get; set; }
-
+        [BsonElement("currentQuestion")]
+        public short CurrentQuestion { get; set; } = 1;
+               
         [BsonElement("questions")]
-        public QuestionDefinition[] Questions { get; set; }
+        public Question[] Questions { get; set; }
 
     }
 
-    public class QuestionDefinition
+    public class Question
     {
         [BsonElement("questionText")]
         public string QuestionText { get; set; }
-
-        [BsonElement("hasCorrectAnswer")]
-        public Boolean HasCorrectAnswer { get; set; } = false;
 
         [BsonElement("isDisabled")]
         public Boolean IsDisabled { get; set; } = false;
 
         [BsonElement("answers")]
-        public CandidateAnswer[] Answers { get; set; }
+        public Answer[] Answers { get; set; }
     }
 
-    public class CandidateAnswer
+    public class Answer
     {
         [BsonElement("answerText")]
         public string AnswerText { get; set; }
@@ -77,5 +66,11 @@ namespace Pollr.Api.Models
 
         [BsonElement("isDisabled")]
         public Boolean IsDisabled { get; set; } = false;
+
+
+        [BsonElement("voteCount")]
+        public int VoteCount { get; set; }
+
+
     }
 }

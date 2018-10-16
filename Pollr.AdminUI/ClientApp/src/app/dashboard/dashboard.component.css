@@ -20,3 +20,13 @@
 .link-list li {
   list-style-type: none;
 }
+
+.btn-sq {
+  margin: 3px;
+  width: 50px !important;
+  height: 50px !important;
+  font-size: 10px;
+  text-align: center;
+  vertical-align: middle;
+}
+

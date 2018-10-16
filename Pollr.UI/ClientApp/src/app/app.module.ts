@@ -19,6 +19,9 @@ import { FooterComponent } from './layout/footer/footer.component';
 import { NavbarComponent } from './layout/navbar/navbar.component';
 import { ResultsComponent } from './results/results.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { SignalRService } from './signalr.service';
+import { HomeComponent } from './home/home.component';
+
 
 @NgModule({
   declarations: [
@@ -28,7 +31,8 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
     FooterComponent,
     NavbarComponent,
     ResultsComponent,
-    PageNotFoundComponent],
+    PageNotFoundComponent,
+    HomeComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
@@ -46,7 +50,7 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
     // }),
   ],
 
-  providers: [],
+  providers: [SignalRService],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

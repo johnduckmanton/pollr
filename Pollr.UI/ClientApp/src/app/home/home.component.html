@@ -1,0 +1,23 @@
+<div class="container">
+  <div class="card justify-content-md-center" style="width: 18rem;">
+    <div class="card-body">
+      <form (ngSubmit)="pollCodeForm.form.valid && onSubmit()" #pollCodeForm="ngForm" novalidate>
+        <p>If you have an event or poll code enter it here</p>
+        <div class="input-group mb-3">
+          <!--<div class="input-group-prepend">
+            <span class="input-group-text" id="basic-addon1">#</span>
+          </div>-->
+          <input type="text" class="form-control" placeholder="poll code" [(ngModel)]="model.pollCode" name="pollCode" #pollCode="ngModel" [ngClass]="{ 'is-invalid': pollCodeForm.submitted && pollCode.invalid }" required>
+          <div class="input-group-append">
+            <button class="btn btn-primary" type="submit" id="button-addon2" [disabled]="!pollCodeForm.form.valid">Join</button>
+          </div>
+          <div [hidden]="pollCode.valid || pollCode.pristine"
+               class="alert alert-danger">
+            A valid poll code is required
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+

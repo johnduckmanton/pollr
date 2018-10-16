@@ -1,25 +1,24 @@
-import { BrowserModule } from '@angular/platform-browser';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
-
+import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { NgxSpinnerModule } from 'ngx-spinner';
 import { NgxQRCodeModule } from 'ngx-qrcode2';
-
+import { NgxSpinnerModule } from 'ngx-spinner';
 // import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
 // import { InMemoryDataService } from './in-memory-data.service';
-
+import { ToastrModule } from 'ngx-toastr';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { VoteComponent } from './vote/vote.component';
-import { MessagesComponent } from './messages/messages.component';
+import { MessagesComponent } from './core/messages/messages.component';
+import { SignalRService } from './core/signalr.service';
+import { DashboardComponent } from './dashboard/dashboard.component';
 import { FooterComponent } from './layout/footer/footer.component';
 import { NavbarComponent } from './layout/navbar/navbar.component';
-import { DashboardComponent } from './dashboard/dashboard.component';
 import { ResultsComponent } from './results/results.component';
 import { ViewPollDetailsComponent } from './view-poll-details/view-poll-details.component';
+import { VoteComponent } from './vote/vote.component';
 
 @NgModule({
   declarations: [
@@ -30,17 +29,18 @@ import { ViewPollDetailsComponent } from './view-poll-details/view-poll-details.
     NavbarComponent,
     DashboardComponent,
     ResultsComponent,
-    ViewPollDetailsComponent
+    ViewPollDetailsComponent,
   ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
+    ToastrModule.forRoot(),
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
     NgbModule,
     NgxSpinnerModule,
-    NgxQRCodeModule
+    NgxQRCodeModule,
     // The HttpClientInMemoryWebApiModule module intercepts HTTP requests
     // and returns simulated server responses.
     // Remove it when a real server is ready to receive requests.
@@ -49,7 +49,7 @@ import { ViewPollDetailsComponent } from './view-poll-details/view-poll-details.
     // }),
   ],
 
-  providers: [],
-  bootstrap: [AppComponent]
+  providers: [SignalRService],
+  bootstrap: [AppComponent],
 })
 export class AppModule {}

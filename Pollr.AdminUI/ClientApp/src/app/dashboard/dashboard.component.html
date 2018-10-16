@@ -1,4 +1,4 @@
-<h3>Open Polls</h3>
+<h3>Polls</h3>
 
 <!-- loading spinner-->
 <!--<ngx-spinner bdColor="rgba(51,51,51,0.8)"
@@ -9,33 +9,37 @@
 </ngx-spinner>-->
 
 
-<div class="dashboard-entry" *ngFor="let poll of polls">
-  <div class="row" *ngIf="!isLoading && polls.length > 0">
+<div *ngIf="!isLoading && polls.length > 0">
+  <div class="row dashboard-entry" *ngFor="let poll of polls; let i=index">
+
     <div class="col-md-9">
       <a routerLink="/vote/{{poll.id}}"><h4>{{poll.name}}</h4></a>
       <p class="text-muted">{{poll.description}}</p>
-      <p>{{ poll.pollDate | date: mediumDate }}</p>
+      <p class="font-weight-light">
+        Event date: <span class="font-weight-bold">{{ poll.pollDate | date: mediumDate }}</span><br />
+        Event code: <span class="font-weight-bold">{{poll.handle}}</span>
+      </p>
+      <p class="font-weight-light">Current question: <span class="font-weight-bold">{{poll.questions[poll.currentQuestion-1].questionText}} (Q{{poll.currentQuestion}})</span></p>
+
     </div>
     <div class="col-md-3">
-      <ul class="link-list">
-        <li class="mt-1">
-          <a class="btn btn-outline-primary" routerLink="/poll-details/{{poll.id}}">Poll Info</a>
-        </li>
-        <li class="mt-1">
-          <div *ngIf="poll.status == 'closed'">
-            <a class="btn btn-success" (click)=startPoll()>Start Poll</a>
-          </div>
-          <div *ngIf="poll.status == 'open'">
-            <a class="btn btn-danger" (click)=stopPoll()>Stop Poll</a>
-          </div>
-        </li>
-        <li class="mt-1">
-          <a class="btn btn-outline-primary" (click)=nextQuestion()>Next Question</a>
-        </li>
-        <li class="mt-1">
-          <a class="btn btn-outline-primary" routerLink="/results/{{poll.id}}">View Results</a>
-        </li>
-      </ul>
+      <p>
+        <button type="button" class="btn btn-secondary btn-sq" (click)=showInfo(i)>
+          <i class="fa fa-info fa-3x"></i>
+        </button>
+        <button type="button" class="btn btn-outline-success btn-sq" *ngIf="poll.status == 'closed'" (click)=startPoll(i)>
+          <i class="fa fa-play fa-3x"></i>
+        </button>
+        <button type="button" class="btn btn-outline-danger btn-sq" *ngIf="poll.status == 'open'" (click)=stopPoll(i)>
+          <i class="fa fa-square fa-3x"></i>
+        </button>
+        <button type="button" class="btn btn-secondary btn-sq" (click)=nextQuestion(i)>
+          <i class="fa fa-step-forward fa-3x"></i>
+        </button>
+        <button type="button" class="btn btn-secondary btn-sq" (click)=showResults(i)>
+          <i class="fa fa-poll-h fa-3x"></i>
+        </button>
+      </p>
     </div>
   </div>
 </div>

@@ -1,6 +1,6 @@
 <div *ngIf="!isLoading">
 
-  <div class="card">
+  <div class="card vote-details">
     <div class="card-body">
       <h1 class="card-title">{{poll.name}}</h1>
       <h6 class="card-subtitle mb-2 text-muted">{{poll.description}}</h6>
@@ -8,18 +8,23 @@
 
       <div class="row">
         <div class="col-md-8">
-          <h1><a class="card-link" href="{{pollVoteUrl}}">{{pollVoteUrl}}</a></h1>
+          <h1 class="display-4"><a class="card-link" href="{{pollVoteUrl}}">{{pollVoteUrl}}</a></h1>
         </div>
         <div class="col-md-4">
           <div class="qrcode float-right">
             <ngx-qrcode [qrc-element-type]="qrcodeElementType"
                         [qrc-value]="pollVoteUrl"
-                        qrc-class="aclass"
+                        qrc-class="qrcode"
                         qrc-errorCorrectionLevel="L">
             </ngx-qrcode>
           </div>
         </div>
-        <p>5 users connected</p>
+      </div>
+      <div class="row">
+        <div class="col-md-8">
+          <h2><span class="user-count">{{connectedUserCount}}</span> user(s) connected</h2>
+
+        </div>
       </div>
     </div>
   </div>

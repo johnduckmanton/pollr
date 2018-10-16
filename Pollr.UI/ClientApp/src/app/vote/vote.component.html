@@ -10,25 +10,32 @@
 
 <div *ngIf="!isLoading">
 
+  <div class="connection-indicator">
+    <i class="fa fa-network-wired" [ngClass]="canSendMessage ? 'text-success' : 'text-danger'"></i>
+  </div>
+
   <div class="poll" *ngIf="poll && isPollOpen">
     <div class="row">
       <div class="col-md-12">
-        <div class="poll-description">{{ poll.description }}</div>
+        <h1 class="text-primary text-center">{{ currentQuestion?.questionText }}</h1>
 
-        <div class="question-text">{{ currentQuestion?.questionText }}</div>
+        <!--<div class="poll-description">{{ poll.description }}</div>-->
+        <h5 class="text-muted text-center">{{ poll.description }}</h5>
 
-        <span>Please select one answer</span>
+        <small>Please select one answer</small>
 
         <div class="answers">
-          <ul>
-            <li style="cursor: pointer" class="answer-box answer-box-1"
-                *ngFor="let answer of currentQuestion?.answers;let i=index" (click)="selectAnswer(i)" [class.selected]="selectedAnswerIdx === i" [class.disabled]="hasVoted">
-              {{answer.answerText}}
-            </li>
-          </ul>
+          <div class="list-group">
+            <div class="list-group-item list-group-item-action flex-column align-items-start active" *ngFor="let answer of currentQuestion?.answers;let i=index" (click)="selectAnswer(i)" [class.active]="selectedAnswerIdx === i" [class.disabled]="hasVoted || answer.isDisabled">
+              <div class="d-flex w-100 justify-content-between">
+                <h5 class="mb-1"><strong>{{answer.answerText}}</strong></h5>
+                <img class="answer-image float-left img-thumbnail responsive" src="{{answer.imagePath}}" *ngIf="answer.imagePath != null" />
+              </div>
+            </div>
+          </div>
         </div>
 
-        <button type="button" class="btn btn-success vote-button" [disabled]="hasVoted || selectedAnswerIdx== -1" (click)="vote(votedMessageDlg)" [class.disabled]="hasVoted">Vote</button>
+        <button type="button" class="btn btn-outline-primary vote-button" [disabled]="hasVoted || selectedAnswerIdx== -1" (click)="vote(votedMessageDlg)" [class.disabled]="hasVoted || !canSendMessage">Vote</button>
       </div>
     </div>
   </div>
@@ -46,6 +53,6 @@
     {{votedMessage}}
   </div>
   <div class="modal-footer">
-    <button type="button" class="btn btn-outline-success" (click)="modal.close()">Finish</button>
+    <button type="button" class="btn btn-primary" (click)="modal.close()">Finish</button>
   </div>
 </ng-template>

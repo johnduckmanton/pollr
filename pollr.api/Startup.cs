@@ -3,20 +3,13 @@
  *  All rights reserved.
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
- using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.AzureAD.UI;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 using Pollr.Api;
 using Pollr.Api.Dal;
 using Pollr.Api.Hubs;
@@ -72,7 +65,7 @@ namespace pollr.api
                 app.UseHsts();
             }
 
-            // Enable Cors: Don't do this is a real production app!
+            // Enable Global Cors: Don't do this is a real production app!
             app.UseCors("AllowLocalhost");
 
             app.UseHttpsRedirection();

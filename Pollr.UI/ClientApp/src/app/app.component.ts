@@ -11,8 +11,11 @@ export class AppComponent {
   title = 'pollr';
 
   constructor(
-    private messageService: MessageService
+    private messageService: MessageService,
   ) { }
 
+  ngOnInit() {
+
+  }
 
 }

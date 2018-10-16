@@ -1,17 +1,16 @@
-﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
-using Newtonsoft.Json.Serialization;
+﻿/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) John Duckmanton.
+ *  All rights reserved.
+ *  Licensed under the MIT License. See LICENSE in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
 using Pollr.Api.Models;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Pollr.Api.Helpers
 {
     public static class PollHelper
     {
-        public static string GetPollResultsAsJson(Poll poll)
+        public static PollResult GetPollResults(Poll poll)
         {
 
             PollResult result = new PollResult {
@@ -43,10 +42,14 @@ namespace Pollr.Api.Helpers
             }
             result.Questions = questionList.ToArray();
 
-            var settings = new JsonSerializerSettings { ContractResolver = new CamelCasePropertyNamesContractResolver() };
-            settings.Converters.Add(new StringEnumConverter());
-            return JsonConvert.SerializeObject(result, Formatting.Indented, settings);
+            return result;
+
+            //var settings = new JsonSerializerSettings { ContractResolver = new CamelCasePropertyNamesContractResolver() };
+            //settings.Converters.Add(new StringEnumConverter());
+            //return JsonConvert.SerializeObject(result, Formatting.Indented, settings);
 
         }
+
     }
+
 }

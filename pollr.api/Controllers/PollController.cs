@@ -3,18 +3,16 @@
  *  All rights reserved.
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
-using Newtonsoft.Json.Serialization;
 using Pollr.Api.Dal;
+using Pollr.Api.Exceptions;
 using Pollr.Api.Helpers;
 using Pollr.Api.Hubs;
 using Pollr.Api.Models;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace pollr.api.Controllers
 {
@@ -63,9 +61,17 @@ namespace pollr.api.Controllers
         [ProducesResponseType(200, Type = typeof(Poll))]
         public async Task<ActionResult> GetPoll(string id)
         {
-            var poll = await _pollRepository.GetPollAsync(id) ?? new Poll();
-
-            return Ok(poll);
+            try {
+                var poll = await _pollRepository.GetPollAsync(id) ?? new Poll();
+                return Ok(poll);
+            }
+            catch (PollNotFoundException e) {
+                ApiStatusMessage a = ApiStatusMessage.CreateFromException(e);
+                return BadRequest(a);
+            }
+            catch (Exception e) {
+                return StatusCode(500, e.Message);
+            }
         }
 
         /// <summary>
@@ -77,9 +83,17 @@ namespace pollr.api.Controllers
         [ProducesResponseType(200, Type = typeof(Poll))]
         public async Task<ActionResult> GetPollByHandle([FromRoute]string handle)
         {
-            var poll = await _pollRepository.GetPollByHandleAsync(handle) ?? new Poll();
-
-            return Ok(poll);
+            try {
+                var poll = await _pollRepository.GetPollByHandleAsync(handle) ?? new Poll();
+                return Ok(poll);
+            }
+            catch (PollNotFoundException e) {
+                ApiStatusMessage a = ApiStatusMessage.CreateFromException(e);
+                return BadRequest(a);
+            }
+            catch (Exception e) {
+                return StatusCode(500, e.Message);
+            }
         }
 
         /// <summary>
@@ -165,7 +179,11 @@ namespace pollr.api.Controllers
                 if (result)
                     return NoContent();
                 else
-                    return BadRequest("Poll does not exist or is already open");
+                    return StatusCode(500, "Error occurred updating the database");
+            }
+            catch (PollNotFoundException e) {
+                ApiStatusMessage a = ApiStatusMessage.CreateFromException(e);
+                return BadRequest(a);
             }
             catch (Exception e) {
                 return StatusCode(500, e.Message);
@@ -183,11 +201,23 @@ namespace pollr.api.Controllers
         public async Task<ActionResult> NextQuestion(string id)
         {
             try {
-                bool result = await _pollRepository.SetNextQuestionAsync(id);
-                if (result)
-                    return Ok();
-                else
-                    return BadRequest("Poll does not exist or is closed");
+                Poll updatedPoll = await _pollRepository.SetNextQuestionAsync(id);
+                if (updatedPoll != null) {
+
+                    await _hubContext.Clients.All.SendAsync("LoadQuestion", new LoadQuestionRequest() { PollId = id, QuestionIndex = updatedPoll.CurrentQuestion -1 });
+                    return Ok(updatedPoll);
+                }
+                else {
+                    return StatusCode(500, "Error occurred updating the database");
+                }
+            }
+            catch (PollNotFoundException e) {
+                ApiStatusMessage a = ApiStatusMessage.CreateFromException(e);
+                return BadRequest(a);
+            }
+            catch (PollAtLastQuestionException e) {
+                ApiStatusMessage a = ApiStatusMessage.CreateFromException(e);
+                return BadRequest(a);
             }
             catch (Exception e) {
                 return StatusCode(500, e.Message);
@@ -210,7 +240,11 @@ namespace pollr.api.Controllers
                 if (result)
                     return NoContent();
                 else
-                    return BadRequest("Poll does not exist or is already closed");
+                    return StatusCode(500, "Error occurred updating the database");
+            }
+            catch (PollNotFoundException e) {
+                ApiStatusMessage a = ApiStatusMessage.CreateFromException(e);
+                return BadRequest(a);
             }
             catch (Exception e) {
                 return StatusCode(500, e.Message);
@@ -241,13 +275,17 @@ namespace pollr.api.Controllers
                 if (updatedPoll != null) {
 
                     // then notify connected clients of the poll status using SignalR
-                    string message = PollHelper.GetPollResultsAsJson(updatedPoll);
+                    PollResult message = PollHelper.GetPollResults(updatedPoll);
                     SendToConnectedClients(message);
 
                     return NoContent();
                 }
                 else
                     return BadRequest("Poll does not exist or is closed");
+            }
+            catch (PollNotFoundException e) {
+                ApiStatusMessage a = ApiStatusMessage.CreateFromException(e);
+                return BadRequest(a);
             }
             catch (Exception e) {
                 return StatusCode(500, e.Message);
@@ -258,7 +296,7 @@ namespace pollr.api.Controllers
         /// Send a message to all connected SignalR clients
         /// </summary>
         /// <param name="message"></param>
-        private void SendToConnectedClients(string message)
+        private void SendToConnectedClients(object message)
         {
             List<string> groups = new List<string>() { "SignalR Users" };
             _hubContext.Clients.All.SendAsync("message", message);
@@ -280,10 +318,9 @@ namespace pollr.api.Controllers
             if (poll == null)
                 return NotFound();
 
-            string result = PollHelper.GetPollResultsAsJson(poll);
+            PollResult result = PollHelper.GetPollResults(poll);
 
             return Ok(result);
         }
-               
-    }    
+    }
 }

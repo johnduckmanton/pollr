@@ -18,6 +18,7 @@ export class Poll {
           answerText: string;
           imagePath: string;
           voteCount: number;
+          isDisabled: boolean;
         }
       ];
     }

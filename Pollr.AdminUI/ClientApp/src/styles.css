@@ -1,5 +1,5 @@
 /* You can add global styles to this file, and also import other style files */
-/*html,
+html,
 body {
   height: 100%;
 }
@@ -11,7 +11,7 @@ body {
 }
 
 html, body { height: 100%; }
-body { margin: 0; font-family: 'Roboto', sans-serif; }*/
+body { margin: 0; font-family: 'Roboto', sans-serif; }
 
 body {
   min-height: 75rem;
@@ -20,4 +20,9 @@ body {
   
 .bg-dark {
   background-color: #10639b !important;
+}
+
+/* remove rounding from cards, buttons and inputs */
+.card, .btn, .form-control {
+  border-radius: 0;
 }
