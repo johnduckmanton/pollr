@@ -1,6 +1,8 @@
-import { environment } from '../environments/environment';
 import { EventEmitter, Injectable } from '@angular/core';
 import { HubConnection, HubConnectionBuilder } from '@aspnet/signalr';
+
+import { ConfigurationService } from './core/configuration/configuration.service';
+
 
 // Signalr message types
 const broadcastMessage = 'Broadcast';
@@ -21,8 +23,10 @@ export class SignalRService {
 
   private connectionIsEstablished: boolean = false;
   private _hubConnection: HubConnection;
+  private hubUrl = this.configService.config.hubUrl;
 
-  constructor() {
+
+  constructor(private configService: ConfigurationService) {
     this.createConnection();
     this.registerOnServerEvents();
     this.startConnection();
@@ -30,7 +34,7 @@ export class SignalRService {
 
   private createConnection() {
     this._hubConnection = new HubConnectionBuilder()
-      .withUrl(environment.hubUrl)
+      .withUrl(`${this.hubUrl}`)
       .build();
   }
 

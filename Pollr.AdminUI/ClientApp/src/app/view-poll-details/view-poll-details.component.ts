@@ -2,6 +2,8 @@ import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
+
+import { ConfigurationService } from '../core/configuration/configuration.service';
 import { MessageService } from '../core/messages/message.service';
 import { SignalRService } from '../core/signalr.service';
 import { PollDataService } from '../poll-data.service';
@@ -21,12 +23,12 @@ export class ViewPollDetailsComponent implements OnInit {
   pollVoteUrl = '';
 
   constructor(
+    private configService: ConfigurationService,
     private spinner: NgxSpinnerService,
     private router: Router,
     private route: ActivatedRoute,
     private location: Location,
     private dataService: PollDataService,
-    private messageService: MessageService,
     private signalrService: SignalRService
   ) {
     this.subscribeToEvents();
@@ -43,7 +45,7 @@ export class ViewPollDetailsComponent implements OnInit {
       // Generate URL to this poll
       const urlTree = this.router.createUrlTree(['/vote', this.poll.handle]).toString();
       const path = this.location.prepareExternalUrl(urlTree.toString());
-      this.pollVoteUrl = window.location.origin + path;
+      this.pollVoteUrl = this.configService.config.voteUrl + path;
 
       this.spinner.hide();
       this.isLoading = false;

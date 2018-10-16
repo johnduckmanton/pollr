@@ -5,6 +5,9 @@
     <UserSecretsId>aspnet-pollr.api-0e7fa453-9a7b-4bb7-9c3e-4f8b7c9dffd6</UserSecretsId>
     <WebProject_DirectoryAccessLevelKey>1</WebProject_DirectoryAccessLevelKey>
     <DockerTargetOS>Linux</DockerTargetOS>
+    <ApplicationIcon></ApplicationIcon>
+    <Authors>John Duckmanton</Authors>
+    <Company>Microsoft</Company>
   </PropertyGroup>
 
   <ItemGroup>

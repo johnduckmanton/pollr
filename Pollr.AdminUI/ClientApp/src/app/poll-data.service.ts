@@ -1,9 +1,9 @@
-import { environment } from '../environments/environment';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, of, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
+import { ConfigurationService } from './core/configuration/configuration.service';
 import { MessageService } from './core/messages/message.service';
 import { Poll } from './poll.model';
 
@@ -15,9 +15,10 @@ const httpOptions = {
   providedIn: 'root',
 })
 export class PollDataService {
-  private apiUrl = environment.apiUrl;
+  private apiUrl = this.configService.config.apiUrl;
 
-  constructor(private http: HttpClient, private messageService: MessageService) {}
+  constructor(private configService: ConfigurationService,
+    private http: HttpClient, private messageService: MessageService) { }
 
   //
   // Get all polls. GET /api/polls

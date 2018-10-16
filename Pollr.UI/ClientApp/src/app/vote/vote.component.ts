@@ -33,7 +33,6 @@ export class VoteComponent implements OnInit {
   selectedAnswer: string;
   selectedAnswerIdx: number = -1;
   canSendMessage: boolean;
-  imageRepositoryUrl = environment.imageRepositoryUrl;
 
   constructor(
     private spinner: NgxSpinnerService,

@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28010.2036
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pollr.Api", "pollr.api\Pollr.Api.csproj", "{3B33B7CE-6A33-459C-B5F7-8DA073220058}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pollr.Api", "Pollr.API\Pollr.Api.csproj", "{3B33B7CE-6A33-459C-B5F7-8DA073220058}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pollr.UI", "Pollr.UI\Pollr.UI.csproj", "{96D67FF5-7D59-4721-BA18-99A5B5F2724A}"
 EndProject

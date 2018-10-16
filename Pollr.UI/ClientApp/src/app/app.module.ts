@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { NgModule } from '@angular/core';
+import { APP_INITIALIZER, NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 
@@ -14,6 +14,7 @@ import { NgxQRCodeModule } from 'ngx-qrcode2';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { VoteComponent } from './vote/vote.component';
+import { ConfigurationService } from './core/configuration/configuration.service';
 import { MessagesComponent } from './messages/messages.component';
 import { FooterComponent } from './layout/footer/footer.component';
 import { NavbarComponent } from './layout/navbar/navbar.component';
@@ -52,7 +53,18 @@ import { AboutComponent } from './about/about.component';
     // }),
   ],
 
-  providers: [SignalRService],
+  providers: [
+    ConfigurationService,
+    {
+      // Here we request that configuration loading be done at app-
+      // initialization time (prior to rendering)
+      provide: APP_INITIALIZER,
+      useFactory: (configService: ConfigurationService) =>
+        () => configService.loadConfigurationData(),
+      deps: [ConfigurationService],
+      multi: true
+    },
+    SignalRService],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

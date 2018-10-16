@@ -4,9 +4,6 @@
 
 export const environment = {
   production: false,
-  apiUrl: 'https://localhost:44372/api',
-  hubUrl: 'https://localhost:44372/voteHub',
-  imageRepositoryUrl: 'https://localhost:44372/assets/images'
 };
 
 /*

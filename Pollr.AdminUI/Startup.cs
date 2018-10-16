@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Pollr.AdminUI.Models;
 
 namespace Pollr.AdminUI
 {
@@ -20,6 +21,12 @@ namespace Pollr.AdminUI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            // Enable IOptions in the DI container
+            services.AddOptions();
+
+            // Indicate how ClientConfiguration options should be constructed
+            services.Configure<ClientConfiguration>(Configuration.GetSection("ClientConfiguration"));
+
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
             // In production, the Angular files will be served from this directory

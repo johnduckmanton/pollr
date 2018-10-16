@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Pollr.AdminUI.Models;
 
 namespace Pollr.UI
 {
@@ -19,6 +20,12 @@ namespace Pollr.UI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            // Enable IOptions in the DI container
+            services.AddOptions();
+
+            // Indicate how ClientConfiguration options should be constructed
+            services.Configure<ClientConfiguration>(Configuration.GetSection("ClientConfiguration"));
+
             services.AddCors(o => o.AddPolicy("AllowAny", builder =>
             {
                 builder.AllowAnyOrigin()

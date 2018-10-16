@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 
+import { ConfigurationService } from './core/configuration/configuration.service';
 import { MessageService } from './message.service';
 
 @Component({
@@ -10,9 +11,11 @@ import { MessageService } from './message.service';
 export class AppComponent {
   title = 'pollr';
 
-  constructor(
-    private messageService: MessageService,
-  ) { }
+  constructor(public configService: ConfigurationService, private messageService: MessageService) {
+    console.log(`Production environment: ${this.configService.config.production}`);
+    console.log(`Api URL: ${this.configService.config.apiUrl}`);
+    console.log(`Hub URL: ${this.configService.config.hubUrl}`);
+  }
 
   ngOnInit() {
 

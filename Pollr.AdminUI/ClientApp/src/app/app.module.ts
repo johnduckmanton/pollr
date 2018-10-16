@@ -1,5 +1,5 @@
 import { HttpClientModule } from '@angular/common/http';
-import { NgModule } from '@angular/core';
+import { APP_INITIALIZER, NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -13,6 +13,7 @@ import { ToastrModule } from 'ngx-toastr';
 import { AboutComponent } from './about/about.component';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { ConfigurationService } from './core/configuration/configuration.service';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { FooterComponent } from './layout/footer/footer.component';
 import { MessagesComponent } from './core/messages/messages.component';
@@ -53,7 +54,17 @@ import { ViewPollDetailsComponent } from './view-poll-details/view-poll-details.
     // }),
   ],
 
-  providers: [SignalRService],
+  providers: [ConfigurationService,
+    {
+      // Here we request that configuration loading be done at app-
+      // initialization time (prior to rendering)
+      provide: APP_INITIALIZER,
+      useFactory: (configService: ConfigurationService) =>
+        () => configService.loadConfigurationData(),
+      deps: [ConfigurationService],
+      multi: true
+    },
+    SignalRService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

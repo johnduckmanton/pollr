@@ -3,9 +3,7 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false,
-  apiUrl: 'https://localhost:44372/api',
-  hubUrl: 'https://localhost:44372/voteHub'
+  production: false
 };
 
 /*

@@ -5,10 +5,10 @@ EXPOSE 44372
 
 FROM microsoft/dotnet:2.1-sdk AS build
 WORKDIR /src
-COPY ["pollr.api/Pollr.Api.csproj", "pollr.api/"]
-RUN dotnet restore "pollr.api/Pollr.Api.csproj"
+COPY ["Pollr.API/Pollr.Api.csproj", "Pollr.API/"]
+RUN dotnet restore "Pollr.API/Pollr.Api.csproj"
 COPY . .
-WORKDIR "/src/pollr.api"
+WORKDIR "/src/Pollr.API"
 RUN dotnet build "Pollr.Api.csproj" -c Release -o /app
 
 FROM build AS publish
