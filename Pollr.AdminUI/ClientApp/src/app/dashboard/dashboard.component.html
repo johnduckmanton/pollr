@@ -1,30 +1,28 @@
-<h3>Polls</h3>
-
 <!-- loading spinner-->
-<!--<ngx-spinner bdColor="rgba(51,51,51,0.8)"
+<ngx-spinner bdColor="rgba(51,51,51,0.8)"
              size="medium"
              color="#fff"
              type="ball-scale-multiple">
   <p style="font-size: 20px; color: white">Loading...</p>
-</ngx-spinner>-->
+</ngx-spinner>
 
 
 <div *ngIf="!isLoading && polls.length > 0">
   <div class="row dashboard-entry" *ngFor="let poll of polls; let i=index">
 
     <div class="col-md-9">
-      <a routerLink="/vote/{{poll.id}}"><h4>{{poll.name}}</h4></a>
-      <p class="text-muted">{{poll.description}}</p>
-      <p class="font-weight-light">
-        Event date: <span class="font-weight-bold">{{ poll.pollDate | date: mediumDate }}</span><br />
-        Event code: <span class="font-weight-bold">{{poll.handle}}</span>
+      <a routerLink="/vote/{{poll.id}}"><h1 class="text-primary">{{poll.name}}</h1></a>
+      <h5 class="text-muted">{{poll.description}}</h5>
+      <p class="text-primary">
+        Event date: <strong>{{ poll.pollDate | date: mediumDate }}</strong><br />
+        Event code: <strong>{{poll.handle}}</strong>
       </p>
-      <p class="font-weight-light">Current question: <span class="font-weight-bold">{{poll.questions[poll.currentQuestion-1].questionText}} (Q{{poll.currentQuestion}})</span></p>
+      <h5 class="text-muted">Current question: <strong>{{poll.questions[poll.currentQuestion-1].questionText}} (Q{{poll.currentQuestion}})</strong></h5>
 
     </div>
     <div class="col-md-3">
       <p>
-        <button type="button" class="btn btn-secondary btn-sq" (click)=showInfo(i)>
+        <button type="button" class="btn btn-primary btn-sq" (click)=showInfo(i)>
           <i class="fa fa-info fa-3x"></i>
         </button>
         <button type="button" class="btn btn-outline-success btn-sq" *ngIf="poll.status == 'closed'" (click)=startPoll(i)>
@@ -33,10 +31,10 @@
         <button type="button" class="btn btn-outline-danger btn-sq" *ngIf="poll.status == 'open'" (click)=stopPoll(i)>
           <i class="fa fa-square fa-3x"></i>
         </button>
-        <button type="button" class="btn btn-secondary btn-sq" (click)=nextQuestion(i)>
+        <button type="button" class="btn btn-primary btn-sq" (click)=nextQuestion(i)>
           <i class="fa fa-step-forward fa-3x"></i>
         </button>
-        <button type="button" class="btn btn-secondary btn-sq" (click)=showResults(i)>
+        <button type="button" class="btn btn-primary btn-sq" (click)=showResults(i)>
           <i class="fa fa-poll-h fa-3x"></i>
         </button>
       </p>

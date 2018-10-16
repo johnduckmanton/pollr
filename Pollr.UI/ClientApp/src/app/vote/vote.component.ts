@@ -5,6 +5,7 @@ import { Location } from '@angular/common';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
+import { environment } from '../../environments/environment';
 import { Poll } from '../poll.model';
 import { PollDefinition } from '../poll-definition.model';
 import { PollDataService } from '../poll-data.service';
@@ -32,6 +33,7 @@ export class VoteComponent implements OnInit {
   selectedAnswer: string;
   selectedAnswerIdx: number = -1;
   canSendMessage: boolean;
+  imageRepositoryUrl = environment.imageRepositoryUrl;
 
   constructor(
     private spinner: NgxSpinnerService,

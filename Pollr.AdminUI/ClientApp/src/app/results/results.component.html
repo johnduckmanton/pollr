@@ -2,7 +2,7 @@
   <div class="card-deck">
     <div class="card" *ngFor="let question of results.questions">
       <div class="card-body">
-        <h4>{{question.questionText}}</h4>
+        <h1 class="text-primary">{{question.questionText}}</h1>
 
         <div *ngIf="question.answers">
 
@@ -10,7 +10,7 @@
             <div class="progress-group">
               <div class="progress-group-header align-items-end">
                 <div>{{answer.answerText}}</div>
-                <div class="ml-auto font-weight-bold mr-2">{{answer.voteCount}} votes</div>
+                <div class="ml-auto text-primary mr-2"><strong>{{answer.voteCount}} votes</strong></div>
                 <div class="text-muted small">
                   ({{answer.voteCount / question.totalVotes | percent}})
                 </div>

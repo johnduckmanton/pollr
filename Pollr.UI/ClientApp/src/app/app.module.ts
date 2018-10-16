@@ -21,6 +21,7 @@ import { ResultsComponent } from './results/results.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { SignalRService } from './signalr.service';
 import { HomeComponent } from './home/home.component';
+import { AboutComponent } from './about/about.component';
 
 
 @NgModule({
@@ -32,7 +33,8 @@ import { HomeComponent } from './home/home.component';
     NavbarComponent,
     ResultsComponent,
     PageNotFoundComponent,
-    HomeComponent],
+    HomeComponent,
+    AboutComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,

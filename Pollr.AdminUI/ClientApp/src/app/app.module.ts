@@ -18,18 +18,18 @@ import { FooterComponent } from './layout/footer/footer.component';
 import { NavbarComponent } from './layout/navbar/navbar.component';
 import { ResultsComponent } from './results/results.component';
 import { ViewPollDetailsComponent } from './view-poll-details/view-poll-details.component';
-import { VoteComponent } from './vote/vote.component';
+import { AboutComponent } from './about/about.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    VoteComponent,
     MessagesComponent,
     FooterComponent,
     NavbarComponent,
     DashboardComponent,
     ResultsComponent,
     ViewPollDetailsComponent,
+    AboutComponent,
   ],
   imports: [
     BrowserModule,

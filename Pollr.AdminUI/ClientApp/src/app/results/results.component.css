@@ -31,7 +31,7 @@ progress-bar {
   color: #fff;
   text-align: center;
   white-space: nowrap;
-  background-color: #2e3bb9;
+  /*background-color: #2e3bb9;*/
   transition: width .6s ease;
 }
 

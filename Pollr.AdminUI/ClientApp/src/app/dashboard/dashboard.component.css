@@ -3,14 +3,12 @@
   margin-top: 0.75rem;
   margin-bottom: 0.75rem;
   border: 2px solid #eee;
-  border-left-width: 0.35rem;
   border-radius: 0.25rem;
-  background-color: #ffffff;
-  color: #0067b8;
-  font-size: 18px;
-  font-weight: 500;
-  padding-left: 1em;
-  border-left-color: #0067b8;
+
+}
+
+.dashboard-entry:hover {
+  background-color: #f3eeee;
 }
 
 .dashboard-entry a {

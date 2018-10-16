@@ -19,7 +19,6 @@
       <div class="col-md-12">
         <h1 class="text-primary text-center">{{ currentQuestion?.questionText }}</h1>
 
-        <!--<div class="poll-description">{{ poll.description }}</div>-->
         <h5 class="text-muted text-center">{{ poll.description }}</h5>
 
         <small>Please select one answer</small>
@@ -28,7 +27,7 @@
           <div class="list-group">
             <div class="list-group-item list-group-item-action flex-column align-items-start active" *ngFor="let answer of currentQuestion?.answers;let i=index" (click)="selectAnswer(i)" [class.active]="selectedAnswerIdx === i" [class.disabled]="hasVoted || answer.isDisabled">
               <div class="d-flex w-100 justify-content-between">
-                <h5 class="mb-1"><strong>{{answer.answerText}}</strong></h5>
+                <h3 class="mb-1"><strong>{{answer.answerText}}</strong></h3>
                 <img class="answer-image float-left img-thumbnail responsive" src="{{answer.imagePath}}" *ngIf="answer.imagePath != null" />
               </div>
             </div>

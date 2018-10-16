@@ -2,15 +2,15 @@
 
   <div class="card vote-details">
     <div class="card-body">
-      <h1 class="card-title">{{poll.name}}</h1>
+      <h1 class="card-title text-primary display-4">{{poll.name}}</h1>
       <h6 class="card-subtitle mb-2 text-muted">{{poll.description}}</h6>
       <p class="lead mt-5">To cast your vote go to</p>
 
       <div class="row">
-        <div class="col-md-8">
+        <div class="col-md-10">
           <h1 class="display-4"><a class="card-link" href="{{pollVoteUrl}}">{{pollVoteUrl}}</a></h1>
         </div>
-        <div class="col-md-4">
+        <div class="col-md-2">
           <div class="qrcode float-right">
             <ngx-qrcode [qrc-element-type]="qrcodeElementType"
                         [qrc-value]="pollVoteUrl"
@@ -22,8 +22,7 @@
       </div>
       <div class="row">
         <div class="col-md-8">
-          <h2><span class="user-count">{{connectedUserCount}}</span> user(s) connected</h2>
-
+          <h5><span class="user-count text-primary"><strong>{{connectedUserCount}}</strong></span> user(s) connected</h5>
         </div>
       </div>
     </div>
