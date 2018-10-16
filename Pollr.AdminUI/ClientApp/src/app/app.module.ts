@@ -9,27 +9,31 @@ import { NgxSpinnerModule } from 'ngx-spinner';
 // import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
 // import { InMemoryDataService } from './in-memory-data.service';
 import { ToastrModule } from 'ngx-toastr';
+
+import { AboutComponent } from './about/about.component';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { MessagesComponent } from './core/messages/messages.component';
-import { SignalRService } from './core/signalr.service';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { FooterComponent } from './layout/footer/footer.component';
+import { MessagesComponent } from './core/messages/messages.component';
 import { NavbarComponent } from './layout/navbar/navbar.component';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { ResultsComponent } from './results/results.component';
+import { SignalRService } from './core/signalr.service';
 import { ViewPollDetailsComponent } from './view-poll-details/view-poll-details.component';
-import { AboutComponent } from './about/about.component';
+
 
 @NgModule({
   declarations: [
+    AboutComponent,
     AppComponent,
-    MessagesComponent,
-    FooterComponent,
-    NavbarComponent,
     DashboardComponent,
+    FooterComponent,
+    MessagesComponent,
+    NavbarComponent,
+    PageNotFoundComponent,
     ResultsComponent,
     ViewPollDetailsComponent,
-    AboutComponent,
   ],
   imports: [
     BrowserModule,
