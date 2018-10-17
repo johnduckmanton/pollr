@@ -164,7 +164,7 @@ namespace Pollr.Api.Dal
         /// <param name="name">The name of the poll</param>
         /// <param name="isOpen">If true the poll is created in an open state</param>
         /// <returns></returns>
-        public async Task<Poll> CreatePollAsync(string name, string pollDefinitionId, bool isOpen)
+        public async Task<Poll> CreatePollAsync(string name, string pollDefinitionId, string handle, bool isOpen)
         {
             // First retrieve the poll definition
             var builder = Builders<PollDefinition>.Filter;
@@ -187,6 +187,7 @@ namespace Pollr.Api.Dal
                 Id = ObjectId.GenerateNewId(),
                 Name = name,
                 Description = def.Description,
+                Handle = handle,
                 PollDefinitionId = def.Id,
                 Status = (isOpen ? "open" : "closed"),
                 PollDate = DateTime.Now,

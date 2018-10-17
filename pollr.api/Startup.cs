@@ -36,8 +36,9 @@ namespace pollr.api
                     .AllowCredentials();
             }));
 
-            services.AddAuthentication(AzureADDefaults.BearerAuthenticationScheme)
-                .AddAzureADBearer(options => Configuration.Bind("AzureAd", options));
+            //services.AddAuthentication(AzureADDefaults.BearerAuthenticationScheme)
+            //    .AddAzureADBearer(options => Configuration.Bind("AzureAd", options));
+
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
             services.Configure<Settings>(options =>
@@ -47,7 +48,9 @@ namespace pollr.api
             });
 
             // Add a SignalR hub
-            services.AddSignalR();
+            var signalrKey = Configuration.GetSection("Azure:SignalR:ConnectionString").Value;
+            services.AddSignalR()
+                    .AddAzureSignalR("Endpoint=https://jrd-pollr-hub.service.signalr.net;AccessKey=MgdlZniHHD/TGroykFmanT/Dy/MwPQRslt3COZTwCrs=;Version=1.0;");
 
             services.AddTransient<IPollDefinitionRepository, PollDefinitionRepository>();
             services.AddTransient<IPollRepository, PollRepository>();
@@ -73,7 +76,12 @@ namespace pollr.api
             app.UseMvc();
 
             // Configure Signalr
-            app.UseSignalR(routes => {
+            //app.UseSignalR(routes => {
+            //    routes.MapHub<VoteHub>("/voteHub");
+            //});
+
+            app.UseAzureSignalR(routes =>
+            {
                 routes.MapHub<VoteHub>("/voteHub");
             });
         }

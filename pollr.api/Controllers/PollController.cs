@@ -111,7 +111,7 @@ namespace pollr.api.Controllers
             }
 
             try {
-                Poll poll = await _pollRepository.CreatePollAsync(request.Name, request.PollDefinitionId, request.IsOpen); ;
+                Poll poll = await _pollRepository.CreatePollAsync(request.Name, request.PollDefinitionId, request.Handle, request.IsOpen);
                 return CreatedAtAction(nameof(GetPoll), poll);
             }
             catch (Exception e) {

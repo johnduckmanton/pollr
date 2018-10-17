@@ -15,6 +15,7 @@ namespace Pollr.Api.Models
         public string PollDefinitionId { get; set; }
 
         public bool IsOpen { get; set; } = false;
+        public string Handle { get; set; }
 
     }
 }

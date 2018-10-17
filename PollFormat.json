@@ -1,0 +1,64 @@
+{
+  "name": "Best Microsoft Presenter",
+  "description": "" ,
+  "type": "poll",
+  "isPublished": true,
+  "theme": "default",
+  "owner": "john",
+  "expiryDate": "2018-04-23T18:25:43.511Z",
+  "tags": [
+  	"poll", "microsoft"
+  	],
+  "questions": [
+    {
+      "questionText": "Who is the best video presenter?",
+      "isDisabled": false,
+      "hasCorrectAnswer": false,
+      "answers": [
+        {
+          "answerText": "Dan Baker",
+          "imagePath": null,
+          "isCorrectAnswer": true,
+          "isDisabled": false
+        },
+                {
+          "answerId": "wegrf",
+          "answerText": "Scott Hanselmanr",
+          "imagePath": null,
+          "isCorrectAnswer": false,
+          "isDisabled": false
+        },
+                {
+          "answerText": "Scott Guthrie",
+          "imagePath": null,
+          "isCorrectAnswer": false,
+          "isDisabled": false
+        }
+      ]
+    },
+    {
+      "questionText": "Who is the funniest presenter?" ,
+      "hasCorrectAnswer": false,
+      "answers": [
+        {
+          "answerText": "Dan Baker",
+          "imagePath": null,
+          "isCorrectAnswer": true, 
+          "isDisabled": false
+        },
+                {
+          "answerText": "Scott Hanselman",
+          "imagePath": null,
+          "isCorrectAnswer": false,
+          "isDisabled": false
+        },
+                {
+          "answerText": "Scott Guthrie",
+          "imagePath": null,
+          "isCorrectAnswer": false ,
+          "isDisabled": false
+        }
+      ]
+    }
+  ]
+}
