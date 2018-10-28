@@ -11,10 +11,9 @@ namespace Pollr.Api.Dal
 {
     internal class DatabaseContext
     {
-        private IOptions<Settings> settings;
         private readonly IMongoDatabase _database = null;
 
-        public DatabaseContext(IOptions<Settings> settings)
+        public DatabaseContext(IOptions<DatabaseSettings> settings)
         {
 
             var client = new MongoClient(settings.Value.ConnectionString);

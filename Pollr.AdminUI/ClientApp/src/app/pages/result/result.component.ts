@@ -3,16 +3,17 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { Subscription } from 'rxjs';
-import { MessageService } from '../core/messages/message.service';
-import { SignalRService } from '../core/signalr.service';
-import { PollDataService } from '../poll-data.service';
+
+import { MessageService } from '../../core/messages/message.service';
+import { SignalRService } from '../../core/signalr.service';
+import { PollDataService } from '../../core/poll-data.service';
 
 @Component({
-  selector: 'app-results',
-  templateUrl: './results.component.html',
-  styleUrls: ['./results.component.css'],
+  selector: 'app-result',
+  templateUrl: './result.component.html',
+  styleUrls: ['./result.component.css'],
 })
-export class ResultsComponent implements OnInit {
+export class ResultComponent implements OnInit {
   voteSubscription: Subscription;
   canSendMessage: boolean;
   public results;

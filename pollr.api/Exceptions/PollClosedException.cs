@@ -11,7 +11,7 @@ namespace Pollr.Api.Exceptions
 
         public PollClosedException()
         {
-            StatusCode = "2";
+            StatusCode = "1002";
             ErrorMessage = ("Poll does not exist or is not open");
         }
 

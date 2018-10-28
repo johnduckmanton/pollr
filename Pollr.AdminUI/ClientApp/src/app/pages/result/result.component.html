@@ -1,0 +1,7 @@
+<div *ngIf="results.questions">
+  <div class="row">
+    <div class="col-6 h-100 mb-3" *ngFor="let question of results.questions">
+      <app-result-chart [question] = "question"></app-result-chart>
+    </div>
+  </div>
+</div>

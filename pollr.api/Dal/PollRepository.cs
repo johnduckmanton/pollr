@@ -3,6 +3,7 @@
  *  All rights reserved.
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using MongoDB.Bson;
 using MongoDB.Driver;
@@ -14,13 +15,18 @@ using System.Threading.Tasks;
 
 namespace Pollr.Api.Dal
 {
+    /// <summary>
+    /// Handles all data access for Polls
+    /// </summary>
     public class PollRepository : IPollRepository
     {
         private readonly DatabaseContext _context = null;
+        private ILogger _logger;
 
-        public PollRepository(IOptions<Settings> settings)
+        public PollRepository(IOptions<DatabaseSettings> settings, ILogger<PollRepository> logger)
         {
             _context = new DatabaseContext(settings);
+            _logger = logger;
         }
 
         /// <summary>
@@ -92,7 +98,6 @@ namespace Pollr.Api.Dal
         public async Task AddPollAsync(Poll item)
         {
             item.Id = ObjectId.GenerateNewId();
-
             await _context.Polls.InsertOneAsync(item);
 
         }
@@ -200,8 +205,8 @@ namespace Pollr.Api.Dal
             for (int i = 0; i < def.Questions.Length; i++) {
                 Question q = new Question {
                     QuestionText = def.Questions[i].QuestionText,
-                    IsDisabled = def.Questions[i].IsDisabled
-
+                    IsDisabled = def.Questions[i].IsDisabled,
+                    TotalVotes = 0
                 };
 
                 List<Answer> answerList = new List<Answer>();
@@ -318,7 +323,10 @@ namespace Pollr.Api.Dal
             var filter = Builders<Poll>.Filter.Eq(s => s.Id, ObjectId.Parse(id))
                 & builder.Eq(s => s.Status, "open");
 
-            var update = Builders<Poll>.Update.Inc(s => s.Questions[question - 1].Answers[answer - 1].VoteCount, 1);
+            var update = Builders<Poll>.Update
+                .Inc(s => s.Questions[question - 1].Answers[answer - 1].VoteCount, 1)
+                .Inc(s => s.Questions[question - 1].TotalVotes, 1);
+
 
             var updatedPoll = await _context.Polls.FindOneAndUpdateAsync
               (filter,

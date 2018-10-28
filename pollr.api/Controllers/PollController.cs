@@ -5,6 +5,8 @@
  *--------------------------------------------------------------------------------------------*/
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
+using Microsoft.Extensions.Logging;
+using Pollr.Api.Core;
 using Pollr.Api.Dal;
 using Pollr.Api.Exceptions;
 using Pollr.Api.Helpers;
@@ -16,16 +18,21 @@ using System.Threading.Tasks;
 
 namespace pollr.api.Controllers
 {
+    /// <summary>
+    /// Controller for Polls
+    /// </summary>
     [Route("api/[controller]")]
     [ApiController]
     public class PollsController : ControllerBase
     {
         private readonly IPollRepository _pollRepository;
+        private readonly ILogger _logger;
         private IHubContext<VoteHub> _hubContext;
 
-        public PollsController(IPollRepository pollRepository, IHubContext<VoteHub> hubContext)
+        public PollsController(IPollRepository pollRepository, IHubContext<VoteHub> hubContext, ILogger<PollsController> logger)
         {
             _pollRepository = pollRepository;
+            _logger = logger;
             _hubContext = hubContext;
         }
 
@@ -38,13 +45,14 @@ namespace pollr.api.Controllers
         [ProducesResponseType(200, Type = typeof(Poll[]))]
         public async Task<ActionResult> GetPolls([FromQuery]string status)
         {
-
             IEnumerable<Poll> polls;
 
             if (status != null) {
+                _logger.LogInformation(LoggingEvents.GetPolls, "Listing all polls with status ({status})", status);
                 polls = await _pollRepository.GetPollsByStatusAsync(status);
             }
             else {
+                _logger.LogInformation(LoggingEvents.GetPolls, "Listing all polls");
                 polls = await _pollRepository.GetAllPollsAsync();
             }
 
@@ -59,10 +67,12 @@ namespace pollr.api.Controllers
         [HttpGet("{id}")]
         [Route("{id}")]
         [ProducesResponseType(200, Type = typeof(Poll))]
-        public async Task<ActionResult> GetPoll(string id)
+        public async Task<ActionResult> Get(string id)
         {
+            _logger.LogInformation(LoggingEvents.GetPoll, "Getting poll {id}", id);
+
             try {
-                var poll = await _pollRepository.GetPollAsync(id) ?? new Poll();
+                var poll = await _pollRepository.GetPollAsync(id);
                 return Ok(poll);
             }
             catch (PollNotFoundException e) {
@@ -70,6 +80,7 @@ namespace pollr.api.Controllers
                 return BadRequest(a);
             }
             catch (Exception e) {
+                _logger.LogError(LoggingEvents.GetPoll, "Error getting poll {id}: Exception {ex}", id, e.Message);
                 return StatusCode(500, e.Message);
             }
         }
@@ -83,8 +94,10 @@ namespace pollr.api.Controllers
         [ProducesResponseType(200, Type = typeof(Poll))]
         public async Task<ActionResult> GetPollByHandle([FromRoute]string handle)
         {
+            _logger.LogInformation(LoggingEvents.GetPoll, "Getting poll with handle {handle}", handle);
+
             try {
-                var poll = await _pollRepository.GetPollByHandleAsync(handle) ?? new Poll();
+                var poll = await _pollRepository.GetPollByHandleAsync(handle);
                 return Ok(poll);
             }
             catch (PollNotFoundException e) {
@@ -92,6 +105,7 @@ namespace pollr.api.Controllers
                 return BadRequest(a);
             }
             catch (Exception e) {
+                _logger.LogError(LoggingEvents.GetPollByHandle, "Error getting poll {id}: Exception {ex}", handle, e.Message);
                 return StatusCode(500, e.Message);
             }
         }
@@ -112,9 +126,11 @@ namespace pollr.api.Controllers
 
             try {
                 Poll poll = await _pollRepository.CreatePollAsync(request.Name, request.PollDefinitionId, request.Handle, request.IsOpen);
-                return CreatedAtAction(nameof(GetPoll), poll);
+                _logger.LogInformation(LoggingEvents.InsertPoll, "Poll {Id} Created", poll.Id);
+                return CreatedAtRoute("Get", new { controller = "Poll", id = poll.Id.ToString() }, poll);
             }
             catch (Exception e) {
+                _logger.LogError(LoggingEvents.InsertPoll, "Error creating new poll: Exception {ex}", e.Message);
                 return StatusCode(500, e.Message);
             }
         }
@@ -129,17 +145,23 @@ namespace pollr.api.Controllers
         [ProducesResponseType(204)]
         [ProducesResponseType(400)]
         [ProducesResponseType(500)]
-        public async Task<ActionResult> Put(string id, [FromBody]Poll pollData)
+        public async Task<ActionResult> Put(string id, [FromBody]Poll poll)
         {
+            if (poll == null || poll.Id.ToString() != id) {
+                return BadRequest();
+            }
+
             if (!ModelState.IsValid) {
                 return BadRequest(ModelState);
             }
 
             try {
-                await _pollRepository.UpdatePollAsync(id, pollData);
-                return NoContent();
+                await _pollRepository.UpdatePollAsync(id, poll);
+                _logger.LogInformation(LoggingEvents.UpdatePoll, "Poll {id} Updated", poll.Id);
+                return new NoContentResult();
             }
             catch (Exception e) {
+                _logger.LogError(LoggingEvents.UpdatePoll, "Error updating poll {id}: Exception {ex}", id, e.Message);
                 return StatusCode(500, e.Message);
             }
 
@@ -156,9 +178,11 @@ namespace pollr.api.Controllers
         {
             try {
                 await _pollRepository.RemovePollAsync(id);
-                return NoContent();
+                _logger.LogInformation(LoggingEvents.DeletePoll, "Poll {id} Deleted", id);
+                return new NoContentResult();
             }
             catch (Exception e) {
+                _logger.LogError(LoggingEvents.DeletePoll, "Error deleting poll {id}: Exception {ex}", id, e.Message);
                 return StatusCode(500, e.Message);
             }
 
@@ -176,8 +200,10 @@ namespace pollr.api.Controllers
         {
             try {
                 bool result = await _pollRepository.OpenPollAsync(id);
-                if (result)
-                    return NoContent();
+                if (result) {
+                    _logger.LogInformation(LoggingEvents.OpenPoll, "Poll {id} status set to open", id);
+                    return new NoContentResult();
+                }
                 else
                     return StatusCode(500, "Error occurred updating the database");
             }
@@ -186,6 +212,7 @@ namespace pollr.api.Controllers
                 return BadRequest(a);
             }
             catch (Exception e) {
+                _logger.LogError(LoggingEvents.OpenPoll, "Error updating poll status to open {id}: Exception {ex}", id, e.Message);
                 return StatusCode(500, e.Message);
             }
         }
@@ -205,6 +232,7 @@ namespace pollr.api.Controllers
                 if (updatedPoll != null) {
 
                     await _hubContext.Clients.All.SendAsync("LoadQuestion", new LoadQuestionRequest() { PollId = id, QuestionIndex = updatedPoll.CurrentQuestion -1 });
+                    _logger.LogInformation(LoggingEvents.PollSetNextQuestion, "Poll {id} next question updated", id);
                     return Ok(updatedPoll);
                 }
                 else {
@@ -220,6 +248,7 @@ namespace pollr.api.Controllers
                 return BadRequest(a);
             }
             catch (Exception e) {
+                _logger.LogError(LoggingEvents.PollSetNextQuestion, "Error setting next question for poll {id}: Exception {ex}", id, e.Message);
                 return StatusCode(500, e.Message);
             }
         }
@@ -237,8 +266,10 @@ namespace pollr.api.Controllers
         {
             try {
                 bool result = await _pollRepository.ClosePollAsync(id);
-                if (result)
-                    return NoContent();
+                if (result) {
+                    _logger.LogInformation(LoggingEvents.ClosePoll, "Poll {id} status set to closed", id);
+                    return new NoContentResult();
+                }
                 else
                     return StatusCode(500, "Error occurred updating the database");
             }
@@ -247,6 +278,7 @@ namespace pollr.api.Controllers
                 return BadRequest(a);
             }
             catch (Exception e) {
+                _logger.LogError(LoggingEvents.ClosePoll, "Error updating poll status to closed {id}: Exception {ex}", id, e.Message);
                 return StatusCode(500, e.Message);
             }
         }
@@ -277,8 +309,9 @@ namespace pollr.api.Controllers
                     // then notify connected clients of the poll status using SignalR
                     PollResult message = PollHelper.GetPollResults(updatedPoll);
                     SendToConnectedClients(message);
+                    _logger.LogInformation(LoggingEvents.PollVoteRegistered, "Poll {id} vote registered", id);
 
-                    return NoContent();
+                    return new NoContentResult();
                 }
                 else
                     return BadRequest("Poll does not exist or is closed");
@@ -288,6 +321,7 @@ namespace pollr.api.Controllers
                 return BadRequest(a);
             }
             catch (Exception e) {
+                _logger.LogError(LoggingEvents.OpenPoll, "Error updating poll status to open {id}: Exception {ex}", id, e.Message);
                 return StatusCode(500, e.Message);
             }
         }
@@ -319,6 +353,7 @@ namespace pollr.api.Controllers
                 return NotFound();
 
             PollResult result = PollHelper.GetPollResults(poll);
+            _logger.LogInformation(LoggingEvents.GetPollResults, "Get poll results for {id}", id);
 
             return Ok(result);
         }

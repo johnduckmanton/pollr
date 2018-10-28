@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using Pollr.Api;
 using Pollr.Api.Dal;
 using Pollr.Api.Hubs;
@@ -18,9 +19,13 @@ namespace pollr.api
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        private readonly ILogger<Startup> _logger;
+        bool useAzureSignalRManagedHub = false;
+
+        public Startup(IConfiguration configuration, ILogger<Startup> logger)
         {
             Configuration = configuration;
+            _logger = logger;
         }
 
         public IConfiguration Configuration { get; }
@@ -41,16 +46,25 @@ namespace pollr.api
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
-            services.Configure<Settings>(options =>
+            services.Configure<DatabaseSettings>(options =>
             {
                 options.ConnectionString = Configuration.GetSection("MongoConnection:ConnectionString").Value;
                 options.Database = Configuration.GetSection("MongoConnection:Database").Value;
             });
 
-            // Add a SignalR hub
-            var signalrKey = Configuration.GetSection("Azure:SignalR:ConnectionString").Value;
-            services.AddSignalR()
-                    .AddAzureSignalR("Endpoint=https://jrd-pollr-hub.service.signalr.net;AccessKey=MgdlZniHHD/TGroykFmanT/Dy/MwPQRslt3COZTwCrs=;Version=1.0;");
+            // Add a SignalR hub:
+            // In production we will typically use an Azure Managed hub, but in development
+            // we''l just create a local hub
+            useAzureSignalRManagedHub = bool.Parse(Configuration.GetSection("SignalR:UseAzureSignalRManagedHub").Value);
+            if (useAzureSignalRManagedHub) {
+                _logger.LogInformation("Using Azure Managed SignaR hub.");
+                services.AddSignalR()
+                        .AddAzureSignalR(Configuration.GetSection("SignalR:Azure:SignalR:ConnectionString").Value);
+            }
+            else {
+                _logger.LogInformation("Using local SignaR hub.");
+                services.AddSignalR();
+            }
 
             services.AddTransient<IPollDefinitionRepository, PollDefinitionRepository>();
             services.AddTransient<IPollRepository, PollRepository>();
@@ -61,6 +75,7 @@ namespace pollr.api
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
+            _logger.LogInformation($"Environment: {0}", env.EnvironmentName);
             if (env.IsDevelopment()) {
                 app.UseDeveloperExceptionPage();
             }
@@ -76,14 +91,16 @@ namespace pollr.api
             app.UseMvc();
 
             // Configure Signalr
-            //app.UseSignalR(routes => {
-            //    routes.MapHub<VoteHub>("/voteHub");
-            //});
-
-            app.UseAzureSignalR(routes =>
-            {
-                routes.MapHub<VoteHub>("/voteHub");
-            });
+            if (useAzureSignalRManagedHub) {
+                app.UseAzureSignalR(routes => {
+                    routes.MapHub<VoteHub>("/voteHub");
+                });
+            }
+            else {
+                app.UseSignalR(routes => {
+                    routes.MapHub<VoteHub>("/voteHub");
+                });
+            }
         }
     }
 }

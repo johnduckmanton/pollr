@@ -17,11 +17,11 @@
   <div class="poll" *ngIf="poll && isPollOpen">
     <div class="row">
       <div class="col-md-12">
-        <h1 class="text-primary text-center">{{ currentQuestion?.questionText }}</h1>
+        <h1 class="text-primary text-center mb-5">{{ currentQuestion?.questionText }}</h1>
 
         <h5 class="text-muted text-center">{{ poll.description }}</h5>
 
-        <small>Please select one answer</small>
+        <span class="text-muted mb-3">Please select one answer</span>
 
         <div class="answers">
           <div class="list-group">

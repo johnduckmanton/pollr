@@ -1,0 +1,19 @@
+.answers ol {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  counter-reset: list;
+}
+
+  /*.answers ol li {
+    margin: 0 0 5px;
+    padding: 0;
+  }*/
+
+  .answers ol li:before {
+    counter-increment: list;
+    content: counter(list, upper-alpha) ". ";
+    color: #008cba;
+    font-size: large;
+    font-weight: 700;
+  }

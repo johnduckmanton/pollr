@@ -51,6 +51,9 @@ namespace Pollr.Api.Models
 
         [BsonElement("answers")]
         public Answer[] Answers { get; set; }
+
+        [BsonElement("totalVotes")]
+        public int TotalVotes { get; set; }
     }
 
     public class Answer

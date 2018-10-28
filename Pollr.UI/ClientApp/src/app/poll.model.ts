@@ -13,6 +13,7 @@ export class Poll {
     {
       questionText: string;
       isDisabled: boolean;
+      totalVotes: number;
       answers: [
         {
           answerText: string;

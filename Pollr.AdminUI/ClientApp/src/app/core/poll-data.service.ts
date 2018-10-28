@@ -3,9 +3,11 @@ import { Injectable } from '@angular/core';
 import { Observable, of, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
-import { ConfigurationService } from './core/configuration/configuration.service';
-import { MessageService } from './core/messages/message.service';
-import { Poll } from './poll.model';
+import { ConfigurationService } from './configuration/configuration.service';
+import { MessageService } from './messages/message.service';
+import { Poll } from '../shared/models/poll.model';
+import { PollDefinition } from '../shared/models/poll-definition.model';
+
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
@@ -19,6 +21,14 @@ export class PollDataService {
 
   constructor(private configService: ConfigurationService,
     private http: HttpClient, private messageService: MessageService) { }
+
+  //
+  // Get all poll definitions. GET /api/polls
+  //
+  public getPollDefinitions(): Observable<PollDefinition[]> {
+    const url = `${this.apiUrl}/polldefinitions`;
+    return this.http.get<PollDefinition[]>(url);
+  }
 
   //
   // Get all polls. GET /api/polls

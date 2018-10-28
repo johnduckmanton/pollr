@@ -3,21 +3,23 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 
-import { ConfigurationService } from '../core/configuration/configuration.service';
-import { MessageService } from '../core/messages/message.service';
-import { SignalRService } from '../core/signalr.service';
-import { PollDataService } from '../poll-data.service';
-import { Poll } from '../poll.model';
+import { ConfigurationService } from '../../core/configuration/configuration.service';
+import { SignalRService } from '../../core/signalr.service';
+import { PollDataService } from '../../core/poll-data.service';
+import { Poll } from '../../shared/models/poll.model';
+import { Question } from '../../shared/models/question.model';
+
 
 @Component({
-  selector: 'app-view-poll-details',
-  templateUrl: './view-poll-details.component.html',
-  styleUrls: ['./view-poll-details.component.css'],
+  selector: 'app-vote-status',
+  templateUrl: './vote-status.component.html',
+  styleUrls: ['./vote-status.component.css']
 })
-export class ViewPollDetailsComponent implements OnInit {
+export class VoteStatusComponent implements OnInit {
   connectedUserCount = 0;
 
   poll: Poll = null;
+  currentQuestion: Question;
   isLoading = false;
   qrcodeElementType = 'url';
   pollVoteUrl = '';
@@ -41,6 +43,8 @@ export class ViewPollDetailsComponent implements OnInit {
 
     this.dataService.getPoll(id).subscribe(poll => {
       this.poll = poll;
+      this.currentQuestion = this.poll.questions[this.poll.currentQuestion - 1];
+      console.log(this.currentQuestion);
 
       // Generate URL to this poll
       const urlTree = this.router.createUrlTree(['/vote', this.poll.handle]).toString();
@@ -60,4 +64,5 @@ export class ViewPollDetailsComponent implements OnInit {
       this.connectedUserCount = count;
     });
   }
+
 }

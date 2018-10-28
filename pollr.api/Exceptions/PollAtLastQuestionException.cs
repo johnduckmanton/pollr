@@ -11,7 +11,7 @@ namespace Pollr.Api.Exceptions
 
         public PollAtLastQuestionException()
         {
-            StatusCode = "3";
+            StatusCode = "1003";
             ErrorMessage = ("Poll has no more questions");
         }
     }

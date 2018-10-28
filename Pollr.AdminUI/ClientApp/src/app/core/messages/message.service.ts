@@ -11,7 +11,7 @@ export class MessageService {
 
   add(message: string) {
     this.messages.push(message);
-    this.toastr.success(message);
+    this.toastr.info(message);
   }
 
   clear() {

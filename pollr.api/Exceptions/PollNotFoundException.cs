@@ -11,7 +11,7 @@ namespace Pollr.Api.Exceptions
 
         public PollNotFoundException()
         {
-            StatusCode = "1";
+            StatusCode = "1001";
             ErrorMessage = ("Poll does not exist");
         }
 

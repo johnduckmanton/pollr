@@ -2,9 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
-import { MessageService } from '../core/messages/message.service';
-import { PollDataService } from '../poll-data.service';
-import { Poll } from '../poll.model';
+import { MessageService } from '../../core/messages/message.service';
+import { PollDataService } from '../../core/poll-data.service';
+import { Poll } from '../../shared/models/poll.model';
 
 @Component({
   selector: 'app-dashboard',
@@ -83,7 +83,7 @@ export class DashboardComponent implements OnInit {
   stopPoll(index: number): void {
     this.dataService.closePoll(this.polls[index].id).subscribe(() => {
       this.polls[index].status = 'closed';
-      this.toastr.warning('Your poll has been stopped. voting is no longer allowed.');
+      this.toastr.warning('Your poll has been stopped. Voting is no longer allowed.');
     });
   }
 

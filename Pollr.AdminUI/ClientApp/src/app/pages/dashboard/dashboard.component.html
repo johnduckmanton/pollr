@@ -12,7 +12,7 @@
 
     <div class="col-md-9">
       <a routerLink="/vote/{{poll.id}}"><h1 class="text-primary">{{poll.name}}</h1></a>
-      <h5 class="text-muted">{{poll.description}}</h5>
+      <h5 class="text-primary">{{poll.description}}</h5>
       <p class="text-primary">
         Event date: <strong>{{ poll.pollDate | date: mediumDate }}</strong><br />
         Event code: <strong>{{poll.handle}}</strong>

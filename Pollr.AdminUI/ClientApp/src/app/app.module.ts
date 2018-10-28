@@ -1,6 +1,6 @@
 import { HttpClientModule } from '@angular/common/http';
 import { APP_INITIALIZER, NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
@@ -10,18 +10,24 @@ import { NgxSpinnerModule } from 'ngx-spinner';
 // import { InMemoryDataService } from './in-memory-data.service';
 import { ToastrModule } from 'ngx-toastr';
 
-import { AboutComponent } from './about/about.component';
+import { AboutComponent } from './pages/about/about.component';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ConfigurationService } from './core/configuration/configuration.service';
-import { DashboardComponent } from './dashboard/dashboard.component';
+import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { FooterComponent } from './layout/footer/footer.component';
 import { MessagesComponent } from './core/messages/messages.component';
 import { NavbarComponent } from './layout/navbar/navbar.component';
-import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
-import { ResultsComponent } from './results/results.component';
+import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.component';
+import { ResultsComponent } from './pages/results/results.component';
 import { SignalRService } from './core/signalr.service';
-import { ViewPollDetailsComponent } from './view-poll-details/view-poll-details.component';
+import { ViewPollDetailsComponent } from './pages/view-poll-details/view-poll-details.component';
+import { VoteStatusComponent } from './pages/vote-status/vote-status.component';
+import { ResultChartComponent } from './pages/result-chart/result-chart.component';
+import { PollDefinitionListComponent } from './pages/poll-definition-list/poll-definition-list.component';
+import { PollDefinitionDetailsComponent } from './pages/poll-definition-details/poll-definition-details.component';
+import { PollDefinitionFormComponent } from './pages/poll-definition-form/poll-definition-form.component';
+import { QuestionFormComponent } from './pages/poll-definition-form/question-form/question-form.component';
 
 
 @NgModule({
@@ -35,6 +41,12 @@ import { ViewPollDetailsComponent } from './view-poll-details/view-poll-details.
     PageNotFoundComponent,
     ResultsComponent,
     ViewPollDetailsComponent,
+    VoteStatusComponent,
+    ResultChartComponent,
+    PollDefinitionListComponent,
+    PollDefinitionDetailsComponent,
+    PollDefinitionFormComponent,
+    QuestionFormComponent,
   ],
   imports: [
     BrowserModule,
@@ -43,6 +55,7 @@ import { ViewPollDetailsComponent } from './view-poll-details/view-poll-details.
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
+    ReactiveFormsModule,
     NgbModule,
     NgxSpinnerModule,
     NgxQRCodeModule,

@@ -11,7 +11,7 @@ namespace Pollr.Api.Exceptions
 
         public PollDefNotPublishedException()
         {
-            StatusCode = "1";
+            StatusCode = "2002";
             ErrorMessage = ("Poll has not been published");
         }
 
