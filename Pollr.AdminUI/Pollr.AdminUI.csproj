@@ -19,8 +19,22 @@
 
   <ItemGroup>
     <!-- Don't publish the SPA source files, but do show them in the project files list -->
+    <Compile Remove="ClientApp\src\app\admin\poll-definition-form - Copy\**" />
     <Content Remove="$(SpaRoot)**" />
+    <Content Remove="ClientApp\src\app\admin\poll-definition-form - Copy\**" />
     <None Include="$(SpaRoot)**" Exclude="$(SpaRoot)node_modules\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Remove="ClientApp\src\app\admin\poll-definition-form - Copy\**" />
+    <None Remove="ClientApp\src\app\admin\poll-definition-form - Copy\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="ClientApp\src\app\admin\poll-definition-form\trip-edit.component.html" />
+    <None Remove="ClientApp\src\app\admin\poll-definition-form\trip-edit.component.html" />
+    <None Remove="ClientApp\src\app\admin\poll-definition-form\trip-edit.component.ts" />
+    <None Remove="ClientApp\src\app\admin\poll-definition-form\trip-edit.component.ts" />
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">

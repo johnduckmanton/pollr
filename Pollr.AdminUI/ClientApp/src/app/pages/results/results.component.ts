@@ -33,7 +33,7 @@ export class ResultsComponent implements OnInit {
     const id: string = this.route.snapshot.paramMap.get('id');
 
     // Get the current results
-    this.results = this.dataService.getPollResults(id).subscribe(results => {
+    this.results = this.dataService.getPollResults$(id).subscribe(results => {
       this.results = results;
       console.log(results);
     });

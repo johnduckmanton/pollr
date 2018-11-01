@@ -1,0 +1,4 @@
+<button class="btn btn-primary btn-sm mt-2 mb-2" (click)="addQuestion()"><i class="fa fa-plus"></i> Add Question</button>
+<app-question-form *ngFor="let question of questionList.controls; let i=index" [index]="i" [questionForm]="question"
+                   (removed)="questionList.removeAt($event)">
+</app-question-form>

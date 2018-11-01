@@ -3,6 +3,7 @@ import { APP_INITIALIZER, NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgxQRCodeModule } from 'ngx-qrcode2';
 import { NgxSpinnerModule } from 'ngx-spinner';
@@ -16,18 +17,17 @@ import { AppComponent } from './app.component';
 import { ConfigurationService } from './core/configuration/configuration.service';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { FooterComponent } from './layout/footer/footer.component';
+import { LoadingService } from './core/loading/loading.service';
+import { LoadingInterceptor } from './core/loading/loading.interceptor';
 import { MessagesComponent } from './core/messages/messages.component';
 import { NavbarComponent } from './layout/navbar/navbar.component';
 import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.component';
+import { QuestionModalComponent } from './pages/question-modal/question-modal.component';
+import { ResultChartComponent } from './pages/result-chart/result-chart.component';
 import { ResultsComponent } from './pages/results/results.component';
 import { SignalRService } from './core/signalr.service';
 import { ViewPollDetailsComponent } from './pages/view-poll-details/view-poll-details.component';
 import { VoteStatusComponent } from './pages/vote-status/vote-status.component';
-import { ResultChartComponent } from './pages/result-chart/result-chart.component';
-import { PollDefinitionListComponent } from './pages/poll-definition-list/poll-definition-list.component';
-import { PollDefinitionDetailsComponent } from './pages/poll-definition-details/poll-definition-details.component';
-import { PollDefinitionFormComponent } from './pages/poll-definition-form/poll-definition-form.component';
-import { QuestionFormComponent } from './pages/poll-definition-form/question-form/question-form.component';
 
 
 @NgModule({
@@ -43,19 +43,14 @@ import { QuestionFormComponent } from './pages/poll-definition-form/question-for
     ViewPollDetailsComponent,
     VoteStatusComponent,
     ResultChartComponent,
-    PollDefinitionListComponent,
-    PollDefinitionDetailsComponent,
-    PollDefinitionFormComponent,
-    QuestionFormComponent,
+    QuestionModalComponent
   ],
   imports: [
+    AppRoutingModule,
     BrowserModule,
     BrowserAnimationsModule,
-    ToastrModule.forRoot(),
-    AppRoutingModule,
-    HttpClientModule,
     FormsModule,
-    ReactiveFormsModule,
+    HttpClientModule,
     NgbModule,
     NgxSpinnerModule,
     NgxQRCodeModule,
@@ -65,9 +60,11 @@ import { QuestionFormComponent } from './pages/poll-definition-form/question-for
     // HttpClientInMemoryWebApiModule.forRoot(InMemoryDataService, {
     // dataEncapsulation: false
     // }),
+    ReactiveFormsModule,
+    ToastrModule.forRoot(),
   ],
-
-  providers: [ConfigurationService,
+  providers: [
+    ConfigurationService,
     {
       // Here we request that configuration loading be done at app-
       // initialization time (prior to rendering)
@@ -77,7 +74,18 @@ import { QuestionFormComponent } from './pages/poll-definition-form/question-for
       deps: [ConfigurationService],
       multi: true
     },
+    LoadingService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: LoadingInterceptor,
+      multi: true
+    },
     SignalRService],
   bootstrap: [AppComponent],
+  entryComponents: [
+    QuestionModalComponent
+  ]
 })
-export class AppModule {}
+export class AppModule { }
+
+export * from './core/loading/loading.service';

@@ -33,7 +33,7 @@ export class DashboardComponent implements OnInit {
     this.spinner.show();
 
     if ((status = 'all')) {
-      this.dataService.getAllPolls().subscribe(
+      this.dataService.getAllPolls$().subscribe(
         data => {
           this.polls = data;
           this.isLoading = false;
@@ -50,7 +50,7 @@ export class DashboardComponent implements OnInit {
         }
       );
     } else {
-      this.dataService.getPollsByStatus(status).subscribe(
+      this.dataService.getPollsByStatus$(status).subscribe(
         data => {
           this.polls = data;
           this.isLoading = false;
@@ -74,21 +74,21 @@ export class DashboardComponent implements OnInit {
   }
 
   startPoll(index: number): void {
-    this.dataService.openPoll(this.polls[index].id).subscribe(() => {
+    this.dataService.openPoll$(this.polls[index].id).subscribe(() => {
       this.polls[index].status = 'open';
       this.toastr.success('Your poll has been started. You can now accept votes.');
     });
   }
 
   stopPoll(index: number): void {
-    this.dataService.closePoll(this.polls[index].id).subscribe(() => {
+    this.dataService.closePoll$(this.polls[index].id).subscribe(() => {
       this.polls[index].status = 'closed';
       this.toastr.warning('Your poll has been stopped. Voting is no longer allowed.');
     });
   }
 
   nextQuestion(index: number): void {
-    this.dataService.nextQuestion(this.polls[index].id).subscribe(
+    this.dataService.nextQuestion$(this.polls[index].id).subscribe(
       (updatedPoll) => {
         this.polls[index] = updatedPoll;
         console.log(`updated poll: ${updatedPoll}`);

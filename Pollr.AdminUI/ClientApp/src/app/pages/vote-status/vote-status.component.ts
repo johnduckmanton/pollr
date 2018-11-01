@@ -20,7 +20,6 @@ export class VoteStatusComponent implements OnInit {
 
   poll: Poll = null;
   currentQuestion: Question;
-  isLoading = false;
   qrcodeElementType = 'url';
   pollVoteUrl = '';
 
@@ -37,11 +36,9 @@ export class VoteStatusComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.spinner.show();
-    this.isLoading = true;
     const id: string = this.route.snapshot.paramMap.get('id');
 
-    this.dataService.getPoll(id).subscribe(poll => {
+    this.dataService.getPoll$(id).subscribe(poll => {
       this.poll = poll;
       this.currentQuestion = this.poll.questions[this.poll.currentQuestion - 1];
       console.log(this.currentQuestion);
@@ -51,8 +48,6 @@ export class VoteStatusComponent implements OnInit {
       const path = this.location.prepareExternalUrl(urlTree.toString());
       this.pollVoteUrl = this.configService.config.voteUrl + path;
 
-      this.spinner.hide();
-      this.isLoading = false;
     });
   }
 

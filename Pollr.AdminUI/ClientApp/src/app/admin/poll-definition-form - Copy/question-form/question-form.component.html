@@ -1,0 +1,13 @@
+<div class="form-group row" [formGroup]="questionForm">
+  <div class="col-sm-5">
+    <input type="text" class="form-control" [attr.id]="'questionText'+index" formControlName="questionText" placeholder="Question text">
+  </div>
+  <!-- <div class="col-sm-1 py-1"> -->
+    <div class="col-sm-1">
+      <img src="/assets/icons/remove.svg" alt="" width="24" height="24" (click)="removed.emit(index)">
+    </div>
+    <div class="col-sm-6">
+      <app-answer-list formArrayName="answers" [answerList]="questionForm.get('answers')">
+      </app-answer-list>
+    </div>
+  </div>

@@ -1,0 +1,141 @@
+<div class="container">
+  <h3>{{isEditing  ? "Edit" : "Create"}} Poll Definition</h3>
+
+  <form [formGroup]="pollDefinitionForm" (ngSubmit)="onSubmit()">
+
+    <div class="card" style="width: 100%;">
+      <div class="card-body">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="form-group">
+              <label for="name">Name</label>
+              <input type="text" class="form-control" id="name" placeholder="Enter name" formControlName="name">
+              <small id="nameHelp" class="form-text text-muted">Enter a unique name for your poll.</small>
+            </div>
+
+            <div class="form-group">
+              <label for="description">Description</label>
+              <textarea class="form-control" id="description" formControlName="description"></textarea>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col">
+            <hr>
+          </div>
+        </div>
+
+        <div class="row">
+
+          <div class="col-md-6">
+
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" value="" id="isPublished">
+              <label class="form-check-label" for="isPublished">
+                Published
+              </label>
+            </div>
+
+            <div class="form-group">
+              <label for="theme">Theme</label>
+              <select class="form-control">
+                <option selected value="default">Default</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="owner">Owner</label>
+              <input type="text" class="form-control" id="owner">
+            </div>
+
+          </div>
+
+          <div class="col-md-6">
+
+            <div class="form-group">
+              <label for="expiryDate">Expiry Date</label>
+              <div class="input-group">
+                <input class="form-control" placeholder="yyyy-mm-dd"
+                       name="dp" ngbDatepicker #d="ngbDatepicker">
+                <div class="input-group-append">
+                  <button class="btn btn-outline-secondary fa fa-calendar" (click)="d.toggle()" type="button"></button>
+                </div>
+              </div>
+              <small id="expiryDateHelp" class="form-text text-muted">Enter a date, after which the poll will be unavailable.</small>
+            </div>
+
+            <div class="form-group">
+              <label for="tags">Tags</label>
+              <tag-input theme="minimal" formControlName="tags"></tag-input>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-12">
+
+            <h5>Questions</h5>
+
+            <!-- QUESTION LIST -->
+            <button type="button" class="btn btn-primary btn-sm mt-2 mb-2" (click)="addQuestion()"><i class="fa fa-plus"></i> Add Question</button>
+
+            <div class="list-group" formArrayName="questions">
+              <div *ngFor="let question of pollDefinitionForm.controls['questions'].controls; let i = index">
+                <div class="question-box" formGroupName="{{i}}">
+
+                  <!-- QUESTION -->
+                  <div class="list-group-item">
+                    <div class="row">
+                      <div class="col">
+                        <div class="row">
+                          <div class="col-sm-10">
+                            <textarea class="form-control" [attr.id]="'questionText'+index" formControlName="questionText" placeholder="Question text"></textarea>
+                          </div>
+                          <div class="col-sm-2 py-1">
+                            <img src="/assets/icons/remove.svg" alt="" width="24" height="24" (click)="pollDefinitionForm.controls['questions'].removeAt(i)">
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="col">
+
+                        <!-- ANSWER LIST -->
+                        <button type="button" class="btn btn-primary btn-sm mt-2 mb-2" (click)="addAnswer(i)"><i class="fa fa-plus"></i> Add Answer</button>
+
+                        <div formArrayName="answers">
+                          <div *ngFor="let answer of question.controls['answers'].controls; let j = index">
+                            <div class="row">
+                              <div class="col-sm-10">
+                                <!-- ANSWER -->
+                                <div class="answer-box" formGroupName="{{j}}">
+                                  <input type="text" class="form-control" [attr.id]="'answerText'+index" formControlName="answerText" placeholder="Answer text">
+                                </div>
+                                <div class="col-sm-2 py-1">
+                                  <img src="/assets/icons/remove.svg" alt="" width="24" height="24" (click)="question.controls['answers'].removeAt(j)">
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card-footer">
+      <button type="submit" class="btn btn-success" [disabled]="!pollDefinitionForm.valid">{{isEditing ? "Save" : "Create"}}</button>
+    </div>
+  </form>
+
+</div>
+<p>
+  Form Status: {{ pollDefinitionForm.status }}
+</p>

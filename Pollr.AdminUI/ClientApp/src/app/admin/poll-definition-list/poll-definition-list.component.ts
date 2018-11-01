@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { Title } from '@angular/platform-browser';
 import { ToastrService } from 'ngx-toastr';
 
 import { MessageService } from '../../core/messages/message.service';
@@ -13,6 +14,7 @@ import { PollDefinition } from '../../shared/models/poll-definition.model';
   styleUrls: ['./poll-definition-list.component.css']
 })
 export class PollDefinitionListComponent implements OnInit {
+  pageTitle = 'Poll Definitions';
   isLoading = false;
   pollDefinitions: PollDefinition[] = [];
 
@@ -22,18 +24,20 @@ export class PollDefinitionListComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private spinner: NgxSpinnerService,
+    private title: Title,
     private toastr: ToastrService
   ) { }
 
   ngOnInit() {
     this.isLoading = true;
+    this.title.setTitle(this.pageTitle);
     this.getPollDefinitions();
   }
 
   getPollDefinitions(): void {
     this.spinner.show();
 
-    this.dataService.getPollDefinitions().subscribe(
+    this.dataService.getPollDefinitions$().subscribe(
       data => {
         this.pollDefinitions = data;
         this.isLoading = false;
@@ -51,17 +55,16 @@ export class PollDefinitionListComponent implements OnInit {
     );
   }
 
-  newPollDefinition(): void {
-    this.router.navigate(['/new-poll-definition']);
+  createPollDefinition(): void {
+    this.router.navigate(['/admin/poll-definitions/create']);
 
 
   }
-  editPollDefinition(e: Event): void {
-    this.toastr.success('Edit clicked');
-
+  editPollDefinition(id: string): void {
+    this.router.navigate([`/admin/poll-definitions/edit/${id}`]);
   }
 
-  deletePollDefinition(e: Event): void {
+  deletePollDefinition(id: string): void {
     this.toastr.success('Delete clicked');
 
   }

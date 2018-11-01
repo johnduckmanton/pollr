@@ -1,15 +1,15 @@
 <div class="card" *ngIf="question">
   <div class="card-body">
-    <h3 class="text-primary" *ngIf="displayQuestionText">{{question.questionText}}</h3>
+    <h3 class="text-primary" *ngIf="displayQuestionText">{{ question?.questionText }}</h3>
 
     <div *ngIf="question.answers">
       <div *ngFor="let answer of question?.answers">
         <div class="progress-group">
           <div class="progress-group-header align-items-end">
-            <div>{{answer.answerText}}</div>
-            <div class="ml-auto text-primary mr-2"><strong>{{answer.voteCount}} votes</strong></div>
+            <div>{{ answer?.answerText }}</div>
+            <div class="ml-auto text-primary mr-2"><strong>{{ answer?.voteCount }} votes</strong></div>
             <div class="text-muted small" *ngIf="question.totalVotes > 0">
-              ({{answer.voteCount / question.totalVotes | percent}})
+              ({{ answer.voteCount / question.totalVotes | percent }})
             </div>
           </div>
           <div class="progress-group-bars">
@@ -19,6 +19,6 @@
         </div>
       </div>
     </div>
-    <div class="text-muted"><small>{{question.totalVotes}} votes cast</small></div>
+    <div class="text-muted"><small>{{ question?.totalVotes }} votes cast</small></div>
   </div>
 </div>
