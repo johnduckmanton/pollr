@@ -33,6 +33,7 @@ import { ResultsComponent } from './pages/results/results.component';
 import { SignalRService } from './core/signalr.service';
 import { ViewPollDetailsComponent } from './pages/view-poll-details/view-poll-details.component';
 import { VoteStatusComponent } from './pages/vote-status/vote-status.component';
+import { ResultComponent } from './pages/result/result.component';
 
 
 @NgModule({
@@ -47,6 +48,7 @@ import { VoteStatusComponent } from './pages/vote-status/vote-status.component';
     ResultsComponent,
     ViewPollDetailsComponent,
     VoteStatusComponent,
+    ResultComponent,
     ResultChartComponent,
     QuestionModalComponent
   ],
