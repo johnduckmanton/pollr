@@ -1,14 +1,14 @@
 <header>
   <!-- loading spinner-->
   <div class="loading" *ngIf="loaderService.isLoading | async">
-    <img src="/assets/images/loading.svg">
+    <!--<img src="/assets/images/loading.svg">-->
   </div>
 
   <app-navbar></app-navbar>
 </header>
-<div class="container">
+<main role="main" class="container">
   <app-messages></app-messages>
   <router-outlet></router-outlet>
-</div>
+</main>
 <app-footer></app-footer>
 

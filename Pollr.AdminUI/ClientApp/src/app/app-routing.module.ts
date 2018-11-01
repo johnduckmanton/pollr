@@ -1,3 +1,8 @@
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) John Duckmanton.
+ *  All rights reserved.
+ *  Licensed under the MIT License. See LICENSE in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 

@@ -1,9 +1,14 @@
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) John Duckmanton.
+ *  All rights reserved.
+ *  Licensed under the MIT License. See LICENSE in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
 import { Injectable } from '@angular/core';
 import { PollDefinition } from '../shared/models/poll-definition.model';
 import { PollDataService } from '../core/poll-data.service';
 
 @Injectable()
-  export class PollDefinitionRepositoryService {
+export class PollDefinitionRepositoryService {
   private pollDefinitions: PollDefinition[] = [];
   private categories: string[] = [];
 

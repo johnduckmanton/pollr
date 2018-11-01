@@ -1,6 +1,10 @@
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) John Duckmanton.
+ *  All rights reserved.
+ *  Licensed under the MIT License. See LICENSE in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
 import { MessageService } from '../../core/messages/message.service';
 import { PollDataService } from '../../core/poll-data.service';
@@ -20,7 +24,6 @@ export class DashboardComponent implements OnInit {
     private messageService: MessageService,
     private router: Router,
     private route: ActivatedRoute,
-    private spinner: NgxSpinnerService,
     private toastr: ToastrService
   ) { }
 
@@ -30,7 +33,6 @@ export class DashboardComponent implements OnInit {
   }
 
   getPolls(status: string): void {
-    this.spinner.show();
 
     if ((status = 'all')) {
       this.dataService.getAllPolls$().subscribe(
@@ -38,13 +40,11 @@ export class DashboardComponent implements OnInit {
           this.polls = data;
           this.isLoading = false;
 
-          this.spinner.hide();
           if (this.polls.length === 0) {
             this.messageService.add(`There are currently no polls defined.`);
           }
         },
         error => {
-          this.spinner.hide();
           this.isLoading = false;
           this.messageService.add('Error retrieving polls data');
         }
@@ -55,13 +55,11 @@ export class DashboardComponent implements OnInit {
           this.polls = data;
           this.isLoading = false;
 
-          this.spinner.hide();
           if (this.polls.length === 0) {
             this.messageService.add(`There are currently no ${status} polls`);
           }
         },
         error => {
-          this.spinner.hide();
           this.isLoading = false;
           this.messageService.add('Error retrieving polls data');
         }
@@ -71,6 +69,10 @@ export class DashboardComponent implements OnInit {
 
   showInfo(index: number) {
     this.router.navigate(['/poll-details', this.polls[index].id]);
+  }
+
+  showVoteStatus(index: number) {
+    this.router.navigate(['/vote-status', this.polls[index].id]);
   }
 
   startPoll(index: number): void {

@@ -1,12 +1,3 @@
-<!-- loading spinner-->
-<ngx-spinner bdColor="rgba(51,51,51,0.8)"
-             size="medium"
-             color="#fff"
-             type="ball-scale-multiple">
-  <p style="font-size: 20px; color: white">Loading...</p>
-</ngx-spinner>
-
-
 <div *ngIf="!isLoading && polls.length > 0">
   <div class="row dashboard-entry" *ngFor="let poll of polls; let i=index">
 
@@ -22,7 +13,7 @@
     </div>
     <div class="col-md-3">
       <p>
-        <button type="button" class="btn btn-primary btn-sq" (click)=showInfo(i)>
+        <button type="button" class="btn btn-primary btn-sq" (click)=showVoteStatus(i)>
           <i class="fa fa-info fa-3x"></i>
         </button>
         <button type="button" class="btn btn-outline-success btn-sq" *ngIf="poll.status == 'closed'" (click)=startPoll(i)>

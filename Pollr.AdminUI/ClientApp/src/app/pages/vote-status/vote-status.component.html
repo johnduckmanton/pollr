@@ -1,6 +1,6 @@
 <div class="row">
   <div class="col-md-12">
-    <h2 class="text-primary text-center mb-5">{{ currentQuestion?.questionText }}</h2>
+    <h1 class="text-primary text-center mb-5">{{ currentQuestion?.questionText }}</h1>
   </div>
 </div>
 <div class="row">
@@ -18,6 +18,28 @@
   </div>
   <div class="col-md-6">
     <app-result-chart [question]="currentQuestion" [displayQuestionText]="false"></app-result-chart>
+  </div>
+</div>
+
+<p class="lead mt-5">To cast your vote go to</p>
+
+<div class="row">
+  <div class="col-md-10">
+    <h1 class="display-4"><a class="card-link" href="{{pollVoteUrl}}">{{pollVoteUrl}}</a></h1>
+  </div>
+  <div class="col-md-2">
+    <div class="qrcode float-right">
+      <ngx-qrcode [qrc-element-type]="qrcodeElementType"
+                  [qrc-value]="pollVoteUrl"
+                  qrc-class="qrcode"
+                  qrc-errorCorrectionLevel="L">
+      </ngx-qrcode>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-8">
+    <h5><span class="user-count text-primary"><strong>{{connectedUserCount}}</strong></span> user(s) connected</h5>
   </div>
 </div>
 
