@@ -12,8 +12,8 @@ import { PollDefinitionFormComponent } from './poll-definition-form/poll-definit
 
 const routes: Routes = [
   { path: 'poll-definitions', component: PollDefinitionListComponent },
-  { path: "poll-definitions/:mode/:id", component: PollDefinitionFormComponent },
-  { path: "poll-definitions/:mode", component: PollDefinitionFormComponent }
+  { path: 'poll-definitions/:mode/:id', component: PollDefinitionFormComponent },
+  { path: 'poll-definitions/:mode', component: PollDefinitionFormComponent }
 ];
 
 @NgModule({

@@ -27,7 +27,6 @@ import { LoadingInterceptor } from './core/loading/loading.interceptor';
 import { MessagesComponent } from './core/messages/messages.component';
 import { NavbarComponent } from './layout/navbar/navbar.component';
 import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.component';
-import { QuestionModalComponent } from './pages/question-modal/question-modal.component';
 import { ResultChartComponent } from './pages/result-chart/result-chart.component';
 import { ResultsComponent } from './pages/results/results.component';
 import { SignalRService } from './core/signalr.service';
@@ -49,8 +48,7 @@ import { ResultComponent } from './pages/result/result.component';
     ViewPollDetailsComponent,
     VoteStatusComponent,
     ResultComponent,
-    ResultChartComponent,
-    QuestionModalComponent
+    ResultChartComponent
   ],
   imports: [
     AppRoutingModule,
@@ -88,10 +86,7 @@ import { ResultComponent } from './pages/result/result.component';
       multi: true
     },
     SignalRService],
-  bootstrap: [AppComponent],
-  entryComponents: [
-    QuestionModalComponent
-  ]
+  bootstrap: [AppComponent]
 })
 export class AppModule { }
 

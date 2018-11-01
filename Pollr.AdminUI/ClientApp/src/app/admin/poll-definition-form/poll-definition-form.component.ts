@@ -5,8 +5,8 @@
  *--------------------------------------------------------------------------------------------*/
 import { Component, OnInit, Input } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
-import { Router, ActivatedRoute } from "@angular/router";
-import { NgForm } from "@angular/forms";
+import { Router, ActivatedRoute } from '@angular/router';
+import { NgForm } from '@angular/forms';
 
 import { PollDefinition } from '../../shared/models/poll-definition.model';
 import { QuestionDefinition } from '../../shared/models/question-definition.model';
@@ -22,7 +22,7 @@ import { PollDefinitionRepositoryService } from '../poll-definition-repository.s
 })
 export class PollDefinitionFormComponent implements OnInit {
 
-  isEditing: boolean = false;
+  isEditing = false;
   pollDefinition: PollDefinition = new PollDefinition();
 
   pollDefinitionForm: FormGroup;
@@ -33,7 +33,7 @@ export class PollDefinitionFormComponent implements OnInit {
     private fb: FormBuilder,
     private repository: PollDefinitionRepositoryService) {
 
-      this.isEditing = activeRoute.snapshot.params["mode"] == "edit";
+      this.isEditing = activeRoute.snapshot.params['mode'] === 'edit';
 
   }
 
@@ -43,10 +43,9 @@ export class PollDefinitionFormComponent implements OnInit {
     // poll definition and pass it to the initForm method.
     if (this.isEditing) {
       Object.assign(this.pollDefinition,
-        this.repository.getPollDefinition(this.activeRoute.snapshot.params["id"]));
+        this.repository.getPollDefinition(this.activeRoute.snapshot.params['id']));
       this.initForm(this.pollDefinition);
-    }
-    else {
+    } else {
       this.initForm();
     }
   }
@@ -54,14 +53,6 @@ export class PollDefinitionFormComponent implements OnInit {
   // Initialise the form with default data if adding, or
   // copy the pollDefinition data if editing
   initForm(pollDefinition?: PollDefinition): void {
-
-    let name: string;
-
-    //if (pollDefinition) {
-    //  name = pollDefinition.name;
-    //} else {
-    //  name = '';
-    //}
 
     this.pollDefinitionForm = new FormGroup({
       name: new FormControl(pollDefinition ? pollDefinition.name : '', Validators.required),
@@ -73,13 +64,12 @@ export class PollDefinitionFormComponent implements OnInit {
       isPublished: new FormControl(pollDefinition ? pollDefinition.isPublished : ''),
       tags: new FormControl(pollDefinition ? pollDefinition.tags : ''),
       questions: new FormArray([])
-    })
+    });
 
     if (!pollDefinition) {
       this.addQuestion();
       this.addAnswer(0);
-    }
-    else {
+    } else {
       if (pollDefinition.questions) {
         pollDefinition.questions.forEach((question, questionIndex) => {
           this.addQuestion(question);
@@ -87,12 +77,11 @@ export class PollDefinitionFormComponent implements OnInit {
           if (question.answers) {
             question.answers.forEach((answer) => {
               this.addAnswer(questionIndex, answer);
-            })
-          }
-          else {
+            });
+          } else {
             this.addAnswer(questionIndex);
           }
-        })
+        });
       }
       else {
         this.addQuestion();
@@ -101,33 +90,33 @@ export class PollDefinitionFormComponent implements OnInit {
     }
   }
 
-  //get questions(): FormArray {
-  //  return this.pollDefinitionForm.get('questions') as FormArray;
-  //}
+  get questions(): FormArray {
+    return this.pollDefinitionForm.get('questions') as FormArray;
+  }
 
   addQuestion(question?: QuestionDefinition): void {
 
-    let answers = new FormArray([]);
-    let questionText = question ? question.questionText : '';
+    const answers = new FormArray([]);
+    const questionText = question ? question.questionText : '';
 
     (<FormArray>this.pollDefinitionForm.controls['questions']).push(
       new FormGroup({
         questionText: new FormControl(questionText, Validators.required),
         answers: answers
       })
-    )
+    );
   }
 
   addAnswer(questionIndex: number, answer?: AnswerDefinition): void {
 
-    let answerText = answer ? answer.answerText : '';
+    const answerText = answer ? answer.answerText : '';
 
     (<FormArray>(<FormGroup>(<FormArray>this.pollDefinitionForm.controls['questions'])
       .controls[questionIndex]).controls['answers']).push(
         new FormGroup({
           answerText: new FormControl(answerText, Validators.required),
         })
-      )
+      );
   }
 
   onSubmit() {
@@ -143,35 +132,22 @@ export class PollDefinitionFormComponent implements OnInit {
     const questionArray: FormArray = (<FormArray>this.pollDefinitionForm.controls['questions']);
 
     for (let i = 0; i < questionArray.length; i++) {
-      var q = new QuestionDefinition();
+      const q = new QuestionDefinition();
       q.answers = [];
       q.questionText = questionArray.at(i).get('questionText').value;
 
-      var answers = questionArray.at(i).get('answers') as FormArray;
+      const answers = questionArray.at(i).get('answers') as FormArray;
       for (let j = 0; j < answers.length; j++) {
-        var a = new AnswerDefinition();
+        const a = new AnswerDefinition();
         a.answerText = answers.at(j).get('answerText').value;
 
         q.answers.push(a);
-      };
+      }
 
       newPollDefinition.questions.push(q);
     }
 
-    console.log("fred");
     console.log(newPollDefinition);
-    //const newPollDefinition: PollDefinition = {
-    //  id: null,
-    //  name: this.pollDefinitionForm.value.name,
-    //  description: this.pollDefinitionForm.value.description,
-    //  theme: this.pollDefinitionForm.value.theme,
-    //  owner: this.pollDefinitionForm.value.owner,
-    //  createDate: null,
-    //  expiryDate: this.pollDefinitionForm.value.expiryDate,
-    //  isPublished: this.pollDefinitionForm.value.isPublished,
-    //  tags: this.pollDefinitionForm.value.tags,
-    //  questions: []
-    //}
 
     this.repository.savePollDefinition(newPollDefinition);
 

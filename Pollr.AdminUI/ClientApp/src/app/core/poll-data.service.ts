@@ -198,15 +198,12 @@ export class PollDataService {
       );
   }
 
-  //
-  // 
-  // 
   private getOptions() {
 
     return {
       headers: new HttpHeaders()
         .append('Content-Type', 'application/json')
-        //.append('Authorization', `Bearer<${this.auth_token}>`);
+        // .append('Authorization', `Bearer<${this.auth_token}>`);
     }
 
   }
@@ -222,9 +219,9 @@ export class PollDataService {
     let errorMsg;
 
     // TODO: Add JWT authentication
-    //if (err.message && err.message.indexOf('No JWT present') > -1) {
-    //  this.auth.login();
-    //}
+    // if (err.message && err.message.indexOf('No JWT present') > -1) {
+    //   this.auth.login();
+    // }
 
 
     if (err.error instanceof ErrorEvent) {

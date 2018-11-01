@@ -84,7 +84,11 @@
               <div class="panel-body" formArrayName="questions">
                 <table class="table borderless">
                   <tbody>
-                    <tr *ngFor="let question of pollDefinitionForm.controls['questions'].controls; let i = index" formGroupName="{{i}}">
+
+                    myForm.get('addresses')['controls']
+
+
+                    <tr *ngFor="let question of questions.controls; let i = index" formGroupName="{{i}}">
                       <td>
                         <div class="form-group">
                           <textarea class="form-control" [attr.id]="'questionText'+index" formControlName="questionText" placeholder="Question text"></textarea>

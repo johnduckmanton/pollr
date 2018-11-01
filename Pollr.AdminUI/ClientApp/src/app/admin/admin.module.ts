@@ -11,13 +11,13 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { TagInputModule } from 'ngx-chips';
 
 import { AdminRoutingModule } from './admin-routing.module';
-//import { AnswerFormComponent } from './poll-definition-form/answer-form/answer-form.component';
-//import { AnswerListComponent } from './poll-definition-form/answer-list/answer-list.component';
+// import { AnswerFormComponent } from './poll-definition-form/answer-form/answer-form.component';
+// import { AnswerListComponent } from './poll-definition-form/answer-list/answer-list.component';
 import { CreatePollDefinitionComponent } from './create-poll-definition/create-poll-definition.component';
 import { PollDefinitionFormComponent } from './poll-definition-form/poll-definition-form.component';
 import { PollDefinitionListComponent } from './poll-definition-list/poll-definition-list.component';
-//import { QuestionFormComponent } from './poll-definition-form/question-form/question-form.component';
-//import { QuestionListComponent } from './poll-definition-form/question-list/question-list.component';
+// import { QuestionFormComponent } from './poll-definition-form/question-form/question-form.component';
+// import { QuestionListComponent } from './poll-definition-form/question-list/question-list.component';
 import { PollDefinitionRepositoryService } from './poll-definition-repository.service';
 
 
@@ -32,13 +32,13 @@ import { PollDefinitionRepositoryService } from './poll-definition-repository.se
     TagInputModule
   ],
   declarations: [
-    //AnswerListComponent,
-    //AnswerFormComponent,
+    // AnswerListComponent,
+    // AnswerFormComponent,
     CreatePollDefinitionComponent,
     PollDefinitionListComponent,
     PollDefinitionFormComponent,
-    //QuestionFormComponent,
-    //QuestionListComponent
+    // QuestionFormComponent,
+    // QuestionListComponent
   ],
   providers: [
     PollDefinitionRepositoryService

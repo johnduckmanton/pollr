@@ -20,16 +20,16 @@ export class PollDefinitionRepositoryService {
 
   getPollDefinitions(isPublished: boolean = true): PollDefinition[] {
     return this.pollDefinitions
-      .filter(p => isPublished == p.isPublished);
+      .filter(p => isPublished === p.isPublished);
   }
 
   getPollDefinition(id: string): PollDefinition {
-    return this.pollDefinitions.find(p => p.id == id);
+    return this.pollDefinitions.find(p => p.id === id);
   }
 
 
   savePollDefinition(pollDefinition: PollDefinition) {
-    if (pollDefinition.id == null || pollDefinition.id.length == 0) {
+    if (pollDefinition.id === null || pollDefinition.id.length === 0) {
       this.dataSource.savePollDefinition$(pollDefinition)
         .subscribe(p => this.pollDefinitions.push(p));
     } else {
