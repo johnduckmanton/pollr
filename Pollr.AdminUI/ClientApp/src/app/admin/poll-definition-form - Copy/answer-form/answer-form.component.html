@@ -1,8 +1,0 @@
-<div class="form-group row" [formGroup]="answer">
-  <div class="col-sm-6">
-    <input type="text" class="form-control" [attr.id]="'answerText'+index" formControlName="answerText" placeholder="Answer text">
-  </div>
-  <div class="col-sm-1 py-1">
-    <img src="/assets/icons/remove.svg" alt="" width="24" height="24" (click)="removed.emit(index)">
-  </div>
-</div>

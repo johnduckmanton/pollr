@@ -1,3 +1,0 @@
-<button class="btn btn-primary btn-sm mt-2 mb-2" (click)="addAnswer()"><i class="fa fa-plus"></i> Add Answer</button>
-<app-answer-form *ngFor="let answer of answerList.controls; let j=index" [index]="j" [answer]="answer" (removed)="answerList.removeAt($event)">
-</app-answer-form>
