@@ -5,15 +5,20 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using Pollr.AdminUI.Models;
 
 namespace Pollr.AdminUI
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        private readonly ILogger<Startup> _logger;
+
+
+        public Startup(IConfiguration configuration, ILogger<Startup> logger)
         {
             Configuration = configuration;
+            _logger = logger;
         }
 
         public IConfiguration Configuration { get; }
@@ -36,8 +41,15 @@ namespace Pollr.AdminUI
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
+            loggerFactory
+                .AddConsole()
+                .AddDebug()
+                .AddAzureWebAppDiagnostics();
+
+            _logger.LogInformation($"### Environment: {0}", env.EnvironmentName);
+
             if (env.IsDevelopment()) {
                 app.UseDeveloperExceptionPage();
             }

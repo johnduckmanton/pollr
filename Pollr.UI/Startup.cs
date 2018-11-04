@@ -4,15 +4,19 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using Pollr.AdminUI.Models;
 
 namespace Pollr.UI
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        private readonly ILogger<Startup> _logger;
+
+        public Startup(IConfiguration configuration, ILogger<Startup> logger)
         {
             Configuration = configuration;
+            _logger = logger;
         }
 
         public IConfiguration Configuration { get; }
@@ -42,18 +46,25 @@ namespace Pollr.UI
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
-            // Enable Cors
-            app.UseCors("AllowAny");
+            loggerFactory
+                .AddConsole()
+                .AddDebug()
+                .AddAzureWebAppDiagnostics();
+
+            _logger.LogInformation($"### Environment: {0}", env.EnvironmentName);
 
             if (env.IsDevelopment()) {
+                app.UseCors("AllowAny");
                 app.UseDeveloperExceptionPage();
             }
             else {
                 app.UseExceptionHandler("/Error");
+                app.UseHsts();
             }
 
+            app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseSpaStaticFiles();
 
@@ -62,8 +73,6 @@ namespace Pollr.UI
                     name: "default",
                     template: "{controller}/{action=Index}/{id?}");
             });
-
-
 
             app.UseSpa(spa => {
                 // To learn more about options for serving an Angular SPA from ASP.NET Core,
