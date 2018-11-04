@@ -26,7 +26,7 @@ namespace pollr.api.Controllers
     public class PollsController : ControllerBase
     {
         private readonly IPollRepository _pollRepository;
-        private readonly ILogger _logger;
+        private readonly ILogger<PollsController> _logger;
         private IHubContext<VoteHub> _hubContext;
 
         public PollsController(IPollRepository pollRepository, IHubContext<VoteHub> hubContext, ILogger<PollsController> logger)
@@ -321,6 +321,57 @@ namespace pollr.api.Controllers
                 return BadRequest(a);
             }
             catch (Exception e) {
+                _logger.LogError(LoggingEvents.OpenPoll, "Error updating poll status to open {id}: Exception {ex}", id, e.Message);
+                return StatusCode(500, e.Message);
+            }
+        }
+
+        /// <summary>
+        /// Vote on the current question in the poll
+        /// </summary>
+        /// <param name="id">The id of the poll</param>
+        /// <param name="answer">the number of the answer being voted for</param>
+        /// <returns></returns>
+        [HttpPut("{id}/actions/vote/current")]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(500)]
+        public async Task<ActionResult> VoteOnCurrent(string id, int answer)
+        {
+            if (answer < 1)
+            {
+                return BadRequest("Answer values must start at 1");
+            }
+
+            try
+            {
+                // Get the poll to determine the current question
+                var poll = await _pollRepository.GetPollAsync(id);
+                if (poll.Status != "open" || poll.CurrentQuestion == 0)
+                    return BadRequest("Poll is not open for voting");
+
+                // Register the vote in the database
+                Poll updatedPoll = await _pollRepository.VoteAsync(id, poll.CurrentQuestion, answer);
+                if (updatedPoll != null)
+                {
+
+                    // then notify connected clients of the poll status using SignalR
+                    PollResult message = PollHelper.GetPollResults(updatedPoll);
+                    SendToConnectedClients(message);
+                    _logger.LogInformation(LoggingEvents.PollVoteRegistered, "Poll {id} vote registered", id);
+
+                    return new NoContentResult();
+                }
+                else
+                    return BadRequest("Poll does not exist or is not open for voting");
+            }
+            catch (PollNotFoundException e)
+            {
+                ApiStatusMessage a = ApiStatusMessage.CreateFromException(e);
+                return BadRequest(a);
+            }
+            catch (Exception e)
+            {
                 _logger.LogError(LoggingEvents.OpenPoll, "Error updating poll status to open {id}: Exception {ex}", id, e.Message);
                 return StatusCode(500, e.Message);
             }

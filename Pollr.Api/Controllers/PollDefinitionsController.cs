@@ -24,9 +24,9 @@ namespace pollr.api.Controllers
     public class PollDefinitionsController : ControllerBase
     {
         private readonly IPollDefinitionRepository _pollDefinitionRepository;
-        private readonly ILogger _logger;
+        private readonly ILogger<PollDefinitionsController> _logger;
 
-        public PollDefinitionsController(IPollDefinitionRepository pollDefinitionRepository, ILogger<PollsController> logger)
+        public PollDefinitionsController(IPollDefinitionRepository pollDefinitionRepository, ILogger<PollDefinitionsController> logger)
         {
             _pollDefinitionRepository = pollDefinitionRepository;
             _logger = logger;

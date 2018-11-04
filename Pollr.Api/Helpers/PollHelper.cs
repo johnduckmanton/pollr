@@ -10,7 +10,7 @@ namespace Pollr.Api.Helpers
 {
     public static class PollHelper
     {
-        public static PollResult GetPollResults(Poll poll)
+        internal static PollResult GetPollResults(Poll poll)
         {
 
             PollResult result = new PollResult {

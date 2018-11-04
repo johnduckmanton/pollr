@@ -33,5 +33,9 @@ namespace Pollr.Api.Core
         public const int UpdatePollNotFound = 9001;
         public const int GetPollDefinitionNotFound = 9010;
         public const int UpdatePollDefinitionNotFound = 9011;
+
+        // Status Events
+        public const int GetStatus = 10000;
+
     }
 }

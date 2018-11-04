@@ -4,6 +4,7 @@
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 using Microsoft.Extensions.Options;
+using MongoDB.Bson;
 using MongoDB.Driver;
 using Pollr.Api.Models;
 
@@ -34,5 +35,13 @@ namespace Pollr.Api.Dal
                 return _database.GetCollection<Poll>("polls");
             }
         }
+
+        public bool Ping()
+        {
+            
+            return _database.RunCommandAsync((Command<BsonDocument>)"{ping:1}").Wait(1000);
+
+        }
+
     }
 }

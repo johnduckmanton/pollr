@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Pollr.Api.Helpers
 {
-    public class ApiStatusMessage
+    internal sealed class ApiStatusMessage
     {
 
         public ApiStatusMessage()
