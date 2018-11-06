@@ -3,6 +3,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { APP_INITIALIZER, NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgxSpinnerModule } from 'ngx-spinner';
@@ -11,18 +12,20 @@ import { NgxQRCodeModule } from 'ngx-qrcode2';
 // import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
 // import { InMemoryDataService } from './in-memory-data.service';
 
+import { AboutComponent } from './about/about.component';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { VoteComponent } from './vote/vote.component';
 import { ConfigurationService } from './core/configuration/configuration.service';
-import { MessagesComponent } from './messages/messages.component';
 import { FooterComponent } from './layout/footer/footer.component';
+import { HomeComponent } from './home/home.component';
+import { MessagesComponent } from './messages/messages.component';
+import { LoadingInterceptor } from './core/loading/loading.interceptor';
+import { LoadingService } from './core/loading/loading.service';
 import { NavbarComponent } from './layout/navbar/navbar.component';
-import { ResultsComponent } from './results/results.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { SignalRService } from './signalr.service';
-import { HomeComponent } from './home/home.component';
-import { AboutComponent } from './about/about.component';
+import { VoteComponent } from './vote/vote.component';
+
 
 
 @NgModule({
@@ -32,7 +35,6 @@ import { AboutComponent } from './about/about.component';
     MessagesComponent,
     FooterComponent,
     NavbarComponent,
-    ResultsComponent,
     PageNotFoundComponent,
     HomeComponent,
     AboutComponent],
@@ -62,6 +64,12 @@ import { AboutComponent } from './about/about.component';
       useFactory: (configService: ConfigurationService) =>
         () => configService.loadConfigurationData(),
       deps: [ConfigurationService],
+      multi: true
+    },
+    LoadingService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: LoadingInterceptor,
       multi: true
     },
     SignalRService],

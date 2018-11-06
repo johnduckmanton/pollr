@@ -11,7 +11,7 @@
 <div *ngIf="!isLoading">
 
   <div class="connection-indicator">
-    <i class="fa fa-network-wired" [ngClass]="canSendMessage ? 'text-success' : 'text-danger'"></i>
+    <i class="fa fa-cloud" [ngClass]="canSendMessage ? 'text-success' : 'text-danger'"></i>
   </div>
 
   <div class="poll" *ngIf="poll && isPollOpen">
@@ -34,7 +34,7 @@
           </div>
         </div>
 
-        <button type="button" class="btn btn-outline-primary vote-button" [disabled]="hasVoted || selectedAnswerIdx== -1" (click)="vote(votedMessageDlg)" [class.disabled]="hasVoted || !canSendMessage">Vote</button>
+        <button type="button" class="btn btn-outline-primary vote-button" [disabled]="hasVoted || selectedAnswerIdx== -1" (click)="vote(votedMessageDlg)" [class.disabled]="hasVoted || !canSendMessage"><i class="fa fa-check-square"></i>  Vote</button>
       </div>
     </div>
   </div>

@@ -1,3 +1,36 @@
+.fa-stack {
+  position: relative;
+  display: inline-block;
+  width: 2em;
+  height: 5em;
+  line-height: 4em;
+  vertical-align: middle;
+}
+
+.fa-stack-1x,
+.fa-stack-2x,
+.fa-stack-3x {
+  position: absolute;
+  left: 0;
+  width: 100%;
+}
+
+.fa-stack-1x {
+  line-height: inherit;
+  position: absolute;
+  left: 4px;
+  top: -46px;
+  font-size: 0.75em;
+}
+
+.fa-stack-2x {
+  font-size: 1.5em;
+}
+
+.fa-stack-3x {
+  font-size: 2em;
+}
+
 .question-box {
   list-style-type: none;
 }

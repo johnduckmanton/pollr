@@ -61,7 +61,7 @@ export class PollDefinitionFormComponent implements OnInit {
       owner: new FormControl(pollDefinition ? pollDefinition.owner : ''),
       createDate: new FormControl(pollDefinition ? pollDefinition.createDate : ''),
       expiryDate: new FormControl(pollDefinition ? pollDefinition.expiryDate : ''),
-      isPublished: new FormControl(pollDefinition ? pollDefinition.isPublished : ''),
+      isPublished: new FormControl(pollDefinition ? pollDefinition.isPublished : true),
       tags: new FormControl(pollDefinition ? pollDefinition.tags : ''),
       questions: new FormArray([])
     });
@@ -102,6 +102,7 @@ export class PollDefinitionFormComponent implements OnInit {
     (<FormArray>this.pollDefinitionForm.controls['questions']).push(
       new FormGroup({
         questionText: new FormControl(questionText, Validators.required),
+        isDisabled: new FormControl(question ? question.isDisabled : false),
         answers: answers
       })
     );
@@ -110,11 +111,15 @@ export class PollDefinitionFormComponent implements OnInit {
   addAnswer(questionIndex: number, answer?: AnswerDefinition): void {
 
     const answerText = answer ? answer.answerText : '';
+    const imagePath = answer ? answer.imagePath : '';
+
 
     (<FormArray>(<FormGroup>(<FormArray>this.pollDefinitionForm.controls['questions'])
       .controls[questionIndex]).controls['answers']).push(
         new FormGroup({
           answerText: new FormControl(answerText, Validators.required),
+          imagePath: new FormControl(imagePath),
+          isDisabled: new FormControl(answer ? answer.isDisabled : false)
         })
       );
   }

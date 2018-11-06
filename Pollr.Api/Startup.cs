@@ -37,7 +37,10 @@ namespace pollr.api
             // Enable IOptions in the DI container
             services.AddOptions();
 
-            services.AddCors(o => o.AddPolicy("AllowLocalhost", builder =>
+            services.AddAuthentication(AzureADDefaults.BearerAuthenticationScheme)
+                .AddAzureADBearer(options => Configuration.Bind("AzureAd", options));
+
+            services.AddCors(o => o.AddPolicy("AllowAny", builder =>
             {
                 builder.AllowAnyOrigin()
                     .AllowAnyOrigin()
@@ -45,9 +48,6 @@ namespace pollr.api
                     .AllowAnyHeader()
                     .AllowCredentials();
             }));
-
-            services.AddAuthentication(AzureADDefaults.BearerAuthenticationScheme)
-                .AddAzureADBearer(options => Configuration.Bind("AzureAd", options));
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
@@ -95,13 +95,13 @@ namespace pollr.api
             _logger.LogInformation($"### Environment: {0}", env.EnvironmentName);
             if (env.IsDevelopment()) {
                 app.UseDeveloperExceptionPage();
-
-                // Enable Global Cors: Don't do this is a real production app!
-                app.UseCors("AllowLocalhost");
             }
             else {
                 app.UseHsts();
             }
+
+            // Enable Global Cors: Don't do this is a real production app!
+            app.UseCors("AllowAny");
 
             app.UseHttpsRedirection();
             app.UseAuthentication();
@@ -110,12 +110,12 @@ namespace pollr.api
             // Configure Signalr
             if (useAzureSignalRManagedHub) {
                 app.UseAzureSignalR(routes => {
-                    routes.MapHub<VoteHub>("/voteHub");
+                    routes.MapHub<VoteHub>("/votehub");
                 });
             }
             else {
                 app.UseSignalR(routes => {
-                    routes.MapHub<VoteHub>("/voteHub");
+                    routes.MapHub<VoteHub>("/votehub");
                 });
             }
         }

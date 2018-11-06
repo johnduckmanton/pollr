@@ -11,6 +11,9 @@
               <label for="name">Name</label>
               <input type="text" class="form-control" id="name" placeholder="Enter name" formControlName="name">
               <small id="nameHelp" class="form-text text-muted">Enter a unique name for your poll.</small>
+              <div class="invalid-feedback">
+                Name is required.
+              </div>
             </div>
 
             <div class="form-group">
@@ -30,10 +33,12 @@
           <div class="col-md-6">
 
             <div class="form-check">
-              <input class="form-check-input" type="checkbox" value="" id="isPublished">
+              <input class="form-check-input" type="checkbox" formControlName="isPublished" id="isPublished">
               <label class="form-check-label" for="isPublished">
                 Published
               </label>
+              <small id="publishedHelp" class="form-text text-muted">Indicates whether your poll is available for selection.</small>
+
             </div>
 
             <div class="form-group">
@@ -58,15 +63,16 @@
                 <input class="form-control" placeholder="yyyy-mm-dd"
                        name="dp" ngbDatepicker #d="ngbDatepicker">
                 <div class="input-group-append">
-                  <button class="btn btn-outline-secondary fa fa-calendar" (click)="d.toggle()" type="button"></button>
+                  <span class="input-group-text" (click)="d.toggle()"><i class="fa fa-calendar"></i></span>
                 </div>
               </div>
-              <small id="expiryDateHelp" class="form-text text-muted">Enter a date, after which the poll will be unavailable.</small>
+              <small id="expiryDateHelp" class="form-text text-muted">After this date your poll will become unavailable for selection.</small>
             </div>
 
             <div class="form-group">
               <label for="tags">Tags</label>
               <tag-input theme="minimal" formControlName="tags"></tag-input>
+              <small id="tagHelp" class="form-text text-muted">Add one or more tags to classify your poll.</small>
             </div>
 
           </div>
@@ -87,8 +93,12 @@
                     <tr *ngFor="let question of questions.controls; let i = index" formGroupName="{{i}}">
                       <td>
                         <div class="form-group">
-                          <textarea class="form-control" [attr.id]="'questionText'+index" formControlName="questionText" placeholder="Question text"></textarea>
+                          <textarea class="form-control" [attr.id]="'questionText'+i" formControlName="questionText" placeholder="Question text" required></textarea>
+                          <div class="invalid-feedback">
+                            This field is required.
+                          </div>
                         </div>
+
 
                         <!-- ANSWERS -->
                         <button type="button" class="btn btn-primary btn-sm mt-2 mb-2" (click)="addAnswer(i)"><i class="fa fa-plus"></i> Add Answer</button>
@@ -100,14 +110,22 @@
                               <tr *ngFor="let answer of question.controls['answers'].controls; let j = index" formGroupName="{{j}}">
                                 <td>
                                   <div class="form-group">
-                                    <input type="text" class="form-control" [attr.id]="'answerText'+index" formControlName="answerText" placeholder="Answer text">
+                                    <input type="text" class="form-control" [attr.id]="'answerText'+j" formControlName="answerText" placeholder="Answer text" required>
+                                    <div class="invalid-feedback">
+                                      This field is required.
+                                    </div>
                                   </div>
 
+                                  <div class="form-group">
+                                    <input type="text" class="form-control" [attr.id]="'imagePath'+j" formControlName="imagePath" placeholder="Image URL">
+                                    <small [attr.id]="'imagePath'+j+'help'" class="form-text text-muted">Enter a URL to an image to display with this answer.</small>
+
+                                  </div>
                                 </td>
                                 <td class="text-right">
                                   <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1">
-                                    <label class="form-check-label" for="inlineCheckbox1">disabled</label>
+                                    <input class="form-check-input" type="checkbox" [attr.id]="'isDisabled'+j" formControlName="isDisabled">
+                                    <label class="form-check-label" [attr.for]="'isDisabled'+j">disabled</label>
                                   </div>
                                 </td>
                                 <td class="text-right">
@@ -120,8 +138,8 @@
                       </td>
                       <td class="text-right">
                         <div class="form-check form-check-inline">
-                          <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1">
-                          <label class="form-check-label" for="inlineCheckbox1">disabled</label>
+                          <input class="form-check-input" type="checkbox" [attr.id]="'isDisabled'+i" formControlName="isDisabled">
+                          <label class="form-check-label" [attr.for]="'isDisabled'+i">disabled</label>
                         </div>
                       </td>
                       <td class="text-right">
@@ -137,7 +155,7 @@
       </div>
 
       <div class="card-footer">
-        <button type="submit" class="btn btn-success" [disabled]="!pollDefinitionForm.valid">{{isEditing ? "Save" : "Create"}}</button>
+        <button type="submit" class="btn btn-success" [disabled]="!pollDefinitionForm.valid">{{isEditing ? "Save Changes" : "Create"}}</button>
       </div>
     </div>
   </form>
