@@ -41,7 +41,7 @@ export class VoteStatusComponent implements OnInit {
   }
 
   ngOnInit() {
-    const id: string = this.route.snapshot.paramMap.get('id');
+    const id: number = Number.parseInt(this.route.snapshot.paramMap.get('id'));
 
     this.dataService.getPoll$(id).subscribe(poll => {
       this.poll = poll;

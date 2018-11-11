@@ -3,24 +3,28 @@
  *  All rights reserved.
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
- using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using System;
 
-namespace Pollr.Api.Models
+namespace Pollr.Api.Models.Polls
 {
-    public class QuestionResult
-    {
-        public string QuestionText { get; set; }
-        public int TotalVotes { get; set; }
-        public AnswerResult[] Answers { get; set; }
-    }
 
-    public class AnswerResult
+    public class Answer
     {
+        public int Id { get; set; }
+
         public string AnswerText { get; set; }
+
+        public string ImagePath { get; set; }
+
+        public bool IsCorrectAnswer { get; set; } = false;
+
+        public bool IsDisabled { get; set; } = false;
+
         public int VoteCount { get; set; }
+
+        public int? QuestionId { get; set; }
+        public Question Question { get; set; }
+
 
     }
 }

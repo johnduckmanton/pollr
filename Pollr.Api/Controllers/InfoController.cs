@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
-using Pollr.Api.Dal;
+using Pollr.Api.Data;
 using System.Reflection;
 
 namespace Pollr.Api.Controllers
@@ -9,11 +10,11 @@ namespace Pollr.Api.Controllers
     [ApiController]
     public class InfoController : ControllerBase
     {
-        private readonly DatabaseContext _context = null;
+        private readonly PollrContext _context = null;
 
-        public InfoController(IOptions<DatabaseSettings> settings)
+        public InfoController(DbContextOptions<PollrContext> options)
         {
-            _context = new DatabaseContext(settings);
+            _context = new PollrContext(options);
         }
 
         /// <summary>

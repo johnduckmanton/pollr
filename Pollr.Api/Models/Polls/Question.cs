@@ -5,15 +5,24 @@
  *--------------------------------------------------------------------------------------------*/
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
-namespace Pollr.Api
+namespace Pollr.Api.Models.Polls
 {
-    public class DatabaseSettings
+
+    public class Question
     {
-        public string ConnectionString;
-        public string Database;
+        public int Id { get; set; }
+
+        public string QuestionText { get; set; }
+
+        public bool IsDisabled { get; set; } = false;
+
+        public IEnumerable<Answer> Answers { get; set; }
+
+        public int TotalVotes { get; set; }
+
+        public int? PollId { get; set; }
+        public Poll Poll { get; set; }
     }
 
 }

@@ -7,6 +7,7 @@ using System;
 
 namespace Pollr.Api.Exceptions
 {
+    [Serializable]
     public class PollrException : Exception
     {
 

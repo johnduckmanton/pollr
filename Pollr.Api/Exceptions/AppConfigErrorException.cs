@@ -9,13 +9,19 @@ using System;
 namespace Pollr.Api.Exceptions
 {
     [Serializable]
-    public class PollDefNotPublishedException : PollrException
+    public class AppConfigErrorException : PollrException
     {
 
-        public PollDefNotPublishedException()
+        public AppConfigErrorException()
         {
-            StatusCode = "2002";
-            ErrorMessage = ("Poll has not been published");
+            StatusCode = "9001";
+            ErrorMessage = ("Application Configuraion Error");
+        }
+
+        public AppConfigErrorException(string message)
+        {
+            StatusCode = "9001";
+            ErrorMessage = ($"Application Configuration Error: {message}");
         }
 
     }

@@ -6,10 +6,11 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Pollr.Api.Core;
-using Pollr.Api.Dal;
+using Pollr.Api.Data;
 using Pollr.Api.Exceptions;
 using Pollr.Api.Helpers;
 using Pollr.Api.Models;
+using Pollr.Api.Models.PollDefinitions;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -52,11 +53,11 @@ namespace pollr.api.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        [HttpGet("{id}")]
+        [HttpGet("{id}", Name = "GetPoll")]
         [ProducesResponseType(200, Type = typeof(PollDefinition))]
-        public async Task<ActionResult> Get(string id)
+        public async Task<ActionResult> Get(int id)
         {
-            _logger.LogInformation(LoggingEvents.GetPollDefinition, "Getting poll definition {id}", id);
+            _logger.LogInformation(LoggingEvents.GetPollDefinition, $"Getting poll definition {id}");
 
             try {
                 var pollDefinition = await _pollDefinitionRepository.GetPollDefinitionAsync(id);
@@ -67,7 +68,7 @@ namespace pollr.api.Controllers
                 return BadRequest(a);
             }
             catch (Exception e) {
-                _logger.LogError(LoggingEvents.GetPollDefinition, "Error getting poll definition {id}: Exception {ex}", id, e.Message);
+                _logger.LogError(LoggingEvents.GetPollDefinition, $"Error getting poll definition {id}: Exception {e.Message}");
                 return StatusCode(500, e.Message);
             }
 
@@ -87,14 +88,16 @@ namespace pollr.api.Controllers
                 return BadRequest(ModelState);
             }
 
-            try {
+            try
+            {
                 await _pollDefinitionRepository.AddPollDefinitionAsync(pollDefinition); ;
 
-                _logger.LogInformation(LoggingEvents.InsertPollDefinition, "Poll Definition {Id} Created", pollDefinition.Id);
-                return CreatedAtRoute("Get", new { controller = "PollDefinition", id = pollDefinition.Id.ToString() }, pollDefinition);
+                _logger.LogInformation(LoggingEvents.InsertPollDefinition, $"Poll Definition {pollDefinition.Id} Created");
+                return CreatedAtRoute("GetPoll", new { id = pollDefinition.Id }, pollDefinition);
             }
-            catch (Exception e) {
-                _logger.LogError(LoggingEvents.InsertPollDefinition, "Error creating new poll definition: Exception {ex}", e.Message);
+            catch (Exception e)
+            {
+                _logger.LogError(LoggingEvents.InsertPollDefinition, $"Error creating new poll definition: Exception {e.Message}");
                 return StatusCode(500, e.Message);
             }
         }
@@ -109,20 +112,23 @@ namespace pollr.api.Controllers
         [ProducesResponseType(204)]
         [ProducesResponseType(400)]
         [ProducesResponseType(500)]
-        public async Task<ActionResult> Put(string id, [FromBody]PollDefinition pollDefinition)
+        public async Task<ActionResult> Put(int id, [FromBody]PollDefinition pollDefinition)
         {
             if (!ModelState.IsValid) {
                 return BadRequest(ModelState);
             }
 
+            if (pollDefinition.Id != id)
+                return BadRequest("Body(id) does not match this poll id ");
+
             try {
-                await _pollDefinitionRepository.UpdatePollDefinitionAsync(id, pollDefinition);
-                _logger.LogInformation(LoggingEvents.UpdatePollDefinition, "Poll Definition {id} Updated", pollDefinition.Id);
+                await _pollDefinitionRepository.UpdatePollDefinitionAsync(pollDefinition);
+                _logger.LogInformation(LoggingEvents.UpdatePollDefinition, $"Poll Definition {id} Updated", pollDefinition.Id);
 
                 return new NoContentResult();
             }
             catch (Exception e) {
-                _logger.LogError(LoggingEvents.UpdatePollDefinition, "Error updating poll definition {id}: Exception {ex}", id, e.Message);
+                _logger.LogError(LoggingEvents.UpdatePollDefinition, $"Error updating poll definition {id}: Exception {e.Message}");
                 return StatusCode(500, e.Message);
             }
 
@@ -136,16 +142,16 @@ namespace pollr.api.Controllers
         [HttpDelete("{id}")]
         [ProducesResponseType(204)]
         [ProducesResponseType(500)]
-        public async Task<ActionResult> Delete(string id)
+        public async Task<ActionResult> Delete(int id)
         {
             try {
                 await _pollDefinitionRepository.RemovePollDefinitionAsync(id);
-                _logger.LogInformation(LoggingEvents.DeletePollDefinition, "Poll Definition {id} Deleted", id);
+                _logger.LogInformation(LoggingEvents.DeletePollDefinition, $"Poll Definition {id} Deleted");
 
                 return NoContent();
             }
             catch (Exception e) {
-                _logger.LogError(LoggingEvents.DeletePollDefinition, "Error deleting poll definition {id}: Exception {ex}", id, e.Message);
+                _logger.LogError(LoggingEvents.DeletePollDefinition, $"Error deleting poll definition {id}: Exception {e.Message}");
                 return StatusCode(500, e.Message);
             }
 
@@ -160,19 +166,19 @@ namespace pollr.api.Controllers
         [ProducesResponseType(400)]
         [ProducesResponseType(500)]
         [HttpPut("{id}/actions/publish")]
-        public async Task<ActionResult> Publish(string id)
+        public async Task<ActionResult> Publish(int id, bool isPublished)
         {
             try {
-                bool result = await _pollDefinitionRepository.PublishPollDefinitionAsync(id);
+                bool result = await _pollDefinitionRepository.SetPublishedStatusAsync(id, isPublished);
                 if (result) {
-                    _logger.LogInformation(LoggingEvents.PublishPollDefinition, "Poll Definition {id} Published", id);
+                    _logger.LogInformation(LoggingEvents.PublishPollDefinition, $"Poll Definition {id} Publish status updated to {isPublished}");
                     return Ok();
                 }
                 else
                     return BadRequest("Poll definition does not exist or is already published");
             }
             catch (Exception e) {
-                _logger.LogError(LoggingEvents.PublishPollDefinition, "Error publishing poll definition {id}: Exception {ex}", id, e.Message);
+                _logger.LogError(LoggingEvents.PublishPollDefinition, $"Error publishing poll definition {id}: Exception {e.Message}");
                 return StatusCode(500, e.Message);
             }
 

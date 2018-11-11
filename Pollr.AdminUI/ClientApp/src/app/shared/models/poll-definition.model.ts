@@ -6,7 +6,7 @@
 import { QuestionDefinition } from './question-definition.model';
 
 export class PollDefinition {
-  id: string;
+  id: number;
   name: string;
   description: string;
   theme: string;

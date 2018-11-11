@@ -3,16 +3,17 @@
  *  All rights reserved.
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { NgForm } from '@angular/forms';
+import { Subscription } from 'rxjs';
 
 import { PollDefinition } from '../../shared/models/poll-definition.model';
 import { QuestionDefinition } from '../../shared/models/question-definition.model';
 import { AnswerDefinition } from '../../shared/models/answer-definition.model';
 import { PollDataService } from '../../core/poll-data.service';
-import { PollDefinitionRepositoryService } from '../poll-definition-repository.service';
+import { PollDefinitionService } from '../poll-definition.service';
 
 
 @Component({
@@ -23,31 +24,45 @@ import { PollDefinitionRepositoryService } from '../poll-definition-repository.s
 export class PollDefinitionFormComponent implements OnInit {
 
   isEditing = false;
+  isLoading = false;
   pollDefinition: PollDefinition = new PollDefinition();
 
   pollDefinitionForm: FormGroup;
+  sub: Subscription;
 
   constructor(
     private router: Router,
-    private activeRoute: ActivatedRoute,
+    private route: ActivatedRoute,
     private fb: FormBuilder,
-    private repository: PollDefinitionRepositoryService) {
+    private repository: PollDefinitionService) {
 
-      this.isEditing = activeRoute.snapshot.params['mode'] === 'edit';
-
+    this.isEditing = route.snapshot.params['mode'] === 'edit';
+    console.log('Edit mode: ' + this.isEditing);
+    
   }
 
   ngOnInit() {
 
+    this.isLoading = true;
+
+
     // Fetch the poll definition id if it is present then get the
     // poll definition and pass it to the initForm method.
     if (this.isEditing) {
-      Object.assign(this.pollDefinition,
-        this.repository.getPollDefinition(this.activeRoute.snapshot.params['id']));
-      this.initForm(this.pollDefinition);
+      this.sub = this.route.params.subscribe(params => {
+        const id = params['id'];
+        if (id) {
+          Object.assign(this.pollDefinition,
+            this.repository.getPollDefinition(id));
+          this.initForm(this.pollDefinition);
+        }
+      })
     } else {
       this.initForm();
     }
+
+    this.isLoading = false;
+
   }
 
   // Initialise the form with default data if adding, or

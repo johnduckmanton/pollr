@@ -18,7 +18,7 @@ import { PollDefinitionFormComponent } from './poll-definition-form/poll-definit
 import { PollDefinitionListComponent } from './poll-definition-list/poll-definition-list.component';
 // import { QuestionFormComponent } from './poll-definition-form/question-form/question-form.component';
 // import { QuestionListComponent } from './poll-definition-form/question-list/question-list.component';
-import { PollDefinitionRepositoryService } from './poll-definition-repository.service';
+import { PollDefinitionService } from './poll-definition.service';
 
 
 @NgModule({
@@ -41,7 +41,7 @@ import { PollDefinitionRepositoryService } from './poll-definition-repository.se
     // QuestionListComponent
   ],
   providers: [
-    PollDefinitionRepositoryService
+    PollDefinitionService
   ]
 })
 export class AdminModule { }

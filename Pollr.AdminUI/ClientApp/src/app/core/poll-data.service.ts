@@ -38,7 +38,7 @@ export class PollDataService {
   //
   // Get poll definition. GET /api/polldefinitions/{id}
   //
-  public getPollDefinition$(id: string): Observable<PollDefinition[]> {
+  public getPollDefinition$(id: number): Observable<PollDefinition[]> {
     const url = `${this.apiUrl}/polldefinitions/${id}`;
     return this.http
       .get<PollDefinition[]>(url, this.getOptions())
@@ -74,7 +74,7 @@ export class PollDataService {
   //
   // Delete a poll definition. DELETE /api/polldefinitions
   //
-  public deletePollDefinition$(id: string): Observable<PollDefinition> {
+  public deletePollDefinition$(id: number): Observable<PollDefinition> {
     const url = `${this.apiUrl}/polldefinitions/${id}`;
     return this.http
       .delete<PollDefinition>(url, this.getOptions())
@@ -110,7 +110,7 @@ export class PollDataService {
   //
   // Get a single poll. GET /api/polls/{id}
   //
-  public getPoll$(id: string): Observable<Poll> {
+  public getPoll$(id: number): Observable<Poll> {
     const url = `${this.apiUrl}/polls/${id}`;
     return this.http
       .get<Poll>(url)
@@ -134,7 +134,7 @@ export class PollDataService {
   //
   // Open a poll
   //
-  public openPoll$(pollId: string): Observable<any> {
+  public openPoll$(pollId: number): Observable<any> {
     const url = `${this.apiUrl}/polls/${pollId}/actions/open`;
     return this.http
       .put(url, {})
@@ -146,7 +146,7 @@ export class PollDataService {
   //
   // Close a poll
   //
-  public closePoll$(pollId: string): Observable<any> {
+  public closePoll$(pollId: number): Observable<any> {
     const url = `${this.apiUrl}/polls/${pollId}/actions/close`;
     return this.http
       .put(url, {})
@@ -158,7 +158,7 @@ export class PollDataService {
   //
   // Submit a vote
   //
-  public vote$(pollId: string, question: number, answer: number): Observable<any> {
+  public vote$(pollId: number, question: number, answer: number): Observable<any> {
     const url = `${this.apiUrl}/polls/${pollId}/actions/vote?question=${question}&answer=${answer}`;
 
     const options = {
@@ -177,7 +177,7 @@ export class PollDataService {
   //
   // Advance to next question
   //
-  public nextQuestion$(pollId: string): Observable<any> {
+  public nextQuestion$(pollId: number): Observable<any> {
     const url = `${this.apiUrl}/polls/${pollId}/actions/nextquestion`;
     return this.http
       .put(url, {})
@@ -189,7 +189,7 @@ export class PollDataService {
   //
   // Get the results for a poll
   //
-  public getPollResults$(pollId: string): Observable<any> {
+  public getPollResults$(pollId: number): Observable<any> {
     const url = `${this.apiUrl}/polls/${pollId}/results`;
     return this.http
       .get(url)

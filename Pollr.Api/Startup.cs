@@ -3,16 +3,17 @@
  *  All rights reserved.
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authentication.AzureAD.UI;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Pollr.Api;
-using Pollr.Api.Dal;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
+using Pollr.Api.Data;
+using Pollr.Api.Exceptions;
 using Pollr.Api.Hubs;
 
 namespace pollr.api
@@ -37,8 +38,17 @@ namespace pollr.api
             // Enable IOptions in the DI container
             services.AddOptions();
 
-            services.AddAuthentication(AzureADDefaults.BearerAuthenticationScheme)
-                .AddAzureADBearer(options => Configuration.Bind("AzureAd", options));
+            // SQL Server Database
+            string connectionString = Configuration.GetConnectionString("PollrDatabase");
+            if (string.IsNullOrEmpty(connectionString)) {
+                throw new AppConfigErrorException("Database connection string is not configured");
+            }
+
+            services.AddDbContext<PollrContext>
+                (options => options.UseSqlServer(connectionString));
+
+            //services.AddAuthentication(AzureADDefaults.BearerAuthenticationScheme)
+            //    .AddAzureADBearer(options => Configuration.Bind("AzureAd", options));
 
             services.AddCors(o => o.AddPolicy("AllowAny", builder =>
             {
@@ -49,15 +59,12 @@ namespace pollr.api
                     .AllowCredentials();
             }));
 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
-
-            services.Configure<DatabaseSettings>(options =>
-            {
-                options.ConnectionString = Configuration.GetSection("MongoConnection:ConnectionString").Value;
-                _logger.LogInformation($"### Database connection string = {options.ConnectionString}.");
-                options.Database = Configuration.GetSection("MongoConnection:Database").Value;
-                _logger.LogInformation($"### Database = {options.Database}");
-            });
+            services.AddMvc()
+                .AddJsonOptions(options => {
+                    options.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+                    options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+                })
+                .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
             // Add a SignalR hub:
             // In production we will typically use an Azure Managed hub, but in development
@@ -104,7 +111,7 @@ namespace pollr.api
             app.UseCors("AllowAny");
 
             app.UseHttpsRedirection();
-            app.UseAuthentication();
+            //app.UseAuthentication();
             app.UseMvc();
 
             // Configure Signalr

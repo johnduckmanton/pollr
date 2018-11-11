@@ -6,6 +6,7 @@
 import { AnswerDefinition } from './answer-definition.model';
 
 export class QuestionDefinition {
+  id: number;
   questionText: string;
   hasCorrectAnswer: boolean;
   isDisabled: boolean;

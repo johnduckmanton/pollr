@@ -8,7 +8,7 @@ import { PollDefinition } from '../shared/models/poll-definition.model';
 import { PollDataService } from '../core/poll-data.service';
 
 @Injectable()
-export class PollDefinitionRepositoryService {
+export class PollDefinitionService {
   private pollDefinitions: PollDefinition[] = [];
   private categories: string[] = [];
 
@@ -23,13 +23,13 @@ export class PollDefinitionRepositoryService {
       .filter(p => isPublished === p.isPublished);
   }
 
-  getPollDefinition(id: string): PollDefinition {
+  getPollDefinition(id: number): PollDefinition {
     return this.pollDefinitions.find(p => p.id === id);
   }
 
 
   savePollDefinition(pollDefinition: PollDefinition) {
-    if (pollDefinition.id === null || pollDefinition.id.length === 0) {
+    if (pollDefinition.id === null || pollDefinition.id === 0) {
       this.dataSource.savePollDefinition$(pollDefinition)
         .subscribe(p => this.pollDefinitions.push(p));
     } else {
@@ -41,10 +41,10 @@ export class PollDefinitionRepositoryService {
     }
   }
 
-  deletePollDefinition(id: string) {
+  deletePollDefinition(id: number) {
     this.dataSource.deletePollDefinition$(id).subscribe(p => {
       this.pollDefinitions.splice(this.pollDefinitions.
-        findIndex(p => p.id == id), 1);
+        findIndex(p => p.id === id), 1);
     })
   }
 

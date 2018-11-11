@@ -3,22 +3,19 @@
  *  All rights reserved.
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-using Pollr.Api.Models;
-using System;
+using Pollr.Api.Models.PollDefinitions;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
-namespace Pollr.Api.Dal
+namespace Pollr.Api.Data
 {
     public interface IPollDefinitionRepository
     {
         Task<IEnumerable<PollDefinition>> GetPollDefinitionsAsync(bool publishedOnly);
-        Task<PollDefinition> GetPollDefinitionAsync(string id);
+        Task<PollDefinition> GetPollDefinitionAsync(int id);
         Task AddPollDefinitionAsync(PollDefinition item);
-        Task<bool> RemovePollDefinitionAsync(string id);
-        Task<bool> UpdatePollDefinitionAsync(string id, PollDefinition item);
-        Task<bool> PublishPollDefinitionAsync(string id);
-        Task<bool> UnpublishPollDefinitionAsync(string id);
+        Task<bool> RemovePollDefinitionAsync(int id);
+        Task<PollDefinition> UpdatePollDefinitionAsync(PollDefinition item);
+        Task<bool> SetPublishedStatusAsync(int id, bool isPublished);
     }
 }

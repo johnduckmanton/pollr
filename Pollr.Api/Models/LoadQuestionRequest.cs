@@ -12,7 +12,7 @@ namespace Pollr.Api.Models
 {
     public class LoadQuestionRequest
     {
-        public string PollId { get; set; }
+        public int PollId { get; set; }
         public int QuestionIndex { get; set; }
     }
 }

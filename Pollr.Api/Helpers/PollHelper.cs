@@ -4,6 +4,7 @@
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 using Pollr.Api.Models;
+using Pollr.Api.Models.Polls;
 using System.Collections.Generic;
 
 namespace Pollr.Api.Helpers
@@ -21,20 +22,20 @@ namespace Pollr.Api.Helpers
             };
 
             List<QuestionResult> questionList = new List<QuestionResult>();
-            for (int i = 0; i < poll.Questions.Length; i++) {
+            foreach (Question question in poll.Questions) {
                 QuestionResult q = new QuestionResult {
-                    QuestionText = poll.Questions[i].QuestionText,
+                    QuestionText = question.QuestionText,
                     TotalVotes = 0
                 };
 
                 List<AnswerResult> answerList = new List<AnswerResult>();
-                for (int j = 0; j < poll.Questions[i].Answers.Length; j++) {
+                foreach (Answer answer in question.Answers) {
                     AnswerResult a = new AnswerResult {
-                        AnswerText = poll.Questions[i].Answers[j].AnswerText,
-                        VoteCount = poll.Questions[i].Answers[j].VoteCount
+                        AnswerText = answer.AnswerText,
+                        VoteCount = answer.VoteCount
                     };
-                    q.TotalVotes += poll.Questions[i].Answers[j].VoteCount;
-                    result.TotalVotes += poll.Questions[i].Answers[j].VoteCount;
+                    q.TotalVotes += answer.VoteCount;
+                    result.TotalVotes += answer.VoteCount;
                     answerList.Add(a);
                 }
                 q.Answers = answerList.ToArray();

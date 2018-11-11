@@ -5,13 +5,15 @@
  *--------------------------------------------------------------------------------------------*/
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Pollr.Api.Core;
-using Pollr.Api.Dal;
+using Pollr.Api.Data;
 using Pollr.Api.Exceptions;
 using Pollr.Api.Helpers;
 using Pollr.Api.Hubs;
 using Pollr.Api.Models;
+using Pollr.Api.Models.Polls;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -43,12 +45,12 @@ namespace pollr.api.Controllers
         /// <returns></returns>
         [HttpGet()]
         [ProducesResponseType(200, Type = typeof(Poll[]))]
-        public async Task<ActionResult> GetPolls([FromQuery]string status)
+        public async Task<ActionResult> GetPolls([FromQuery]PollStatus status = PollStatus.Open)
         {
             IEnumerable<Poll> polls;
 
-            if (status != null) {
-                _logger.LogInformation(LoggingEvents.GetPolls, "Listing all polls with status ({status})", status);
+            if (status != PollStatus.Undefined) {
+                _logger.LogInformation(LoggingEvents.GetPolls, "Listing all polls with status ({status})", status.ToString());
                 polls = await _pollRepository.GetPollsByStatusAsync(status);
             }
             else {
@@ -67,7 +69,7 @@ namespace pollr.api.Controllers
         [HttpGet("{id}")]
         [Route("{id}")]
         [ProducesResponseType(200, Type = typeof(Poll))]
-        public async Task<ActionResult> Get(string id)
+        public async Task<ActionResult> Get(int id)
         {
             _logger.LogInformation(LoggingEvents.GetPoll, "Getting poll {id}", id);
 
@@ -127,7 +129,7 @@ namespace pollr.api.Controllers
             try {
                 Poll poll = await _pollRepository.CreatePollAsync(request.Name, request.PollDefinitionId, request.Handle, request.IsOpen);
                 _logger.LogInformation(LoggingEvents.InsertPoll, "Poll {Id} Created", poll.Id);
-                return CreatedAtRoute("Get", new { controller = "Poll", id = poll.Id.ToString() }, poll);
+                return CreatedAtRoute("Get", new { controller = "Polls", id = poll.Id.ToString() }, poll);
             }
             catch (Exception e) {
                 _logger.LogError(LoggingEvents.InsertPoll, "Error creating new poll: Exception {ex}", e.Message);
@@ -145,9 +147,9 @@ namespace pollr.api.Controllers
         [ProducesResponseType(204)]
         [ProducesResponseType(400)]
         [ProducesResponseType(500)]
-        public async Task<ActionResult> Put(string id, [FromBody]Poll poll)
+        public async Task<ActionResult> Put(int id, [FromBody]Poll poll)
         {
-            if (poll == null || poll.Id.ToString() != id) {
+            if (poll == null || poll.Id != id) {
                 return BadRequest();
             }
 
@@ -156,9 +158,9 @@ namespace pollr.api.Controllers
             }
 
             try {
-                await _pollRepository.UpdatePollAsync(id, poll);
+                var updatedPoll = await _pollRepository.UpdatePollAsync(poll);
                 _logger.LogInformation(LoggingEvents.UpdatePoll, "Poll {id} Updated", poll.Id);
-                return new NoContentResult();
+                return Ok(updatedPoll);
             }
             catch (Exception e) {
                 _logger.LogError(LoggingEvents.UpdatePoll, "Error updating poll {id}: Exception {ex}", id, e.Message);
@@ -174,7 +176,7 @@ namespace pollr.api.Controllers
         /// <returns></returns>
         [HttpDelete]
         [ProducesResponseType(204)]
-        public async Task<ActionResult> Delete(string id)
+        public async Task<ActionResult> Delete(int id)
         {
             try {
                 await _pollRepository.RemovePollAsync(id);
@@ -196,7 +198,7 @@ namespace pollr.api.Controllers
         [HttpPut("{id}/actions/open")]
         [ProducesResponseType(204)]
         [ProducesResponseType(500)]
-        public async Task<ActionResult> Open(string id)
+        public async Task<ActionResult> Open(int id)
         {
             try {
                 bool result = await _pollRepository.OpenPollAsync(id);
@@ -210,6 +212,11 @@ namespace pollr.api.Controllers
             catch (PollNotFoundException e) {
                 ApiStatusMessage a = ApiStatusMessage.CreateFromException(e);
                 return BadRequest(a);
+            }
+            catch (DbUpdateException e)
+            {
+                _logger.LogError($"Error occurred whilst attempting to update poll {id}: {e.Message}");
+                throw (e);
             }
             catch (Exception e) {
                 _logger.LogError(LoggingEvents.OpenPoll, "Error updating poll status to open {id}: Exception {ex}", id, e.Message);
@@ -225,7 +232,7 @@ namespace pollr.api.Controllers
         [HttpPut("{id}/actions/nextquestion")]
         [ProducesResponseType(204)]
         [ProducesResponseType(500)]
-        public async Task<ActionResult> NextQuestion(string id)
+        public async Task<ActionResult> NextQuestion(int id)
         {
             try {
                 Poll updatedPoll = await _pollRepository.SetNextQuestionAsync(id);
@@ -262,7 +269,7 @@ namespace pollr.api.Controllers
         [HttpPut("{id}/actions/close")]
         [ProducesResponseType(204)]
         [ProducesResponseType(500)]
-        public async Task<ActionResult> Close(string id)
+        public async Task<ActionResult> Close(int id)
         {
             try {
                 bool result = await _pollRepository.ClosePollAsync(id);
@@ -294,7 +301,7 @@ namespace pollr.api.Controllers
         [ProducesResponseType(204)]
         [ProducesResponseType(400)]
         [ProducesResponseType(500)]
-        public async Task<ActionResult> Vote(string id, int question, int answer)
+        public async Task<ActionResult> Vote(int id, int question, int answer)
         {
             if (question < 1 || answer < 1) {
                 return BadRequest("Index values must start at 1");
@@ -320,6 +327,10 @@ namespace pollr.api.Controllers
                 ApiStatusMessage a = ApiStatusMessage.CreateFromException(e);
                 return BadRequest(a);
             }
+            catch (PollClosedException)
+            {
+                return BadRequest("Poll is not open for voting");
+            }
             catch (Exception e) {
                 _logger.LogError(LoggingEvents.OpenPoll, "Error updating poll status to open {id}: Exception {ex}", id, e.Message);
                 return StatusCode(500, e.Message);
@@ -336,7 +347,7 @@ namespace pollr.api.Controllers
         [ProducesResponseType(204)]
         [ProducesResponseType(400)]
         [ProducesResponseType(500)]
-        public async Task<ActionResult> VoteOnCurrent(string id, int answer)
+        public async Task<ActionResult> VoteOnCurrent(int id, int answer)
         {
             if (answer < 1)
             {
@@ -347,7 +358,7 @@ namespace pollr.api.Controllers
             {
                 // Get the poll to determine the current question
                 var poll = await _pollRepository.GetPollAsync(id);
-                if (poll.Status != "open" || poll.CurrentQuestion == 0)
+                if (poll.Status != PollStatus.Open || poll.CurrentQuestion == 0)
                     return BadRequest("Poll is not open for voting");
 
                 // Register the vote in the database
@@ -364,6 +375,10 @@ namespace pollr.api.Controllers
                 }
                 else
                     return BadRequest("Poll does not exist or is not open for voting");
+            }
+            catch (PollClosedException)
+            {
+                return BadRequest("Poll is not open for voting");
             }
             catch (PollNotFoundException e)
             {
@@ -397,7 +412,7 @@ namespace pollr.api.Controllers
         [ProducesResponseType(404)]
         [ProducesResponseType(500)]
         [Route("{id}/results")]
-        public async Task<ActionResult> GetPollResults(string id)
+        public async Task<ActionResult> GetPollResults(int id)
         {
             var poll = await _pollRepository.GetPollAsync(id) ?? new Poll();
             if (poll == null)

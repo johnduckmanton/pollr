@@ -35,7 +35,7 @@ export class ResultsComponent implements OnInit {
 
   ngOnInit() {
     this.spinner.show();
-    const id: string = this.route.snapshot.paramMap.get('id');
+    const id: number = Number.parseInt(this.route.snapshot.paramMap.get('id'));
 
     // Get the current results
     this.results = this.dataService.getPollResults$(id).subscribe(results => {

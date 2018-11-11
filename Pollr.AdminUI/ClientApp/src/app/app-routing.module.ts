@@ -19,11 +19,11 @@ const routes: Routes = [
   { path: 'poll-details/:id', component: ViewPollDetailsComponent },
   { path: 'results/:id', component: ResultsComponent },
   { path: 'vote-status/:id', component: VoteStatusComponent },
-  { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
   {
     path: 'admin',
     loadChildren: './admin/admin.module#AdminModule'
   },
+  { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
   { path: '**', component: PageNotFoundComponent }
 ];
 

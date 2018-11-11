@@ -4,9 +4,10 @@
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 using Microsoft.AspNetCore.SignalR;
-using Pollr.Api.Dal;
+using Pollr.Api.Data;
 using Pollr.Api.Helpers;
 using Pollr.Api.Models;
+using Pollr.Api.Models.Polls;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -41,7 +42,7 @@ namespace Pollr.Api.Hubs
         /// <param name="question"></param>
         /// <param name="answer"></param>
         /// <returns></returns>
-        public async Task<VoteResult> Vote(string pollId, int question, int answer)
+        public async Task<VoteResult> Vote(int pollId, int question, int answer)
         {
             VoteResult result = new VoteResult();
 
