@@ -45,7 +45,7 @@ namespace pollr.api.Controllers
         /// <returns></returns>
         [HttpGet()]
         [ProducesResponseType(200, Type = typeof(Poll[]))]
-        public async Task<ActionResult> GetPolls([FromQuery]PollStatus status = PollStatus.Open)
+        public async Task<ActionResult> GetPolls([FromQuery]PollStatus status = PollStatus.Undefined)
         {
             IEnumerable<Poll> polls;
 
@@ -66,8 +66,8 @@ namespace pollr.api.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        [HttpGet("{id}")]
         [Route("{id}")]
+        [HttpGet("{id}", Name = "GetPoll")]
         [ProducesResponseType(200, Type = typeof(Poll))]
         public async Task<ActionResult> Get(int id)
         {
@@ -127,12 +127,12 @@ namespace pollr.api.Controllers
             }
 
             try {
-                Poll poll = await _pollRepository.CreatePollAsync(request.Name, request.PollDefinitionId, request.Handle, request.IsOpen);
+                Poll poll = await _pollRepository.CreatePollAsync(request.Name, request.PollDefinitionId, request.Handle, request.Description, request.IsOpen);
                 _logger.LogInformation(LoggingEvents.InsertPoll, "Poll {Id} Created", poll.Id);
-                return CreatedAtRoute("Get", new { controller = "Polls", id = poll.Id.ToString() }, poll);
+                return CreatedAtRoute("GetPoll", new { controller = "Polls", id = poll.Id }, poll);
             }
             catch (Exception e) {
-                _logger.LogError(LoggingEvents.InsertPoll, "Error creating new poll: Exception {ex}", e.Message);
+                _logger.LogError(LoggingEvents.InsertPoll, $"Error creating new poll: Exception {e.Message}");
                 return StatusCode(500, e.Message);
             }
         }
@@ -174,7 +174,7 @@ namespace pollr.api.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        [HttpDelete]
+        [HttpDelete("{id}")]
         [ProducesResponseType(204)]
         public async Task<ActionResult> Delete(int id)
         {

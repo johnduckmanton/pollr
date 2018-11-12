@@ -13,9 +13,11 @@ namespace Pollr.Api.Models
         public string Name { get; set; }
 
         public int PollDefinitionId { get; set; }
+        public string Handle { get; set; }
+
+        public string Description { get; set; }
 
         public bool IsOpen { get; set; } = false;
-        public string Handle { get; set; }
 
     }
 }

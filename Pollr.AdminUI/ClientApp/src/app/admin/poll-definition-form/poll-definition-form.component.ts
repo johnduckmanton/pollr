@@ -32,42 +32,35 @@ export class PollDefinitionFormComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private route: ActivatedRoute,
+    private activeRoute: ActivatedRoute,
     private fb: FormBuilder,
     private repository: PollDefinitionService) {
 
-    this.isEditing = route.snapshot.params['mode'] === 'edit';
-    console.log('Edit mode: ' + this.isEditing);
-    
+    activeRoute.params.subscribe(params => {
+      this.isEditing = params["mode"] == "edit";
+      const id = params["id"];
+
+      // Fetch the poll definition id if it is present then get the
+      // poll definition and pass it to the initForm method.
+      if (this.isEditing && id != 0) {
+        Object.assign(this.pollDefinition,
+          this.repository.getPollDefinition(this.activeRoute.snapshot.params['id']));
+      }
+
+    })
   }
 
   ngOnInit() {
 
-    this.isLoading = true;
-
-
-    // Fetch the poll definition id if it is present then get the
-    // poll definition and pass it to the initForm method.
-    if (this.isEditing) {
-      this.sub = this.route.params.subscribe(params => {
-        const id = params['id'];
-        if (id) {
-          Object.assign(this.pollDefinition,
-            this.repository.getPollDefinition(id));
-          this.initForm(this.pollDefinition);
-        }
-      })
-    } else {
-      this.initForm();
-    }
-
-    this.isLoading = false;
+    console.log("Poll Definition Form");
+    console.log(this.pollDefinition);
+    this.initForm(this.pollDefinition);
 
   }
 
   // Initialise the form with default data if adding, or
   // copy the pollDefinition data if editing
-  initForm(pollDefinition?: PollDefinition): void {
+  initForm(pollDefinition: PollDefinition): void {
 
     this.pollDefinitionForm = new FormGroup({
       name: new FormControl(pollDefinition ? pollDefinition.name : '', Validators.required),

@@ -13,7 +13,7 @@ namespace Pollr.Api.Data
     {
         Task<IEnumerable<PollDefinition>> GetPollDefinitionsAsync(bool publishedOnly);
         Task<PollDefinition> GetPollDefinitionAsync(int id);
-        Task AddPollDefinitionAsync(PollDefinition item);
+        Task<PollDefinition> AddPollDefinitionAsync(PollDefinition item);
         Task<bool> RemovePollDefinitionAsync(int id);
         Task<PollDefinition> UpdatePollDefinitionAsync(PollDefinition item);
         Task<bool> SetPublishedStatusAsync(int id, bool isPublished);

@@ -19,7 +19,7 @@ namespace Pollr.Api.Data
         Task<Poll> GetPollByHandleAsync(string handl);
         Task<Poll> SetNextQuestionAsync(int id);
         Task<bool> RemovePollAsync(int id);
-        Task<Poll> CreatePollAsync(string name, int pollDefinitionId, string handle, bool isOpen);
+        Task<Poll> CreatePollAsync(string name, int pollDefinitionId, string handle, string description, bool isOpen);
         Task<bool> OpenPollAsync(int id);
         Task<bool> ClosePollAsync(int id);
         Task<Poll> UpdatePollAsync(Poll poll);

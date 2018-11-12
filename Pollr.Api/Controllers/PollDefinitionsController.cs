@@ -53,7 +53,7 @@ namespace pollr.api.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        [HttpGet("{id}", Name = "GetPoll")]
+        [HttpGet("{id}", Name = "GetPollDefinition")]
         [ProducesResponseType(200, Type = typeof(PollDefinition))]
         public async Task<ActionResult> Get(int id)
         {
@@ -93,7 +93,7 @@ namespace pollr.api.Controllers
                 await _pollDefinitionRepository.AddPollDefinitionAsync(pollDefinition); ;
 
                 _logger.LogInformation(LoggingEvents.InsertPollDefinition, $"Poll Definition {pollDefinition.Id} Created");
-                return CreatedAtRoute("GetPoll", new { id = pollDefinition.Id }, pollDefinition);
+                return CreatedAtRoute("GetPollDefinition", new { id = pollDefinition.Id }, pollDefinition);
             }
             catch (Exception e)
             {

@@ -36,7 +36,10 @@ namespace Pollr.Api.Data
         /// <returns></returns>
         public async Task<IEnumerable<Poll>> GetAllPollsAsync()
         {
-            return await _context.Polls.ToListAsync();
+            return await _context.Polls
+                .Include(q => q.Questions)
+                .ThenInclude(a => a.Answers)
+                .ToListAsync();
         }
 
         /// <summary>
@@ -48,6 +51,8 @@ namespace Pollr.Api.Data
         {
             return await _context.Polls
                 .Where(p => p.Status == status)
+                .Include(q => q.Questions)
+                .ThenInclude(a => a.Answers)
                 .ToListAsync();
         }
                
@@ -58,7 +63,12 @@ namespace Pollr.Api.Data
         /// <returns></returns>
         public async Task<Poll> GetPollAsync(int id)
         {
-            var poll = await _context.Polls.FindAsync(id);
+            var poll = await _context.Polls
+                .Where(p => p.Id == id)
+                .Include(q => q.Questions)
+                .ThenInclude(a => a.Answers)
+                .FirstOrDefaultAsync();
+                
             if (poll == null)
                 throw new PollNotFoundException();
 
@@ -74,6 +84,8 @@ namespace Pollr.Api.Data
         {
             var poll = await _context.Polls
                 .Where(p => p.Handle == handle)
+                .Include(q => q.Questions)
+                .ThenInclude(a => a.Answers)
                 .FirstOrDefaultAsync();
 
             if (poll == null)
@@ -119,7 +131,7 @@ namespace Pollr.Api.Data
         /// <returns></returns>
         public async Task<Poll> UpdatePollAsync(Poll poll)
         {
-            _context.Entry(poll).State = EntityState.Modified;
+            _context.Polls.Update(poll);
 
             try
             {
@@ -146,12 +158,17 @@ namespace Pollr.Api.Data
         /// <param name="name">The name of the poll</param>
         /// <param name="isOpen">If true the poll is created in an open state</param>
         /// <returns></returns>
-        public async Task<Poll> CreatePollAsync(string name, int pollDefinitionId, string handle, bool isOpen)
+        public async Task<Poll> CreatePollAsync(string name, int pollDefinitionId, string handle, string description, bool isOpen)
         {
             // First retrieve the poll definition
-            var def = await _context.PollDefinitions.FindAsync(pollDefinitionId);
+            var def = await _context.PollDefinitions
+                .Where(p => p.Id == pollDefinitionId)
+                .Include(q => q.Questions)
+                .ThenInclude(a => a.Answers)
+                .FirstOrDefaultAsync();
+
             if (def == null)
-                throw new PollNotFoundException();
+                throw new PollDefNotFoundException();
 
             // Check that the poll has been published
             if (!def.IsPublished)
@@ -161,7 +178,7 @@ namespace Pollr.Api.Data
             Poll poll = new Poll
             {
                 Name = name,
-                Description = def.Description,
+                Description = description,
                 Handle = handle,
                 PollDefinition= def,
                 Status = (isOpen ? PollStatus.Open : PollStatus.Closed),
@@ -303,6 +320,7 @@ namespace Pollr.Api.Data
         {
             return _context.Polls.Any(e => e.Id == id);
         }
+
     }
 }
 

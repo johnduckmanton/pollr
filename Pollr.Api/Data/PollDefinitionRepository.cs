@@ -78,11 +78,13 @@ namespace Pollr.Api.Data
         /// </summary>
         /// <param name="item"></param>
         /// <returns></returns>
-        public async Task AddPollDefinitionAsync(PollDefinition pollDefinition)
+        public async Task<PollDefinition> AddPollDefinitionAsync(PollDefinition pollDefinition)
         {
             await _context.PollDefinitions
                 .AddAsync(pollDefinition);
             await _context.SaveChangesAsync();
+
+            return pollDefinition;
         }
 
         /// <summary>
@@ -109,7 +111,7 @@ namespace Pollr.Api.Data
         public async Task<PollDefinition> UpdatePollDefinitionAsync(PollDefinition pollDefinition)
         {
 
-            _context.Entry(pollDefinition).State = EntityState.Modified;
+            _context.PollDefinitions.Update(pollDefinition);
 
             try
             {
