@@ -8,7 +8,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { MessageService } from '../../core/messages/message.service';
 import { PollDataService } from '../../core/poll-data.service';
-import { Poll } from '../../shared/models/poll.model';
+import { Poll, PollStatus } from '../../shared/models/poll.model';
 
 @Component({
   selector: 'app-dashboard',
@@ -18,6 +18,7 @@ import { Poll } from '../../shared/models/poll.model';
 export class DashboardComponent implements OnInit {
   isLoading = false;
   polls: Poll[] = [];
+  public pollStatus = PollStatus;
 
   constructor(
     private dataService: PollDataService,
@@ -25,16 +26,15 @@ export class DashboardComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private toastr: ToastrService
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     this.isLoading = true;
-    this.getPolls('all');
+    this.getPolls(PollStatus.Undefined);
   }
 
-  getPolls(status: string): void {
-
-    if ((status = 'all')) {
+  getPolls(status: PollStatus): void {
+    if (status === PollStatus.Undefined) {
       this.dataService.getAllPolls$().subscribe(
         data => {
           this.polls = data;
@@ -56,7 +56,7 @@ export class DashboardComponent implements OnInit {
           this.isLoading = false;
 
           if (this.polls.length === 0) {
-            this.messageService.add(`There are currently no ${status} polls`);
+            this.messageService.add(`There are currently no ${status.toString()} polls`);
           }
         },
         error => {
@@ -77,27 +77,31 @@ export class DashboardComponent implements OnInit {
 
   startPoll(index: number): void {
     this.dataService.openPoll$(this.polls[index].id).subscribe(() => {
-      this.polls[index].status = 'open';
+      this.polls[index].status = PollStatus.Open;
       this.toastr.success('Your poll has been started. You can now accept votes.');
     });
   }
 
   stopPoll(index: number): void {
     this.dataService.closePoll$(this.polls[index].id).subscribe(() => {
-      this.polls[index].status = 'closed';
+      this.polls[index].status = PollStatus.Closed;
       this.toastr.warning('Your poll has been stopped. Voting is no longer allowed.');
     });
   }
 
   nextQuestion(index: number): void {
     this.dataService.nextQuestion$(this.polls[index].id).subscribe(
-      (updatedPoll) => {
+      updatedPoll => {
         this.polls[index] = updatedPoll;
         console.log(`updated poll: ${updatedPoll}`);
-        this.toastr.success(`Question ${updatedPoll.currentQuestion} is now available for votes`);
-      }, error => {
+        this.toastr.success(
+          `Question ${updatedPoll.currentQuestion} is now available for votes`
+        );
+      },
+      error => {
         this.toastr.error(error);
-      });
+      }
+    );
   }
 
   showResults(index: number) {

@@ -31,6 +31,8 @@ namespace pollr.api.Controllers
         private readonly ILogger<PollsController> _logger;
         private IHubContext<VoteHub> _hubContext;
 
+        private static string VOTE_RECEIVED = "VoteReceived";
+
         public PollsController(IPollRepository pollRepository, IHubContext<VoteHub> hubContext, ILogger<PollsController> logger)
         {
             _pollRepository = pollRepository;
@@ -308,20 +310,9 @@ namespace pollr.api.Controllers
             }
 
             try {
-
-                // Register the vote in the database
-                Poll updatedPoll = await _pollRepository.VoteAsync(id, question, answer);
-                if (updatedPoll != null) {
-
-                    // then notify connected clients of the poll status using SignalR
-                    PollResult message = PollHelper.GetPollResults(updatedPoll);
-                    SendToConnectedClients(message);
-                    _logger.LogInformation(LoggingEvents.PollVoteRegistered, "Poll {id} vote registered", id);
-
+                    await RegisterVote(id, question, answer);
                     return new NoContentResult();
-                }
-                else
-                    return BadRequest("Poll does not exist or is closed");
+
             }
             catch (PollNotFoundException e) {
                 ApiStatusMessage a = ApiStatusMessage.CreateFromException(e);
@@ -361,20 +352,9 @@ namespace pollr.api.Controllers
                 if (poll.Status != PollStatus.Open || poll.CurrentQuestion == 0)
                     return BadRequest("Poll is not open for voting");
 
-                // Register the vote in the database
-                Poll updatedPoll = await _pollRepository.VoteAsync(id, poll.CurrentQuestion, answer);
-                if (updatedPoll != null)
-                {
+                await RegisterVote(id, poll.CurrentQuestion, answer);
+                return new NoContentResult();
 
-                    // then notify connected clients of the poll status using SignalR
-                    PollResult message = PollHelper.GetPollResults(updatedPoll);
-                    SendToConnectedClients(message);
-                    _logger.LogInformation(LoggingEvents.PollVoteRegistered, "Poll {id} vote registered", id);
-
-                    return new NoContentResult();
-                }
-                else
-                    return BadRequest("Poll does not exist or is not open for voting");
             }
             catch (PollClosedException)
             {
@@ -390,16 +370,6 @@ namespace pollr.api.Controllers
                 _logger.LogError(LoggingEvents.OpenPoll, "Error updating poll status to open {id}: Exception {ex}", id, e.Message);
                 return StatusCode(500, e.Message);
             }
-        }
-
-        /// <summary>
-        /// Send a message to all connected SignalR clients
-        /// </summary>
-        /// <param name="message"></param>
-        private void SendToConnectedClients(object message)
-        {
-            List<string> groups = new List<string>() { "SignalR Users" };
-            _hubContext.Clients.All.SendAsync("message", message);
         }
 
         /// <summary>
@@ -422,6 +392,28 @@ namespace pollr.api.Controllers
             _logger.LogInformation(LoggingEvents.GetPollResults, "Get poll results for {id}", id);
 
             return Ok(result);
+        }
+
+        /// <summary>
+        /// Register the vote by updating the database
+        /// and sending a message to all clients connected
+        /// to the hub to inform interested parties
+        /// </summary>
+        /// <param name="pollId"></param>
+        /// <param name="question"></param>
+        /// <param name="answer"></param>
+        private async Task RegisterVote(int pollId, int question, int answer)
+        {
+            // Register the vote in the database
+            Poll updatedPoll = await _pollRepository.VoteAsync(pollId, question, answer);
+            if (updatedPoll != null)
+            {
+
+                // then notify connected clients of the poll status using SignalR
+                PollResult message = PollHelper.GetPollResults(updatedPoll);
+                await _hubContext.Clients.All.SendAsync(VOTE_RECEIVED, message);
+                _logger.LogInformation(LoggingEvents.PollVoteRegistered, "Poll {id} vote registered", pollId);
+            }
         }
     }
 }

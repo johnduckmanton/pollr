@@ -17,7 +17,7 @@ export class ResultChartComponent implements OnInit {
 
   //@Input() question: Question;
   @Input() question: Observable<Question>;
-  @Input() displayQuestionText: boolean = false;
+  @Input() displayQuestionText: boolean = true;
 
   constructor() { }
 

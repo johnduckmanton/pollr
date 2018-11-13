@@ -46,7 +46,11 @@ export class VoteStatusComponent implements OnInit {
     this.dataService.getPoll$(id).subscribe(poll => {
       this.poll = poll;
       this.currentQuestion = this.poll.questions[this.poll.currentQuestion - 1];
-      console.log(this.currentQuestion);
+
+      // Calculate the total votes
+      this.currentQuestion.totalVotes = this.currentQuestion.answers.map(answer => answer.voteCount).reduce(function sum(prev, next) {
+        return prev + next;
+      });
 
       // Generate URL to this poll
       const urlTree = this.router.createUrlTree(['/vote', this.poll.handle]).toString();
@@ -57,10 +61,19 @@ export class VoteStatusComponent implements OnInit {
   }
 
   private subscribeToEvents(): void {
+
+    // Subscribe to vote messages and update the result dataset when
+    // new messages are received
+    this.signalrService.resultsReceived.subscribe(message => {
+
+      // We will get back a result for the whole poll so we need to
+      // dig out the current question from the results and update the vote counts
+      this.currentQuestion = message.questions[this.poll.currentQuestion - 1];
+    });
+
     // Subscribe to new connection messages and update the connectedUsers count
     // when new messages are received
     this.signalrService.newConnection.subscribe(count => {
-      console.log(count);
       this.connectedUserCount = count;
     });
   }

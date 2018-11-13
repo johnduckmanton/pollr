@@ -232,7 +232,12 @@ namespace Pollr.Api.Data
         public async Task<bool> OpenPollAsync(int id)
         {
 
-            var poll = await _context.Polls.FindAsync(id);
+            var poll = await _context.Polls
+                .Where(p => p.Id == id)
+                .Include(q => q.Questions)
+                .ThenInclude(a => a.Answers)
+                .FirstOrDefaultAsync();
+
             if (poll == null)
                 throw new PollNotFoundException();
 
@@ -250,7 +255,12 @@ namespace Pollr.Api.Data
         /// <returns></returns>
         public async Task<bool> ClosePollAsync(int id)
         {
-            var poll = await _context.Polls.FindAsync(id);
+            var poll = await _context.Polls
+                .Where(p => p.Id == id)
+                .Include(q => q.Questions)
+                .ThenInclude(a => a.Answers)
+                .FirstOrDefaultAsync();
+
             if (poll == null)
                 throw new PollNotFoundException();
 
@@ -268,7 +278,12 @@ namespace Pollr.Api.Data
         public async Task<Poll> SetNextQuestionAsync(int id)
         {
             // Get the poll
-            var poll = await _context.Polls.FindAsync(id);
+            var poll = await _context.Polls
+                .Where(p => p.Id == id)
+                .Include(q => q.Questions)
+                .ThenInclude(a => a.Answers)
+                .FirstOrDefaultAsync();
+
             if (poll == null)
                 throw new PollNotFoundException();
 
@@ -300,7 +315,12 @@ namespace Pollr.Api.Data
         {
 
             // Get the poll
-            var poll = await _context.Polls.FindAsync(id);
+            var poll = await _context.Polls
+                .Where(p => p.Id == id)
+                .Include(q => q.Questions)
+                .ThenInclude(a => a.Answers)
+                .FirstOrDefaultAsync();
+
             if (poll == null)
                 throw new PollNotFoundException();
 
@@ -309,7 +329,7 @@ namespace Pollr.Api.Data
             if (poll.Status != PollStatus.Open || poll.CurrentQuestion == 0)
                 throw new PollClosedException();
 
-            poll.Questions.ElementAt(question).Answers.ElementAt(answer).VoteCount++;
+            poll.Questions.ElementAt(question-1).Answers.ElementAt(answer-1).VoteCount++;
             _context.Entry(poll).State = EntityState.Modified;
 
             await _context.SaveChangesAsync();

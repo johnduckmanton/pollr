@@ -28,10 +28,15 @@ namespace Pollr.Api.Helpers
                     TotalVotes = 0
                 };
 
-                List<AnswerResult> answerList = new List<AnswerResult>();
+                // TODO: this is a bit of a hack, since I changed the object type returned
+                // at the last minute. Needs to be refactured
+                List<Answer> answerList = new List<Answer>();
                 foreach (Answer answer in question.Answers) {
-                    AnswerResult a = new AnswerResult {
+                    Answer a = new Answer {
                         AnswerText = answer.AnswerText,
+                        ImagePath = answer.ImagePath,
+                        IsDisabled = answer.IsDisabled,
+                        IsCorrectAnswer = answer.IsCorrectAnswer,
                         VoteCount = answer.VoteCount
                     };
                     q.TotalVotes += answer.VoteCount;

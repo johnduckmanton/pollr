@@ -6,14 +6,13 @@
 import { QuestionDefinition } from './question-definition.model';
 
 export class PollDefinition {
-  id: number;
+  id: number = 0;
   name: string;
   description: string;
   theme: string;
   owner: string;
   isPublished: boolean;
   createDate: Date;
-  expiryDate: Date;
   tags: string[];
   questions: QuestionDefinition [];
 }

@@ -3,18 +3,21 @@
  *  All rights reserved.
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-import { Component, OnInit, OnDestroy, Input } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
-import { Router, ActivatedRoute } from '@angular/router';
-import { NgForm } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import {
+  FormArray,
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { Subscription } from 'rxjs';
-
+import { PollDataService } from '../../core/poll-data.service';
+import { AnswerDefinition } from '../../shared/models/answer-definition.model';
 import { PollDefinition } from '../../shared/models/poll-definition.model';
 import { QuestionDefinition } from '../../shared/models/question-definition.model';
-import { AnswerDefinition } from '../../shared/models/answer-definition.model';
-import { PollDataService } from '../../core/poll-data.service';
-import { PollDefinitionService } from '../poll-definition.service';
-
 
 @Component({
   selector: 'app-poll-definition-form',
@@ -22,11 +25,10 @@ import { PollDefinitionService } from '../poll-definition.service';
   styleUrls: ['./poll-definition-form.component.css'],
 })
 export class PollDefinitionFormComponent implements OnInit {
-
-  isEditing = false;
+  id: number;
   isLoading = false;
+  isEditing = false;
   pollDefinition: PollDefinition = new PollDefinition();
-
   pollDefinitionForm: FormGroup;
   sub: Subscription;
 
@@ -34,138 +36,162 @@ export class PollDefinitionFormComponent implements OnInit {
     private router: Router,
     private activeRoute: ActivatedRoute,
     private fb: FormBuilder,
-    private repository: PollDefinitionService) {
-
-    activeRoute.params.subscribe(params => {
-      this.isEditing = params["mode"] == "edit";
-      const id = params["id"];
-
-      // Fetch the poll definition id if it is present then get the
-      // poll definition and pass it to the initForm method.
-      if (this.isEditing && id != 0) {
-        Object.assign(this.pollDefinition,
-          this.repository.getPollDefinition(this.activeRoute.snapshot.params['id']));
-      }
-
-    })
-  }
+    private dataService: PollDataService,
+    private toastr: ToastrService
+  ) {}
 
   ngOnInit() {
+    this.isLoading = true;
 
-    console.log("Poll Definition Form");
-    console.log(this.pollDefinition);
-    this.initForm(this.pollDefinition);
+    this.id = this.activeRoute.snapshot.params['id'];
+    this.isEditing = this.activeRoute.snapshot.params['mode'] === 'edit';
 
-  }
+    this.initForm();
 
-  // Initialise the form with default data if adding, or
-  // copy the pollDefinition data if editing
-  initForm(pollDefinition: PollDefinition): void {
-
-    this.pollDefinitionForm = new FormGroup({
-      name: new FormControl(pollDefinition ? pollDefinition.name : '', Validators.required),
-      description: new FormControl(pollDefinition ? pollDefinition.description : ''),
-      theme: new FormControl(pollDefinition ? pollDefinition.theme : ''),
-      owner: new FormControl(pollDefinition ? pollDefinition.owner : ''),
-      createDate: new FormControl(pollDefinition ? pollDefinition.createDate : ''),
-      expiryDate: new FormControl(pollDefinition ? pollDefinition.expiryDate : ''),
-      isPublished: new FormControl(pollDefinition ? pollDefinition.isPublished : true),
-      tags: new FormControl(pollDefinition ? pollDefinition.tags : ''),
-      questions: new FormArray([])
-    });
-
-    if (!pollDefinition) {
-      this.addQuestion();
-      this.addAnswer(0);
-    } else {
-      if (pollDefinition.questions) {
-        pollDefinition.questions.forEach((question, questionIndex) => {
-          this.addQuestion(question);
-
-          if (question.answers) {
-            question.answers.forEach((answer) => {
-              this.addAnswer(questionIndex, answer);
-            });
-          } else {
-            this.addAnswer(questionIndex);
-          }
+    // IF the poll definition id is present and valid
+    // then get the poll definition from the server
+    // and update the form values
+    if (this.isEditing && this.id !== 0) {
+      this.dataService
+        .getPollDefinition$(this.activeRoute.snapshot.params['id'])
+        .subscribe((data: PollDefinition) => {
+          this.pollDefinition = data;
+          this.updateForm(this.pollDefinition);
+          this.isLoading = false;
         });
-      }
-      else {
-        this.addQuestion();
-        this.addAnswer(0);
-      }
+    } else {
+      this.pollDefinition.id = 0;
+      this.isLoading = false;
     }
   }
 
+  // Initialise the form with default data
+  initForm(): void {
+    this.pollDefinitionForm = new FormGroup({
+      id: new FormControl(0),
+      name: new FormControl('', Validators.required),
+      description: new FormControl(''),
+      theme: new FormControl(''),
+      owner: new FormControl(''),
+      createDate: new FormControl(''),
+      isPublished: new FormControl(true),
+      questions: new FormArray([]),
+    });
+  }
+
+  // Update the form data fields
+  updateForm(pollDefinition: PollDefinition): void {
+    this.pollDefinitionForm.patchValue({
+      id: pollDefinition.id,
+      name: pollDefinition.name,
+      description: pollDefinition.description,
+      theme: pollDefinition.theme,
+      owner: pollDefinition.owner,
+      createDate: pollDefinition.createDate,
+      isPublished: pollDefinition.isPublished,
+    });
+
+    if (this.pollDefinition.questions) {
+      this.pollDefinition.questions.forEach((question, questionIndex) => {
+        this.addQuestion(question);
+
+        if (question.answers) {
+          question.answers.forEach(answer => {
+            this.addAnswer(questionIndex, answer);
+          });
+        } else {
+          this.addAnswer(questionIndex);
+        }
+      });
+    }
+  }
+
+  // Getter for the form questions FormArray
   get questions(): FormArray {
     return this.pollDefinitionForm.get('questions') as FormArray;
   }
 
+  // Add a question to the form
   addQuestion(question?: QuestionDefinition): void {
-
-    const answers = new FormArray([]);
-    const questionText = question ? question.questionText : '';
-
     (<FormArray>this.pollDefinitionForm.controls['questions']).push(
       new FormGroup({
-        questionText: new FormControl(questionText, Validators.required),
+        id: new FormControl(question ? question.id : 0),
+        questionText: new FormControl(
+          question ? question.questionText : '',
+          Validators.required
+        ),
         isDisabled: new FormControl(question ? question.isDisabled : false),
-        answers: answers
+        hasCorrectAnswer: new FormControl(false),
+        answers: new FormArray([]),
       })
     );
   }
 
+  // Add an answer to the form
   addAnswer(questionIndex: number, answer?: AnswerDefinition): void {
-
-    const answerText = answer ? answer.answerText : '';
-    const imagePath = answer ? answer.imagePath : '';
-
-
-    (<FormArray>(<FormGroup>(<FormArray>this.pollDefinitionForm.controls['questions'])
-      .controls[questionIndex]).controls['answers']).push(
-        new FormGroup({
-          answerText: new FormControl(answerText, Validators.required),
-          imagePath: new FormControl(imagePath),
-          isDisabled: new FormControl(answer ? answer.isDisabled : false)
-        })
-      );
+    (<FormArray>(
+      (<FormGroup>(
+        (<FormArray>this.pollDefinitionForm.controls['questions']).controls[questionIndex]
+      )).controls['answers']
+    )).push(
+      new FormGroup({
+        id: new FormControl(answer ? answer.id : 0),
+        answerText: new FormControl(answer ? answer.answerText : '', Validators.required),
+        imagePath: new FormControl(answer ? answer.imagePath : ''),
+        isDisabled: new FormControl(answer ? answer.isDisabled : false),
+      })
+    );
   }
 
+  // Save the updated data to the server
   onSubmit() {
-    console.warn(this.pollDefinitionForm.value);
 
-    const newPollDefinition: PollDefinition = Object.assign({}, this.pollDefinitionForm.value);
-    newPollDefinition.questions = [];
-
-    // Save the data (Make sure to create a deep copy of
+    // Make sure to create a deep copy of
     // the form - model or weird things will happen!
-    // There is probably a more elegent way to do this, but
+    //
+    // TODO: There is probably a more elegent way to do this, but
     // I haven't found it yet
-    const questionArray: FormArray = (<FormArray>this.pollDefinitionForm.controls['questions']);
+    this.pollDefinition = Object.assign({}, this.pollDefinitionForm.value);
+    this.pollDefinition.questions = [];
+
+    const questionArray: FormArray = <FormArray>(
+      this.pollDefinitionForm.controls['questions']
+    );
 
     for (let i = 0; i < questionArray.length; i++) {
       const q = new QuestionDefinition();
       q.answers = [];
+      q.id = questionArray.at(i).get('id').value;
       q.questionText = questionArray.at(i).get('questionText').value;
+      q.isDisabled = questionArray.at(i).get('isDisabled').value;
+      q.hasCorrectAnswer = questionArray.at(i).get('hasCorrectAnswer').value;
 
       const answers = questionArray.at(i).get('answers') as FormArray;
       for (let j = 0; j < answers.length; j++) {
         const a = new AnswerDefinition();
+        a.id = answers.at(j).get('id').value;
         a.answerText = answers.at(j).get('answerText').value;
+        a.imagePath = answers.at(j).get('imagePath').value;
+        a.isDisabled = answers.at(j).get('isDisabled').value;
 
         q.answers.push(a);
       }
 
-      newPollDefinition.questions.push(q);
+      this.pollDefinition.questions.push(q);
     }
 
-    console.log(newPollDefinition);
-
-    this.repository.savePollDefinition(newPollDefinition);
-
-    this.router.navigateByUrl("/admin/poll-definitions");
-
+    this.dataService.updatePollDefinition$(this.pollDefinition).subscribe(
+      () => {
+        this.toastr.success(`Poll Definition Updated successfully!`);
+        this.router.navigateByUrl('/admin/poll-definitions');
+      },
+      error => {
+        this.toastr.error(error);
+      }
+    );
   }
 
+  onCancel() {
+    this.router.navigateByUrl('/admin/poll-definitions');
+  }
 }

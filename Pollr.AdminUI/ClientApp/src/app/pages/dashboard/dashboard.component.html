@@ -1,31 +1,49 @@
 <div *ngIf="!isLoading && polls.length > 0">
-  <div class="row dashboard-entry" *ngFor="let poll of polls; let i=index">
-
+  <div class="row dashboard-entry" *ngFor="let poll of polls; let i = index">
     <div class="col-md-9">
-      <a routerLink="/poll-details/{{poll.id}}"><h1 class="text-primary">{{poll.name}}</h1></a>
-      <h5 class="text-primary">{{poll.description}}</h5>
+      <a routerLink="/poll-details/{{poll.id}}"><h1 class="text-primary">{{ poll.name }}</h1></a>
+      <h5 class="text-primary">{{ poll.description }}</h5>
       <p class="text-primary">
-        Event date: <strong>{{ poll.pollDate | date: mediumDate }}</strong><br />
-        Event code: <strong>{{poll.handle}}</strong>
+        Event date: <strong>{{ poll.pollDate | date }}</strong><br />
+        Event code: <strong>{{ poll.handle }}</strong>
       </p>
-      <h5 class="text-muted">Current question: <strong>{{poll.questions[poll.currentQuestion-1].questionText}} (Q{{poll.currentQuestion}})</strong></h5>
-
+      <h5 class="text-muted">
+        Current question:
+        <strong>
+          {{ poll.questions[poll.currentQuestion - 1].questionText }} (Q{{
+            poll.currentQuestion
+          }})
+        </strong>
+      </h5>
     </div>
     <div class="col-md-3">
       <p>
-        <button type="button" class="btn btn-primary btn-sq" (click)=showVoteStatus(i)>
+        <button type="button"
+                class="btn btn-primary btn-sq" (click)="showVoteStatus(i)"
+                ngbTooltip="Show vote information and status">
           <i class="fa fa-info fa-3x"></i>
         </button>
-        <button type="button" class="btn btn-outline-success btn-sq" *ngIf="poll.status == 'closed'" (click)=startPoll(i)>
+        <button type="button"
+                class="btn btn-outline-success btn-sq"
+                *ngIf="poll.status == pollStatus.Closed"
+                ngbTooltip="Open the poll"
+                (click)="startPoll(i)">
           <i class="fa fa-play fa-3x"></i>
         </button>
-        <button type="button" class="btn btn-outline-danger btn-sq" *ngIf="poll.status == 'open'" (click)=stopPoll(i)>
+        <button type="button"
+                class="btn btn-outline-danger btn-sq"
+                *ngIf="poll.status == pollStatus.Open"
+                ngbTooltip="Close the poll"
+                (click)="stopPoll(i)">
           <i class="fa fa-square fa-3x"></i>
         </button>
-        <button type="button" class="btn btn-primary btn-sq" (click)=nextQuestion(i)>
+        <button type="button" class="btn btn-primary btn-sq" (click)="nextQuestion(i)"
+                [disabled]="poll.currentQuestion === poll.questions.length"
+                ngbTooltip="Show the next question">
           <i class="fa fa-step-forward fa-3x"></i>
         </button>
-        <button type="button" class="btn btn-primary btn-sq" (click)=showResults(i)>
+        <button type="button" class="btn btn-primary btn-sq" (click)="showResults(i)"
+                ngbTooltip="Show the results for this poll">
           <i class="fa fa-poll-h fa-3x"></i>
         </button>
       </p>

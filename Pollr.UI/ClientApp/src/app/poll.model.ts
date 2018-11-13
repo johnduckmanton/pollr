@@ -1,11 +1,11 @@
 import { PollDefinition } from './poll-definition.model';
 
 export class Poll {
-  id: string;
+  id: number;
   name: string;
   handle: string;
   description: string;
-  status: string;
+  status: PollStatus;
   pollDefinitionId: string;
   pollDate: Date;
   currentQuestion: number;
@@ -24,4 +24,10 @@ export class Poll {
       ];
     }
   ];
+}
+
+export enum PollStatus {
+  Undefined = 0,
+  Open,
+  Closed,
 }

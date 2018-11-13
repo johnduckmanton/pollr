@@ -125,6 +125,7 @@ namespace pollr.api.Controllers
                 await _pollDefinitionRepository.UpdatePollDefinitionAsync(pollDefinition);
                 _logger.LogInformation(LoggingEvents.UpdatePollDefinition, $"Poll Definition {id} Updated", pollDefinition.Id);
 
+                // return new NoContentResult();
                 return new NoContentResult();
             }
             catch (Exception e) {

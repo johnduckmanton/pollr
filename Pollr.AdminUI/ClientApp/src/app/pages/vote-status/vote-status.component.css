@@ -5,15 +5,21 @@
   counter-reset: list;
 }
 
-  /*.answers ol li {
+/*.answers ol li {
     margin: 0 0 5px;
     padding: 0;
   }*/
 
-  .answers ol li:before {
-    counter-increment: list;
-    content: counter(list, upper-alpha) ". ";
-    color: #008cba;
-    font-size: large;
-    font-weight: 700;
-  }
+.answers ol li:before {
+  counter-increment: list;
+  content: counter(list, upper-alpha) '. ';
+  color: #008cba;
+  font-size: large;
+  font-weight: 700;
+}
+
+.answer-image {
+  width: 15%;
+  height: 15%;
+  margin-left: 2rem;
+}

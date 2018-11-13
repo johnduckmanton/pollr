@@ -59,13 +59,6 @@ namespace pollr.api
                     .AllowCredentials();
             }));
 
-            services.AddMvc()
-                .AddJsonOptions(options => {
-                    options.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
-                    options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
-                })
-                .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
-
             // Add a SignalR hub:
             // In production we will typically use an Azure Managed hub, but in development
             // we''l just create a local hub
@@ -74,15 +67,24 @@ namespace pollr.api
                 useAzureSignalRManagedHub = false;
             }
 
-            if (useAzureSignalRManagedHub) {
+            if (useAzureSignalRManagedHub)
+            {
                 _logger.LogInformation("### Using Azure Managed SignaR hub.");
                 services.AddSignalR()
                         .AddAzureSignalR(Configuration.GetSection("SignalR:Azure:SignalR:ConnectionString").Value);
             }
-            else {
+            else
+            {
                 _logger.LogInformation("### Using local SignaR hub.");
                 services.AddSignalR();
             }
+
+            services.AddMvc()
+                .AddJsonOptions(options => {
+                    options.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+                    options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+                })
+                .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
             services.AddTransient<IPollDefinitionRepository, PollDefinitionRepository>();
             services.AddTransient<IPollRepository, PollRepository>();

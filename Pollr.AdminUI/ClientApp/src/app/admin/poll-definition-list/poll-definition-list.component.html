@@ -3,7 +3,7 @@
 <div *ngIf="!isLoading">
   <div class="row">
     <div class="col-md-12">
-      <button type="button" class="btn btn-success mb-3" (click)="createPollDefinition()">
+      <button type="button" class="btn btn-success mt-3 mb-3" (click)="createPollDefinition()">
         <i class="fa fa-plus"></i> New Poll Definition
       </button>
     </div>
@@ -22,29 +22,65 @@
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let definition of pollDefinitions; let i=index">
+            <tr *ngFor="let definition of pollDefinitions; let i = index">
               <th scope="row">
                 <p class="text-primary">
-                  {{definition.name}}<br />
-                  <small>Expires on {{definition.expiryDate | date:'medium' }}</small>
+                  <a class="link-text text-primary" (click)=" editPollDefinition(definition.id)">{{ definition.name }}</a>
+                  <span *ngIf="definition.owner"><br/><small>Owned by {{ definition.owner }}</small></span>
                 </p>
               </th>
-              <td width="50%">{{definition.description}}</td>
-              <td align="center"><i class="fa fa-check text-primary" *ngIf="definition.isPublished"></i></td>
+              <td width="50%">{{ definition.description }}</td>
+              <td align="center">
+                <i class="fa fa-check text-primary" *ngIf="definition.isPublished"></i>
+              </td>
               <td>
                 <span>
-                  <!--<button type="button" class="btn btn-primary btn-sm mr-1" (click)="editPollDefinition(definition.id)"> -->
-                  <button type="button" class="btn btn-primary btn-sm mr-1" (click)="editPollDefinition(definition.id)" placement="top" ngbTooltip="Edit">
+                  <button
+                    type="button"
+                    class="btn btn-primary btn-sm mr-1"
+                    (click)="editPollDefinition(definition.id)"
+                    placement="top"
+                    ngbTooltip="Edit"
+                  >
                     <i class="fa fa-edit"></i>
                   </button>
-                  <button type="button" class="btn btn-danger btn-sm mr-1" (click)="deletePollDefinition(definition.id)" placement="top" ngbTooltip="Delete">
+                  <button
+                    type="button"
+                    class="btn btn-danger btn-sm mr-1"
+                    (click)="deletePollDefinition(definition)"
+                    placement="top"
+                    ngbTooltip="Delete"
+                  >
                     <i class="fa fa-trash"></i>
                   </button>
-                  <button type="button" class="btn btn-warning btn-sm mr-1" (click)="publishPollDefinition(definition.id)" placement="top" ngbTooltip="Publish" *ngIf="!definition.isPublished">
+                  <button
+                    type="button"
+                    class="btn btn-warning btn-sm mr-1"
+                    (click)="publishPollDefinition(definition.id)"
+                    placement="top"
+                    ngbTooltip="Publish"
+                    *ngIf="!definition.isPublished"
+                  >
                     <i class="fa fa-upload"></i>
                   </button>
-                  <button type="button" class="btn btn-warning btn-sm mr-1" (click)="unpublishPollDefinition(definition.id)" placement="top" ngbTooltip="Unpublish" *ngIf="definition.isPublished">
+                  <button
+                    type="button"
+                    class="btn btn-warning btn-sm mr-1"
+                    (click)="unpublishPollDefinition(definition.id)"
+                    placement="top"
+                    ngbTooltip="Unpublish"
+                    *ngIf="definition.isPublished"
+                  >
                     <i class="fa fa-download"></i>
+                  </button>
+                  <button
+                    type="button"
+                    class="btn btn-primary btn-sm mr-1"
+                    (click)="createPoll(definition)"
+                    placement="top"
+                    ngbTooltip="Create a poll based on this definition"
+                  >
+                    <i class="fa fa-poll-h"></i>
                   </button>
                 </span>
               </td>

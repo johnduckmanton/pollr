@@ -1,12 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
-
 import { NgxSpinnerService } from 'ngx-spinner';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
-import { environment } from '../../environments/environment';
-import { Poll } from '../poll.model';
+import { Poll, PollStatus } from '../poll.model';
 import { PollDefinition } from '../poll-definition.model';
 import { PollDataService } from '../poll-data.service';
 import { MessageService } from '../message.service';
@@ -28,11 +26,12 @@ export class VoteComponent implements OnInit {
       : this.currentPollDef.questions[this.currentQuestionIndex];
   isLoading = false;
   isPollOpen = true;
+  canSendMessage: boolean;
+
   votedMessage: string;
   hasVoted = false;
   selectedAnswer: string;
   selectedAnswerIdx: number = -1;
-  canSendMessage: boolean;
 
   constructor(
     private spinner: NgxSpinnerService,
@@ -61,7 +60,7 @@ export class VoteComponent implements OnInit {
       .subscribe(poll => {
         this.poll = poll;
         if (this.poll) {
-          if (this.poll.status !== 'open') {
+          if (this.poll.status !== PollStatus.Open) {
             this.isPollOpen = false;
             this.messageService.add('Sorry. This poll is now closed.');
           }
@@ -84,6 +83,7 @@ export class VoteComponent implements OnInit {
     this.currentQuestion = this.poll.questions[
       this.currentQuestionIndex - 1
     ];
+    this.hasVoted = false;
   }
 
   //
@@ -98,15 +98,22 @@ export class VoteComponent implements OnInit {
   //
   vote(votedMessageDlg: any) {
 
+    console.log(this.canSendMessage);
+
     if (this.canSendMessage) {
       this.spinner.show();
-      this.signalrService.vote(this.poll.id, this.currentQuestionIndex, this.selectedAnswerIdx + 1);
-      this.spinner.hide();
-    } 
+      this.signalrService.vote(this.poll.id, this.currentQuestionIndex, this.selectedAnswerIdx + 1)
+        .then((data) => {
+          console.log(data);
+          let result = data.statusCode;
+          console.log(result);
+          this.spinner.hide();
 
-    this.hasVoted = true;
-    this.votedMessage = `You have voted for ${this.currentQuestion.answers[this.selectedAnswerIdx].answerText}.`;
-    this.modalService.open(votedMessageDlg, { size: 'sm', centered: true });
+          this.hasVoted = true;
+          this.votedMessage = `You have voted for ${this.currentQuestion.answers[this.selectedAnswerIdx].answerText}.`;
+          this.modalService.open(votedMessageDlg, { size: 'sm', centered: true });
+        });
+    }
   }
 
   //

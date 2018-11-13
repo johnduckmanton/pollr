@@ -2,12 +2,14 @@ import { EventEmitter, Injectable } from '@angular/core';
 import { HubConnection, HubConnectionBuilder } from '@aspnet/signalr';
 
 import { ConfigurationService } from './core/configuration/configuration.service';
+import { Promise } from 'q';
+import { VoteResult } from './shared/vote-result.model';
 
 
 // Signalr message types
 const broadcastMessage = 'Broadcast';
 const connectionCountMessage = 'ConnectionCount';
-const newConnectionMessage= 'NewConnection';
+const newConnectionMessage = 'NewConnection';
 const loadQuestionMessage: string = 'LoadQuestion';
 
 @Injectable()
@@ -48,7 +50,7 @@ export class SignalRService {
       })
       .catch(err => {
         console.log('Error while establishing connection, retrying...');
-        setTimeout(this.startConnection(), 5000);
+        setTimeout(this.startConnection(), 10000);
       });
   }
 
@@ -72,8 +74,17 @@ export class SignalRService {
 
   }
 
-  public vote(pollId: string, question, answer): any {
-    this._hubConnection.invoke('Vote', pollId, question, answer);
+  public vote(pollId: number, question, answer) {
+
+    //this._hubConnection
+    //  .invoke('Vote', pollId, question, answer)
+    //  .then((data) => { result = data.statusCode; console.log(result); })
+    //  .catch((error) => { console.log(error); });
+
+    return this._hubConnection
+      .invoke('Vote', pollId, question, answer)
+      .catch((error) => { console.log(error); });
+
   }
 
   public disconnect() {

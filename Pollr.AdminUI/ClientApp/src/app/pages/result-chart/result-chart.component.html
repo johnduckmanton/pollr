@@ -7,7 +7,9 @@
         <div class="progress-group">
           <div class="progress-group-header align-items-end">
             <div>{{ answer?.answerText }}</div>
-            <div class="ml-auto text-primary mr-2"><strong>{{ answer?.voteCount }} votes</strong></div>
+            <div class="ml-auto text-primary mr-2">
+              <strong>{{ answer?.voteCount }} votes</strong>
+            </div>
             <div class="text-muted small" *ngIf="question.totalVotes > 0">
               ({{ answer.voteCount / question.totalVotes | percent }})
             </div>
@@ -19,6 +21,8 @@
         </div>
       </div>
     </div>
-    <div class="text-muted"><small>{{ question?.totalVotes }} votes cast</small></div>
+    <div class="text-muted">
+      <small>{{ question?.totalVotes }} votes cast</small>
+    </div>
   </div>
 </div>

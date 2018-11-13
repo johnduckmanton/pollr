@@ -3,23 +3,20 @@
  *  All rights reserved.
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { NgModule } from '@angular/core';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { TagInputModule } from 'ngx-chips';
-
+import { PollDataService } from '../core/poll-data.service';
 import { AdminRoutingModule } from './admin-routing.module';
-// import { AnswerFormComponent } from './poll-definition-form/answer-form/answer-form.component';
-// import { AnswerListComponent } from './poll-definition-form/answer-list/answer-list.component';
-import { CreatePollDefinitionComponent } from './create-poll-definition/create-poll-definition.component';
+import { CreatePollComponent } from './create-poll/create-poll.component';
 import { PollDefinitionFormComponent } from './poll-definition-form/poll-definition-form.component';
 import { PollDefinitionListComponent } from './poll-definition-list/poll-definition-list.component';
+
 // import { QuestionFormComponent } from './poll-definition-form/question-form/question-form.component';
 // import { QuestionListComponent } from './poll-definition-form/question-list/question-list.component';
-import { PollDefinitionService } from './poll-definition.service';
-
 
 @NgModule({
   imports: [
@@ -29,19 +26,17 @@ import { PollDefinitionService } from './poll-definition.service';
     HttpClientModule,
     NgbModule,
     ReactiveFormsModule,
-    TagInputModule
+    TagInputModule,
   ],
   declarations: [
     // AnswerListComponent,
     // AnswerFormComponent,
-    CreatePollDefinitionComponent,
+    CreatePollComponent,
     PollDefinitionListComponent,
     PollDefinitionFormComponent,
     // QuestionFormComponent,
     // QuestionListComponent
   ],
-  providers: [
-    PollDefinitionService
-  ]
+  providers: [PollDataService],
 })
-export class AdminModule { }
+export class AdminModule {}
