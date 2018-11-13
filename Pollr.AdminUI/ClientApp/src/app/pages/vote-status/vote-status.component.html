@@ -1,70 +1,50 @@
-<div class="row">
-  <div class="col-md-12">
-    <h1 class="text-primary text-center mb-5">{{ currentQuestion?.questionText }}</h1>
-  </div>
-</div>
-<div class="row">
-  <div class="col-md-6">
-    <div class="answers">
-      <ol type="A">
-        <li *ngFor="let answer of currentQuestion?.answers; let i = index">
-          <div class="d-flex w-100 justify-content-between mb-3">
-            <h3 class="mb-1">
-              <strong>{{ answer.answerText }}</strong>
-            </h3>
-            <img
-              class="answer-image float-left img-thumbnail responsive"
-              src="{{answer.imagePath}}"
-              *ngIf="answer.imagePath != ''"
-            />
-          </div>
-        </li>
-      </ol>
-    </div>
-  </div>
-  <div class="col-md-6">
-    <app-result-chart
-      [question]="currentQuestion"
-      [displayQuestionText]="false"
-    ></app-result-chart>
-  </div>
-</div>
-
-<p class="lead mt-2">To cast your vote go to</p>
-
-<div class="row">
-  <div class="col-md-10">
-    <h1>
-      <a class="card-link" href="{{pollVoteUrl}}">{{ pollVoteUrl }}</a>
-    </h1>
-    <h5>
-      <span class="user-count text-primary"
-        ><strong>{{ connectedUserCount }}</strong></span
-      >
-      user(s) connected
-    </h5>
-  </div>
-  <div class="col-md-2">
-    <div class="qrcode float-right">
-      <ngx-qrcode
-        [qrc-element-type]="qrcodeElementType"
-        [qrc-value]="pollVoteUrl"
-        qrc-class="qrcode"
-        qrc-errorCorrectionLevel="L"
-      >
-      </ngx-qrcode>
-    </div>
-  </div>
-</div>
-<!--
+<div *ngIf="!isLoading">
   <div class="row">
-    <div class="col-md-8">
-      <h5>
-        <span class="user-count text-primary"
-          ><strong>{{ connectedUserCount }}</strong></span
-        >
-        user(s) connected
-      </h5>
+    <div class="col-md-12">
+      <h1 class="text-primary text-center mb-5">{{ currentQuestion?.questionText }}</h1>
     </div>
   </div>
--->
+  <div class="row">
+    <div class="col-md-6">
+      <div class="answers">
+        <ol type="A">
+          <li *ngFor="let answer of currentQuestion?.answers; let i = index">
+            <div class="d-flex w-100 justify-content-between mb-3">
+              <h3 class="mb-1">
+                <strong>{{ answer.answerText }}</strong>
+              </h3>
+              <img class="answer-image float-left img-thumbnail responsive"
+                   src="{{answer.imagePath}}"
+                   *ngIf="answer.imagePath != ''" />
+            </div>
+          </li>
+        </ol>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <app-result-chart [question]="currentQuestion"
+                        [displayQuestionText]="false"></app-result-chart>
+    </div>
+  </div>
+
+  <div class="col-sm-6 col-md-6 offset-md-6 col-xs-6">
+
+    <div class="thumbnail" style="border:none; background:white;">
+
+      <div class="col-sm-12 col-md-12 col-xs-12 image-container">
+        <div class="qrcode float-right">
+          <ngx-qrcode [qrc-element-type]="qrcodeElementType"
+                      [qrc-value]="pollVoteUrl"
+                      qrc-class="qrcode"
+                      qrc-errorCorrectionLevel="L">
+            </ngx-qrcode>
+        </div>
+      </div>
+
+      <div class="col-sm-12 col-md-12 col-xs-12">
+
+        <h3>To cast your vote go to <a href="{{ pollVoteUrl }}">{{ pollVoteUrl }}</a> and enter code <strong>{{poll.handle}}</strong></h3>
+      </div>
+    </div>
+
+  </div>

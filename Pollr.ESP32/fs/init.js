@@ -16,7 +16,7 @@ let BTN1 = 39,
 let LCD_BACKLIGHT = 32;
 
 let devID = Cfg.get('device.id');
-let greeting = 'Welcome to Pollr.Net';
+let greeting = 'Welcome to Pollr';
 let btnc = [-1, 0, 0, 0];
 let netStatus = null;
 let cloudName = null;
@@ -131,6 +131,11 @@ function printGreeting() {
   } else {
     clearLine(5);
   }
+  printCentered(
+    ILI9341.getScreenWidth() / 2,
+    ILI9341.line(6),
+    'Please make your selection'
+  );
 }
 
 function printMessage(messageText) {

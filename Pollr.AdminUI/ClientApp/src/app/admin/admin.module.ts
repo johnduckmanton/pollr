@@ -14,6 +14,8 @@ import { AdminRoutingModule } from './admin-routing.module';
 import { CreatePollComponent } from './create-poll/create-poll.component';
 import { PollDefinitionFormComponent } from './poll-definition-form/poll-definition-form.component';
 import { PollDefinitionListComponent } from './poll-definition-list/poll-definition-list.component';
+import { PollFormComponent } from './poll-form/poll-form.component';
+import { PollListComponent } from './poll-list/poll-list.component';
 
 // import { QuestionFormComponent } from './poll-definition-form/question-form/question-form.component';
 // import { QuestionListComponent } from './poll-definition-form/question-list/question-list.component';
@@ -34,6 +36,8 @@ import { PollDefinitionListComponent } from './poll-definition-list/poll-definit
     CreatePollComponent,
     PollDefinitionListComponent,
     PollDefinitionFormComponent,
+    PollFormComponent,
+    PollListComponent,
     // QuestionFormComponent,
     // QuestionListComponent
   ],

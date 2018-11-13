@@ -1,0 +1,188 @@
+<div class="container" *ngIf="!isLoading">
+  <h3>{{ isEditing ? 'Edit' : 'Create' }} Poll</h3>
+
+  <form [formGroup]="pollForm" (ngSubmit)="onSubmit()">
+    <div class="card" style="width: 100%;">
+      <div class="card-body">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="form-group">
+              <label for="name">Name</label>
+              <input type="text"
+                     class="form-control"
+                     id="name"
+                     placeholder="Enter name"
+                     formControlName="name" />
+              <small id="nameHelp" class="form-text text-muted">Enter a unique name for your poll.</small>
+              <div class="invalid-feedback">Name is required.</div>
+            </div>
+
+            <div class="form-group">
+              <label for="name">Short Code</label>
+              <input type="text"
+                     class="form-control"
+                     id="handle"
+                     placeholder="Enter short code"
+                     formControlName="handle" />
+              <small id="nameHelp" class="form-text text-muted">Enter a unique name for short code your poll.</small>
+              <div class="invalid-feedback">Short code is required.</div>
+            </div>
+
+            <div class="form-group">
+              <label for="description">Description</label>
+              <textarea class="form-control"
+                        id="description"
+                        formControlName="description"></textarea>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col"><hr /></div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-6">
+          </div>
+
+          <div class="col-md-6">
+            <!--<div class="form-group">
+                <label for="theme">Theme</label>
+                <select class="form-control" formControlName="theme">
+                  <option selected value="default">Default</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="owner">Owner</label>
+                <input type="text" class="form-control" id="owner" formControlName="owner" />
+              </div> -->
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-12">
+            <h5>Questions</h5>
+
+            <!-- QUESTION LIST -->
+            <button type="button"
+                    class="btn btn-primary btn-sm mt-2 mb-2"
+                    (click)="addQuestion()">
+              <i class="fa fa-plus"></i> Add Question
+            </button>
+
+            <div class="panel panel-default">
+              <div class="panel-body" formArrayName="questions">
+                <table class="table borderless">
+                  <tbody>
+                    <tr *ngFor="let question of questions.controls; let i = index"
+                        formGroupName="{{i}}">
+                      <td style="width:90%">
+                        <div class="form-group">
+                          <textarea class="form-control"
+                                    [attr.id]="'questionText' + i"
+                                    formControlName="questionText"
+                                    placeholder="Question text"
+                                    required></textarea>
+                          <div class="invalid-feedback">This field is required.</div>
+                        </div>
+
+                        <!-- ANSWERS -->
+                        <button type="button"
+                                class="btn btn-primary btn-sm mt-2 mb-2"
+                                (click)="addAnswer(i)">
+                          <i class="fa fa-plus"></i> Add Answer
+                        </button>
+
+                        <div formArrayName="answers">
+                          <table class="table borderless">
+                            <tbody>
+                              <tr *ngFor="
+                                  let answer of question.controls['answers'].controls;
+                                  let j = index
+                                "
+                                  formGroupName="{{j}}">
+                                <td style="width:90%">
+                                  <div class="form-group">
+                                    <input type="text"
+                                           class="form-control"
+                                           [attr.id]="'answerText' + j"
+                                           formControlName="answerText"
+                                           placeholder="Answer text"
+                                           required />
+                                    <div class="invalid-feedback">
+                                      This field is required.
+                                    </div>
+                                  </div>
+
+                                  <div class="form-group">
+                                    <input type="text"
+                                           class="form-control"
+                                           [attr.id]="'imagePath' + j"
+                                           formControlName="imagePath"
+                                           placeholder="Image URL" />
+                                    <small [attr.id]="'imagePath' + j + 'help'"
+                                           class="form-text text-muted">
+                                      Enter a URL to an image to display with this
+                                      answer.
+                                    </small>
+                                  </div>
+                                </td>
+                                <td class="text-right">
+                                  <div class="form-check form-check-inline">
+                                    <input class="form-check-input"
+                                           type="checkbox"
+                                           [attr.id]="'isDisabled' + j"
+                                           formControlName="isDisabled" />
+                                    <label class="form-check-label"
+                                           [attr.for]="'isDisabled' + j">disabled</label>
+                                  </div>
+                                </td>
+                                <td class="text-right">
+                                  <img src="/assets/icons/remove.svg"
+                                       alt=""
+                                       width="24"
+                                       height="24"
+                                       (click)="question.controls['answers'].removeAt(j)" />
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                      </td>
+                      <td class="text-right">
+                        <div class="form-check form-check-inline">
+                          <input class="form-check-input"
+                                 type="checkbox"
+                                 [attr.id]="'isDisabled' + i"
+                                 formControlName="isDisabled" />
+                          <label class="form-check-label" [attr.for]="'isDisabled' + i">disabled</label>
+                        </div>
+                      </td>
+                      <td class="text-right">
+                        <img src="/assets/icons/remove.svg"
+                             alt=""
+                             width="24"
+                             height="24"
+                             (click)="pollForm.controls['questions'].removeAt(i)" />
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card-footer">
+        <button type="submit"
+                class="btn btn-success"
+                [disabled]="!pollForm.valid">
+          {{ isEditing ? 'Save Changes' : 'Create' }}
+        </button>
+        <button class="btn btn-secondary ml-3" (click)="onCancel()">Cancel</button>
+      </div>
+    </div>
+  </form>
+</div>

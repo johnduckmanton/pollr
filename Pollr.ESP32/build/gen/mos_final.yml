@@ -7,150 +7,150 @@ platforms:
 author: mongoose-os
 description: A JS-enabled demo application for M5stack
 sources:
-- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_298354764/src/main.c
-- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_298354764/build/gen/mgos_deps_init.c
-- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_298354764/libs/i2c/src/mgos_i2c.c
-- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_298354764/libs/i2c/esp32/src/esp32_i2c_master.c
-- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_298354764/libs/atca/src/mgos_atca.c
-- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_298354764/libs/atca/cryptoauthlib/lib/atca_cfgs.c
-- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_298354764/libs/atca/cryptoauthlib/lib/atca_command.c
-- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_298354764/libs/atca/cryptoauthlib/lib/atca_device.c
-- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_298354764/libs/atca/cryptoauthlib/lib/atca_iface.c
-- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_298354764/libs/atca/cryptoauthlib/lib/basic/atca_basic.c
-- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_298354764/libs/atca/cryptoauthlib/lib/basic/atca_helpers.c
-- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_298354764/libs/atca/cryptoauthlib/lib/host/atca_host.c
-- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_298354764/libs/vfs-common/src/mgos_vfs.c
-- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_298354764/libs/vfs-common/src/mgos_vfs_dev.c
-- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_298354764/libs/vfs-common/src/mgos_vfs_internal.c
-- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_298354764/libs/vfs-common/src/esp32/esp32_fs.c
-- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_298354764/libs/vfs-common/src/esp32/esp32_fs_crypt.c
-- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_298354764/libs/vfs-common/src/esp32/esp32_vfs_dev_partition.c
-- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_298354764/libs/vfs-fs-lfs/src/mgos_vfs_lfs.c
-- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_298354764/libs/vfs-fs-lfs/src/littlefs/lfs.c
-- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_298354764/libs/vfs-fs-lfs/src/littlefs/lfs_util.c
-- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_298354764/libs/vfs-fs-spiffs/src/mgos_vfs_fs_spiffs.c
-- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_298354764/libs/vfs-fs-spiffs/src/spiffs/spiffs_cache.c
-- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_298354764/libs/vfs-fs-spiffs/src/spiffs/spiffs_check.c
-- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_298354764/libs/vfs-fs-spiffs/src/spiffs/spiffs_gc.c
-- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_298354764/libs/vfs-fs-spiffs/src/spiffs/spiffs_hydrogen.c
-- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_298354764/libs/vfs-fs-spiffs/src/spiffs/spiffs_nucleus.c
-- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_298354764/libs/core/src/mgos_core.c
-- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_298354764/libs/mqtt/src/mgos_mqtt.c
-- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_298354764/libs/shadow/src/mgos_shadow.c
-- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_298354764/libs/aws/src/mgos_aws.c
-- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_298354764/libs/aws/src/mgos_aws_greengrass.c
-- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_298354764/libs/aws/src/mgos_aws_shadow.c
-- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_298354764/libs/sntp/src/mgos_sntp.c
-- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_298354764/libs/azure/src/mgos_azure.c
-- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_298354764/libs/azure/src/mgos_azure_cm.c
-- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_298354764/libs/azure/src/mgos_azure_dm.c
-- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_298354764/libs/azure/src/mgos_azure_sas.c
-- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_298354764/libs/azure/src/mgos_azure_shadow.c
-- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_298354764/libs/rpc-common/src/mg_rpc.c
-- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_298354764/libs/rpc-common/src/mg_rpc_channel.c
-- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_298354764/libs/rpc-common/src/mg_rpc_channel_http.c
-- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_298354764/libs/rpc-common/src/mgos_rpc.c
-- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_298354764/libs/rpc-ws/src/mg_rpc_channel_ws.c
-- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_298354764/libs/rpc-ws/src/mgos_rpc_ws.c
-- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_298354764/libs/gcp/src/mgos_gcp.c
-- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_298354764/libs/http-server/src/mgos_http_server.c
-- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_298354764/libs/spi/src/mgos_spi.c
-- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_298354764/libs/spi/src/mgos_spi_mjs.c
-- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_298354764/libs/spi/src/esp32/esp32_spi_master.c
-- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_298354764/libs/ili9341-spi/src/mgos_ili9341.c
-- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_298354764/libs/ili9341-spi/src/mgos_ili9341_font.c
-- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_298354764/libs/ili9341-spi/third_party/adafruit/src/mgos_ili9341_primitives.c
-- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_298354764/libs/mjs/src/mos_mjs.c
-- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_298354764/modules/mjs/mjs.c
-- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_298354764/libs/mjs/esp32/src/esp32_mjs.c
-- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_298354764/libs/rpc-azure/src/mgos_rpc_channel_azure_dm.c
-- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_298354764/libs/rpc-mqtt/src/mgos_rpc_channel_mqtt.c
-- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_298354764/libs/rpc-service-config/src/mgos_service_config.c
-- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_298354764/libs/rpc-service-fs/src/mgos_service_filesystem.c
-- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_298354764/libs/rpc-uart/src/mgos_rpc_channel_uart.c
-- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_298354764/libs/watson/src/mgos_watson.c
-- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_298354764/libs/wifi/src/mgos_wifi.c
-- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_298354764/libs/wifi/src/mjs_wifi.c
-- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_298354764/libs/wifi/esp32/src/esp32_wifi.c
+- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_192861275/src/main.c
+- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_192861275/build/gen/mgos_deps_init.c
+- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_192861275/libs/i2c/src/mgos_i2c.c
+- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_192861275/libs/i2c/esp32/src/esp32_i2c_master.c
+- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_192861275/libs/atca/src/mgos_atca.c
+- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_192861275/libs/atca/cryptoauthlib/lib/atca_cfgs.c
+- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_192861275/libs/atca/cryptoauthlib/lib/atca_command.c
+- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_192861275/libs/atca/cryptoauthlib/lib/atca_device.c
+- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_192861275/libs/atca/cryptoauthlib/lib/atca_iface.c
+- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_192861275/libs/atca/cryptoauthlib/lib/basic/atca_basic.c
+- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_192861275/libs/atca/cryptoauthlib/lib/basic/atca_helpers.c
+- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_192861275/libs/atca/cryptoauthlib/lib/host/atca_host.c
+- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_192861275/libs/vfs-common/src/mgos_vfs.c
+- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_192861275/libs/vfs-common/src/mgos_vfs_dev.c
+- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_192861275/libs/vfs-common/src/mgos_vfs_internal.c
+- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_192861275/libs/vfs-common/src/esp32/esp32_fs.c
+- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_192861275/libs/vfs-common/src/esp32/esp32_fs_crypt.c
+- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_192861275/libs/vfs-common/src/esp32/esp32_vfs_dev_partition.c
+- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_192861275/libs/vfs-fs-lfs/src/mgos_vfs_lfs.c
+- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_192861275/libs/vfs-fs-lfs/src/littlefs/lfs.c
+- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_192861275/libs/vfs-fs-lfs/src/littlefs/lfs_util.c
+- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_192861275/libs/vfs-fs-spiffs/src/mgos_vfs_fs_spiffs.c
+- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_192861275/libs/vfs-fs-spiffs/src/spiffs/spiffs_cache.c
+- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_192861275/libs/vfs-fs-spiffs/src/spiffs/spiffs_check.c
+- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_192861275/libs/vfs-fs-spiffs/src/spiffs/spiffs_gc.c
+- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_192861275/libs/vfs-fs-spiffs/src/spiffs/spiffs_hydrogen.c
+- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_192861275/libs/vfs-fs-spiffs/src/spiffs/spiffs_nucleus.c
+- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_192861275/libs/core/src/mgos_core.c
+- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_192861275/libs/mqtt/src/mgos_mqtt.c
+- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_192861275/libs/shadow/src/mgos_shadow.c
+- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_192861275/libs/aws/src/mgos_aws.c
+- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_192861275/libs/aws/src/mgos_aws_greengrass.c
+- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_192861275/libs/aws/src/mgos_aws_shadow.c
+- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_192861275/libs/sntp/src/mgos_sntp.c
+- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_192861275/libs/azure/src/mgos_azure.c
+- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_192861275/libs/azure/src/mgos_azure_cm.c
+- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_192861275/libs/azure/src/mgos_azure_dm.c
+- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_192861275/libs/azure/src/mgos_azure_sas.c
+- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_192861275/libs/azure/src/mgos_azure_shadow.c
+- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_192861275/libs/rpc-common/src/mg_rpc.c
+- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_192861275/libs/rpc-common/src/mg_rpc_channel.c
+- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_192861275/libs/rpc-common/src/mg_rpc_channel_http.c
+- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_192861275/libs/rpc-common/src/mgos_rpc.c
+- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_192861275/libs/rpc-ws/src/mg_rpc_channel_ws.c
+- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_192861275/libs/rpc-ws/src/mgos_rpc_ws.c
+- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_192861275/libs/gcp/src/mgos_gcp.c
+- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_192861275/libs/http-server/src/mgos_http_server.c
+- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_192861275/libs/spi/src/mgos_spi.c
+- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_192861275/libs/spi/src/mgos_spi_mjs.c
+- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_192861275/libs/spi/src/esp32/esp32_spi_master.c
+- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_192861275/libs/ili9341-spi/src/mgos_ili9341.c
+- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_192861275/libs/ili9341-spi/src/mgos_ili9341_font.c
+- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_192861275/libs/ili9341-spi/third_party/adafruit/src/mgos_ili9341_primitives.c
+- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_192861275/libs/mjs/src/mos_mjs.c
+- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_192861275/modules/mjs/mjs.c
+- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_192861275/libs/mjs/esp32/src/esp32_mjs.c
+- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_192861275/libs/rpc-azure/src/mgos_rpc_channel_azure_dm.c
+- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_192861275/libs/rpc-mqtt/src/mgos_rpc_channel_mqtt.c
+- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_192861275/libs/rpc-service-config/src/mgos_service_config.c
+- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_192861275/libs/rpc-service-fs/src/mgos_service_filesystem.c
+- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_192861275/libs/rpc-uart/src/mgos_rpc_channel_uart.c
+- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_192861275/libs/watson/src/mgos_watson.c
+- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_192861275/libs/wifi/src/mgos_wifi.c
+- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_192861275/libs/wifi/src/mjs_wifi.c
+- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_192861275/libs/wifi/esp32/src/esp32_wifi.c
 includes:
-- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_298354764/libs/i2c/include
-- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_298354764/libs/atca/include
-- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_298354764/libs/atca/cryptoauthlib/lib
-- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_298354764/libs/mbedtls/include
-- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_298354764/libs/mbedtls/include/esp32
-- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_298354764/libs/mbedtls/mbedtls/include
-- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_298354764/libs/vfs-common/include
-- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_298354764/libs/vfs-common/include/esp32
-- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_298354764/libs/mongoose/include
-- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_298354764/libs/vfs-fs-lfs/include
-- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_298354764/libs/vfs-fs-spiffs/include
-- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_298354764/libs/vfs-fs-spiffs/include/spiffs
-- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_298354764/libs/vfs-fs-spiffs/include/esp32
-- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_298354764/libs/core/include
-- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_298354764/libs/core/include/esp32
-- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_298354764/libs/mqtt/include
-- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_298354764/libs/shadow/include
-- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_298354764/libs/aws/include
-- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_298354764/libs/azure/include
-- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_298354764/libs/ota-common/include
-- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_298354764/libs/ota-common/include/esp32
-- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_298354764/libs/ota-http-client/include
-- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_298354764/libs/rpc-common/include
-- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_298354764/libs/rpc-ws/include
-- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_298354764/libs/dash/include
-- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_298354764/libs/gcp/include
-- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_298354764/libs/http-server/include
-- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_298354764/libs/spi/include
-- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_298354764/libs/ili9341-spi/include
-- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_298354764/libs/ili9341-spi/third_party/adafruit/include
-- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_298354764/libs/mjs/include
-- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_298354764/libs/rpc-mqtt/include
-- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_298354764/libs/rpc-service-config/include
-- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_298354764/libs/rpc-service-fs/include
-- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_298354764/libs/rpc-uart/include
-- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_298354764/libs/watson/include
-- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_298354764/libs/wifi/include
-- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_298354764/libs/wifi/esp32/include
+- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_192861275/libs/i2c/include
+- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_192861275/libs/atca/include
+- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_192861275/libs/atca/cryptoauthlib/lib
+- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_192861275/libs/mbedtls/include
+- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_192861275/libs/mbedtls/include/esp32
+- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_192861275/libs/mbedtls/mbedtls/include
+- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_192861275/libs/vfs-common/include
+- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_192861275/libs/vfs-common/include/esp32
+- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_192861275/libs/mongoose/include
+- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_192861275/libs/vfs-fs-lfs/include
+- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_192861275/libs/vfs-fs-spiffs/include
+- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_192861275/libs/vfs-fs-spiffs/include/spiffs
+- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_192861275/libs/vfs-fs-spiffs/include/esp32
+- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_192861275/libs/core/include
+- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_192861275/libs/core/include/esp32
+- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_192861275/libs/mqtt/include
+- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_192861275/libs/shadow/include
+- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_192861275/libs/aws/include
+- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_192861275/libs/azure/include
+- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_192861275/libs/ota-common/include
+- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_192861275/libs/ota-common/include/esp32
+- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_192861275/libs/ota-http-client/include
+- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_192861275/libs/rpc-common/include
+- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_192861275/libs/rpc-ws/include
+- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_192861275/libs/dash/include
+- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_192861275/libs/gcp/include
+- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_192861275/libs/http-server/include
+- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_192861275/libs/spi/include
+- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_192861275/libs/ili9341-spi/include
+- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_192861275/libs/ili9341-spi/third_party/adafruit/include
+- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_192861275/libs/mjs/include
+- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_192861275/libs/rpc-mqtt/include
+- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_192861275/libs/rpc-service-config/include
+- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_192861275/libs/rpc-service-fs/include
+- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_192861275/libs/rpc-uart/include
+- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_192861275/libs/watson/include
+- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_192861275/libs/wifi/include
+- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_192861275/libs/wifi/esp32/include
 filesystem:
-- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_298354764/libs/ca-bundle/fs/ca.pem
-- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_298354764/libs/mjs/fs/api_bitbang.js
-- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_298354764/libs/mjs/fs/api_config.js
-- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_298354764/libs/mjs/fs/api_events.js
-- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_298354764/libs/mjs/fs/api_gpio.js
-- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_298354764/libs/mjs/fs/api_http.js
-- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_298354764/libs/mjs/fs/api_log.js
-- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_298354764/libs/mjs/fs/api_net.js
-- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_298354764/libs/mjs/fs/api_sys.js
-- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_298354764/libs/mjs/fs/api_timer.js
-- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_298354764/libs/mjs/fs/api_uart.js
-- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_298354764/libs/mjs/fs/init.js
-- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_298354764/modules/mjs/mjs/lib/api_dataview.js
-- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_298354764/modules/mjs/mjs/lib/api_file.js
-- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_298354764/modules/mjs/mjs/lib/api_math.js
-- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_298354764/libs/i2c/mjs_fs/api_i2c.js
-- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_298354764/libs/mqtt/mjs_fs/api_mqtt.js
-- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_298354764/libs/shadow/mjs_fs/api_shadow.js
-- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_298354764/libs/aws/mjs_fs/api_aws.js
-- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_298354764/libs/azure/mjs_fs/api_azure.js
-- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_298354764/libs/ota-http-client/mjs_fs/api_ota.js
-- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_298354764/libs/rpc-common/mjs_fs/api_rpc.js
-- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_298354764/libs/dash/mjs_fs/api_dash.js
-- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_298354764/libs/spi/mjs_fs/api_spi.js
-- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_298354764/libs/ili9341-spi/mjs_fs/api_ili9341_spi.js
-- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_298354764/libs/watson/mjs_fs/api_watson.js
-- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_298354764/libs/wifi/mjs_fs/api_wifi.js
-- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_298354764/libs/mjs/esp32/fs/api_arch_uart.js
-- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_298354764/libs/mjs/esp32/fs/api_esp32.js
-- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_298354764/fs/init.js
-- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_298354764/fs/init.js.orig
+- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_192861275/libs/ca-bundle/fs/ca.pem
+- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_192861275/libs/mjs/fs/api_bitbang.js
+- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_192861275/libs/mjs/fs/api_config.js
+- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_192861275/libs/mjs/fs/api_events.js
+- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_192861275/libs/mjs/fs/api_gpio.js
+- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_192861275/libs/mjs/fs/api_http.js
+- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_192861275/libs/mjs/fs/api_log.js
+- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_192861275/libs/mjs/fs/api_net.js
+- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_192861275/libs/mjs/fs/api_sys.js
+- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_192861275/libs/mjs/fs/api_timer.js
+- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_192861275/libs/mjs/fs/api_uart.js
+- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_192861275/libs/mjs/fs/init.js
+- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_192861275/modules/mjs/mjs/lib/api_dataview.js
+- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_192861275/modules/mjs/mjs/lib/api_file.js
+- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_192861275/modules/mjs/mjs/lib/api_math.js
+- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_192861275/libs/i2c/mjs_fs/api_i2c.js
+- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_192861275/libs/mqtt/mjs_fs/api_mqtt.js
+- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_192861275/libs/shadow/mjs_fs/api_shadow.js
+- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_192861275/libs/aws/mjs_fs/api_aws.js
+- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_192861275/libs/azure/mjs_fs/api_azure.js
+- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_192861275/libs/ota-http-client/mjs_fs/api_ota.js
+- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_192861275/libs/rpc-common/mjs_fs/api_rpc.js
+- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_192861275/libs/dash/mjs_fs/api_dash.js
+- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_192861275/libs/spi/mjs_fs/api_spi.js
+- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_192861275/libs/ili9341-spi/mjs_fs/api_ili9341_spi.js
+- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_192861275/libs/watson/mjs_fs/api_watson.js
+- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_192861275/libs/wifi/mjs_fs/api_wifi.js
+- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_192861275/libs/mjs/esp32/fs/api_arch_uart.js
+- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_192861275/libs/mjs/esp32/fs/api_esp32.js
+- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_192861275/fs/init.js
+- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_192861275/fs/init.js.orig
 binary_libs:
-- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_298354764/libs/mbedtls/lib/esp32/libmbedtls.a
-- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_298354764/libs/mongoose/lib/esp32/libmongoose.a
-- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_298354764/libs/ota-common/lib/esp32/libota-common.a
-- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_298354764/libs/ota-http-client/lib/esp32/libota-http-client.a
-- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_298354764/libs/ota-shadow/lib/esp32/libota-shadow.a
-- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_298354764/libs/dash/lib/esp32/libdash.a
-- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_298354764/libs/ota-http-server/lib/esp32/libota-http-server.a
+- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_192861275/libs/mbedtls/lib/esp32/libmbedtls.a
+- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_192861275/libs/mongoose/lib/esp32/libmongoose.a
+- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_192861275/libs/ota-common/lib/esp32/libota-common.a
+- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_192861275/libs/ota-http-client/lib/esp32/libota-http-client.a
+- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_192861275/libs/ota-shadow/lib/esp32/libota-shadow.a
+- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_192861275/libs/dash/lib/esp32/libdash.a
+- /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_192861275/libs/ota-http-server/lib/esp32/libota-http-server.a
 modules:
 - origin: https://github.com/cesanta/mjs
   location: https://github.com/cesanta/mjs
@@ -1221,52 +1221,52 @@ libs_handled:
     origin: https://github.com/mongoose-os-libs/i2c
     location: https://github.com/mongoose-os-libs/i2c
     name: i2c
-  path: /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_298354764/libs/i2c
+  path: /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_192861275/libs/i2c
   init_deps:
   - core
   sources:
-  - /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_298354764/libs/i2c/src/mgos_i2c.c
-  - /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_298354764/libs/i2c/esp32/src/esp32_i2c_master.c
+  - /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_192861275/libs/i2c/src/mgos_i2c.c
+  - /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_192861275/libs/i2c/esp32/src/esp32_i2c_master.c
 - lib:
     origin: https://github.com/mongoose-os-libs/atca
     location: https://github.com/mongoose-os-libs/atca
     name: atca
-  path: /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_298354764/libs/atca
+  path: /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_192861275/libs/atca
   deps:
   - i2c
   init_deps:
   - i2c
   sources:
-  - /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_298354764/libs/atca/src/mgos_atca.c
-  - /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_298354764/libs/atca/cryptoauthlib/lib/atca_cfgs.c
-  - /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_298354764/libs/atca/cryptoauthlib/lib/atca_command.c
-  - /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_298354764/libs/atca/cryptoauthlib/lib/atca_device.c
-  - /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_298354764/libs/atca/cryptoauthlib/lib/atca_iface.c
-  - /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_298354764/libs/atca/cryptoauthlib/lib/basic/atca_basic.c
-  - /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_298354764/libs/atca/cryptoauthlib/lib/basic/atca_helpers.c
-  - /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_298354764/libs/atca/cryptoauthlib/lib/host/atca_host.c
+  - /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_192861275/libs/atca/src/mgos_atca.c
+  - /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_192861275/libs/atca/cryptoauthlib/lib/atca_cfgs.c
+  - /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_192861275/libs/atca/cryptoauthlib/lib/atca_command.c
+  - /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_192861275/libs/atca/cryptoauthlib/lib/atca_device.c
+  - /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_192861275/libs/atca/cryptoauthlib/lib/atca_iface.c
+  - /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_192861275/libs/atca/cryptoauthlib/lib/basic/atca_basic.c
+  - /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_192861275/libs/atca/cryptoauthlib/lib/basic/atca_helpers.c
+  - /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_192861275/libs/atca/cryptoauthlib/lib/host/atca_host.c
 - lib:
     origin: https://github.com/mongoose-os-libs/mbedtls
     location: https://github.com/mongoose-os-libs/mbedtls
     name: mbedtls
-  path: /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_298354764/libs/mbedtls
+  path: /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_192861275/libs/mbedtls
 - lib:
     origin: https://github.com/mongoose-os-libs/vfs-common
     location: https://github.com/mongoose-os-libs/vfs-common
     name: vfs-common
-  path: /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_298354764/libs/vfs-common
+  path: /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_192861275/libs/vfs-common
   sources:
-  - /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_298354764/libs/vfs-common/src/mgos_vfs.c
-  - /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_298354764/libs/vfs-common/src/mgos_vfs_dev.c
-  - /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_298354764/libs/vfs-common/src/mgos_vfs_internal.c
-  - /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_298354764/libs/vfs-common/src/esp32/esp32_fs.c
-  - /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_298354764/libs/vfs-common/src/esp32/esp32_fs_crypt.c
-  - /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_298354764/libs/vfs-common/src/esp32/esp32_vfs_dev_partition.c
+  - /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_192861275/libs/vfs-common/src/mgos_vfs.c
+  - /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_192861275/libs/vfs-common/src/mgos_vfs_dev.c
+  - /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_192861275/libs/vfs-common/src/mgos_vfs_internal.c
+  - /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_192861275/libs/vfs-common/src/esp32/esp32_fs.c
+  - /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_192861275/libs/vfs-common/src/esp32/esp32_fs_crypt.c
+  - /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_192861275/libs/vfs-common/src/esp32/esp32_vfs_dev_partition.c
 - lib:
     origin: https://github.com/mongoose-os-libs/mongoose
     location: https://github.com/mongoose-os-libs/mongoose
     name: mongoose
-  path: /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_298354764/libs/mongoose
+  path: /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_192861275/libs/mongoose
   deps:
   - mbedtls
   - vfs-common
@@ -1274,36 +1274,36 @@ libs_handled:
     origin: https://github.com/mongoose-os-libs/vfs-fs-lfs
     location: https://github.com/mongoose-os-libs/vfs-fs-lfs
     name: vfs-fs-lfs
-  path: /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_298354764/libs/vfs-fs-lfs
+  path: /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_192861275/libs/vfs-fs-lfs
   deps:
   - vfs-common
   init_deps:
   - vfs-common
   sources:
-  - /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_298354764/libs/vfs-fs-lfs/src/mgos_vfs_lfs.c
-  - /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_298354764/libs/vfs-fs-lfs/src/littlefs/lfs.c
-  - /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_298354764/libs/vfs-fs-lfs/src/littlefs/lfs_util.c
+  - /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_192861275/libs/vfs-fs-lfs/src/mgos_vfs_lfs.c
+  - /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_192861275/libs/vfs-fs-lfs/src/littlefs/lfs.c
+  - /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_192861275/libs/vfs-fs-lfs/src/littlefs/lfs_util.c
 - lib:
     origin: https://github.com/mongoose-os-libs/vfs-fs-spiffs
     location: https://github.com/mongoose-os-libs/vfs-fs-spiffs
     name: vfs-fs-spiffs
-  path: /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_298354764/libs/vfs-fs-spiffs
+  path: /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_192861275/libs/vfs-fs-spiffs
   deps:
   - vfs-common
   init_deps:
   - vfs-common
   sources:
-  - /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_298354764/libs/vfs-fs-spiffs/src/mgos_vfs_fs_spiffs.c
-  - /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_298354764/libs/vfs-fs-spiffs/src/spiffs/spiffs_cache.c
-  - /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_298354764/libs/vfs-fs-spiffs/src/spiffs/spiffs_check.c
-  - /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_298354764/libs/vfs-fs-spiffs/src/spiffs/spiffs_gc.c
-  - /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_298354764/libs/vfs-fs-spiffs/src/spiffs/spiffs_hydrogen.c
-  - /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_298354764/libs/vfs-fs-spiffs/src/spiffs/spiffs_nucleus.c
+  - /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_192861275/libs/vfs-fs-spiffs/src/mgos_vfs_fs_spiffs.c
+  - /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_192861275/libs/vfs-fs-spiffs/src/spiffs/spiffs_cache.c
+  - /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_192861275/libs/vfs-fs-spiffs/src/spiffs/spiffs_check.c
+  - /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_192861275/libs/vfs-fs-spiffs/src/spiffs/spiffs_gc.c
+  - /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_192861275/libs/vfs-fs-spiffs/src/spiffs/spiffs_hydrogen.c
+  - /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_192861275/libs/vfs-fs-spiffs/src/spiffs/spiffs_nucleus.c
 - lib:
     origin: https://github.com/mongoose-os-libs/core
     location: https://github.com/mongoose-os-libs/core
     name: core
-  path: /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_298354764/libs/core
+  path: /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_192861275/libs/core
   deps:
   - mongoose
   - vfs-fs-lfs
@@ -1315,12 +1315,12 @@ libs_handled:
   - vfs-fs-lfs
   - vfs-fs-spiffs
   sources:
-  - /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_298354764/libs/core/src/mgos_core.c
+  - /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_192861275/libs/core/src/mgos_core.c
 - lib:
     origin: https://github.com/mongoose-os-libs/ca-bundle
     location: https://github.com/mongoose-os-libs/ca-bundle
     name: ca-bundle
-  path: /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_298354764/libs/ca-bundle
+  path: /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_192861275/libs/ca-bundle
   deps:
   - core
   init_deps:
@@ -1329,29 +1329,29 @@ libs_handled:
     origin: https://github.com/mongoose-os-libs/mqtt
     location: https://github.com/mongoose-os-libs/mqtt
     name: mqtt
-  path: /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_298354764/libs/mqtt
+  path: /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_192861275/libs/mqtt
   deps:
   - core
   init_deps:
   - core
   sources:
-  - /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_298354764/libs/mqtt/src/mgos_mqtt.c
+  - /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_192861275/libs/mqtt/src/mgos_mqtt.c
 - lib:
     origin: https://github.com/mongoose-os-libs/shadow
     location: https://github.com/mongoose-os-libs/shadow
     name: shadow
-  path: /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_298354764/libs/shadow
+  path: /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_192861275/libs/shadow
   deps:
   - core
   init_deps:
   - core
   sources:
-  - /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_298354764/libs/shadow/src/mgos_shadow.c
+  - /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_192861275/libs/shadow/src/mgos_shadow.c
 - lib:
     origin: https://github.com/mongoose-os-libs/aws
     location: https://github.com/mongoose-os-libs/aws
     name: aws
-  path: /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_298354764/libs/aws
+  path: /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_192861275/libs/aws
   deps:
   - ca-bundle
   - mqtt
@@ -1362,23 +1362,23 @@ libs_handled:
   - mqtt
   - shadow
   sources:
-  - /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_298354764/libs/aws/src/mgos_aws.c
-  - /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_298354764/libs/aws/src/mgos_aws_greengrass.c
-  - /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_298354764/libs/aws/src/mgos_aws_shadow.c
+  - /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_192861275/libs/aws/src/mgos_aws.c
+  - /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_192861275/libs/aws/src/mgos_aws_greengrass.c
+  - /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_192861275/libs/aws/src/mgos_aws_shadow.c
 - lib:
     origin: https://github.com/mongoose-os-libs/sntp
     location: https://github.com/mongoose-os-libs/sntp
     name: sntp
-  path: /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_298354764/libs/sntp
+  path: /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_192861275/libs/sntp
   init_deps:
   - core
   sources:
-  - /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_298354764/libs/sntp/src/mgos_sntp.c
+  - /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_192861275/libs/sntp/src/mgos_sntp.c
 - lib:
     origin: https://github.com/mongoose-os-libs/azure
     location: https://github.com/mongoose-os-libs/azure
     name: azure
-  path: /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_298354764/libs/azure
+  path: /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_192861275/libs/azure
   deps:
   - ca-bundle
   - mqtt
@@ -1391,23 +1391,23 @@ libs_handled:
   - shadow
   - sntp
   sources:
-  - /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_298354764/libs/azure/src/mgos_azure.c
-  - /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_298354764/libs/azure/src/mgos_azure_cm.c
-  - /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_298354764/libs/azure/src/mgos_azure_dm.c
-  - /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_298354764/libs/azure/src/mgos_azure_sas.c
-  - /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_298354764/libs/azure/src/mgos_azure_shadow.c
+  - /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_192861275/libs/azure/src/mgos_azure.c
+  - /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_192861275/libs/azure/src/mgos_azure_cm.c
+  - /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_192861275/libs/azure/src/mgos_azure_dm.c
+  - /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_192861275/libs/azure/src/mgos_azure_sas.c
+  - /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_192861275/libs/azure/src/mgos_azure_shadow.c
 - lib:
     origin: https://github.com/mongoose-os-libs/ota-common
     location: https://github.com/mongoose-os-libs/ota-common
     name: ota-common
-  path: /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_298354764/libs/ota-common
+  path: /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_192861275/libs/ota-common
   deps:
   - mongoose
 - lib:
     origin: https://github.com/mongoose-os-libs/ota-http-client
     location: https://github.com/mongoose-os-libs/ota-http-client
     name: ota-http-client
-  path: /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_298354764/libs/ota-http-client
+  path: /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_192861275/libs/ota-http-client
   deps:
   - ota-common
   init_deps:
@@ -1417,7 +1417,7 @@ libs_handled:
     origin: https://github.com/mongoose-os-libs/ota-shadow
     location: https://github.com/mongoose-os-libs/ota-shadow
     name: ota-shadow
-  path: /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_298354764/libs/ota-shadow
+  path: /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_192861275/libs/ota-shadow
   deps:
   - ota-common
   - ota-http-client
@@ -1431,22 +1431,22 @@ libs_handled:
     origin: https://github.com/mongoose-os-libs/rpc-common
     location: https://github.com/mongoose-os-libs/rpc-common
     name: rpc-common
-  path: /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_298354764/libs/rpc-common
+  path: /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_192861275/libs/rpc-common
   deps:
   - mongoose
   init_deps:
   - core
   - mongoose
   sources:
-  - /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_298354764/libs/rpc-common/src/mg_rpc.c
-  - /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_298354764/libs/rpc-common/src/mg_rpc_channel.c
-  - /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_298354764/libs/rpc-common/src/mg_rpc_channel_http.c
-  - /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_298354764/libs/rpc-common/src/mgos_rpc.c
+  - /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_192861275/libs/rpc-common/src/mg_rpc.c
+  - /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_192861275/libs/rpc-common/src/mg_rpc_channel.c
+  - /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_192861275/libs/rpc-common/src/mg_rpc_channel_http.c
+  - /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_192861275/libs/rpc-common/src/mgos_rpc.c
 - lib:
     origin: https://github.com/mongoose-os-libs/rpc-ws
     location: https://github.com/mongoose-os-libs/rpc-ws
     name: rpc-ws
-  path: /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_298354764/libs/rpc-ws
+  path: /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_192861275/libs/rpc-ws
   deps:
   - rpc-common
   init_deps:
@@ -1454,13 +1454,13 @@ libs_handled:
   - http-server
   - rpc-common
   sources:
-  - /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_298354764/libs/rpc-ws/src/mg_rpc_channel_ws.c
-  - /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_298354764/libs/rpc-ws/src/mgos_rpc_ws.c
+  - /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_192861275/libs/rpc-ws/src/mg_rpc_channel_ws.c
+  - /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_192861275/libs/rpc-ws/src/mgos_rpc_ws.c
 - lib:
     origin: https://github.com/mongoose-os-libs/dash
     location: https://github.com/mongoose-os-libs/dash
     name: dash
-  path: /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_298354764/libs/dash
+  path: /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_192861275/libs/dash
   deps:
   - core
   - ota-shadow
@@ -1475,7 +1475,7 @@ libs_handled:
     origin: https://github.com/mongoose-os-libs/gcp
     location: https://github.com/mongoose-os-libs/gcp
     name: gcp
-  path: /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_298354764/libs/gcp
+  path: /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_192861275/libs/gcp
   deps:
   - ca-bundle
   - mqtt
@@ -1486,12 +1486,12 @@ libs_handled:
   - mqtt
   - sntp
   sources:
-  - /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_298354764/libs/gcp/src/mgos_gcp.c
+  - /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_192861275/libs/gcp/src/mgos_gcp.c
 - lib:
     origin: https://github.com/mongoose-os-libs/http-server
     location: https://github.com/mongoose-os-libs/http-server
     name: http-server
-  path: /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_298354764/libs/http-server
+  path: /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_192861275/libs/http-server
   deps:
   - core
   init_deps:
@@ -1499,50 +1499,50 @@ libs_handled:
   - core
   - wifi
   sources:
-  - /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_298354764/libs/http-server/src/mgos_http_server.c
+  - /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_192861275/libs/http-server/src/mgos_http_server.c
 - lib:
     origin: https://github.com/mongoose-os-libs/spi
     location: https://github.com/mongoose-os-libs/spi
     name: spi
-  path: /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_298354764/libs/spi
+  path: /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_192861275/libs/spi
   init_deps:
   - core
   sources:
-  - /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_298354764/libs/spi/src/mgos_spi.c
-  - /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_298354764/libs/spi/src/mgos_spi_mjs.c
-  - /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_298354764/libs/spi/src/esp32/esp32_spi_master.c
+  - /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_192861275/libs/spi/src/mgos_spi.c
+  - /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_192861275/libs/spi/src/mgos_spi_mjs.c
+  - /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_192861275/libs/spi/src/esp32/esp32_spi_master.c
 - lib:
     origin: https://github.com/mongoose-os-libs/ili9341-spi
     location: https://github.com/mongoose-os-libs/ili9341-spi
     name: ili9341-spi
-  path: /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_298354764/libs/ili9341-spi
+  path: /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_192861275/libs/ili9341-spi
   deps:
   - spi
   init_deps:
   - core
   - spi
   sources:
-  - /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_298354764/libs/ili9341-spi/src/mgos_ili9341.c
-  - /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_298354764/libs/ili9341-spi/src/mgos_ili9341_font.c
-  - /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_298354764/libs/ili9341-spi/third_party/adafruit/src/mgos_ili9341_primitives.c
+  - /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_192861275/libs/ili9341-spi/src/mgos_ili9341.c
+  - /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_192861275/libs/ili9341-spi/src/mgos_ili9341_font.c
+  - /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_192861275/libs/ili9341-spi/third_party/adafruit/src/mgos_ili9341_primitives.c
 - lib:
     origin: https://github.com/mongoose-os-libs/mjs
     location: https://github.com/mongoose-os-libs/mjs
     name: mjs
-  path: /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_298354764/libs/mjs
+  path: /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_192861275/libs/mjs
   deps:
   - core
   init_deps:
   - core
   sources:
-  - /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_298354764/libs/mjs/src/mos_mjs.c
-  - /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_298354764/modules/mjs/mjs.c
-  - /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_298354764/libs/mjs/esp32/src/esp32_mjs.c
+  - /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_192861275/libs/mjs/src/mos_mjs.c
+  - /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_192861275/modules/mjs/mjs.c
+  - /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_192861275/libs/mjs/esp32/src/esp32_mjs.c
 - lib:
     origin: https://github.com/mongoose-os-libs/ota-http-server
     location: https://github.com/mongoose-os-libs/ota-http-server
     name: ota-http-server
-  path: /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_298354764/libs/ota-http-server
+  path: /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_192861275/libs/ota-http-server
   deps:
   - http-server
   - ota-common
@@ -1556,7 +1556,7 @@ libs_handled:
     origin: https://github.com/mongoose-os-libs/rpc-azure
     location: https://github.com/mongoose-os-libs/rpc-azure
     name: rpc-azure
-  path: /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_298354764/libs/rpc-azure
+  path: /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_192861275/libs/rpc-azure
   deps:
   - azure
   - rpc-common
@@ -1565,12 +1565,12 @@ libs_handled:
   - core
   - rpc-common
   sources:
-  - /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_298354764/libs/rpc-azure/src/mgos_rpc_channel_azure_dm.c
+  - /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_192861275/libs/rpc-azure/src/mgos_rpc_channel_azure_dm.c
 - lib:
     origin: https://github.com/mongoose-os-libs/rpc-mqtt
     location: https://github.com/mongoose-os-libs/rpc-mqtt
     name: rpc-mqtt
-  path: /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_298354764/libs/rpc-mqtt
+  path: /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_192861275/libs/rpc-mqtt
   deps:
   - mqtt
   - rpc-common
@@ -1583,48 +1583,48 @@ libs_handled:
   - rpc-common
   - watson
   sources:
-  - /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_298354764/libs/rpc-mqtt/src/mgos_rpc_channel_mqtt.c
+  - /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_192861275/libs/rpc-mqtt/src/mgos_rpc_channel_mqtt.c
 - lib:
     origin: https://github.com/mongoose-os-libs/rpc-service-config
     location: https://github.com/mongoose-os-libs/rpc-service-config
     name: rpc-service-config
-  path: /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_298354764/libs/rpc-service-config
+  path: /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_192861275/libs/rpc-service-config
   deps:
   - rpc-common
   init_deps:
   - core
   - rpc-common
   sources:
-  - /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_298354764/libs/rpc-service-config/src/mgos_service_config.c
+  - /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_192861275/libs/rpc-service-config/src/mgos_service_config.c
 - lib:
     origin: https://github.com/mongoose-os-libs/rpc-service-fs
     location: https://github.com/mongoose-os-libs/rpc-service-fs
     name: rpc-service-fs
-  path: /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_298354764/libs/rpc-service-fs
+  path: /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_192861275/libs/rpc-service-fs
   deps:
   - rpc-common
   init_deps:
   - core
   - rpc-common
   sources:
-  - /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_298354764/libs/rpc-service-fs/src/mgos_service_filesystem.c
+  - /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_192861275/libs/rpc-service-fs/src/mgos_service_filesystem.c
 - lib:
     origin: https://github.com/mongoose-os-libs/rpc-uart
     location: https://github.com/mongoose-os-libs/rpc-uart
     name: rpc-uart
-  path: /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_298354764/libs/rpc-uart
+  path: /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_192861275/libs/rpc-uart
   deps:
   - rpc-common
   init_deps:
   - core
   - rpc-common
   sources:
-  - /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_298354764/libs/rpc-uart/src/mgos_rpc_channel_uart.c
+  - /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_192861275/libs/rpc-uart/src/mgos_rpc_channel_uart.c
 - lib:
     origin: https://github.com/mongoose-os-libs/watson
     location: https://github.com/mongoose-os-libs/watson
     name: watson
-  path: /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_298354764/libs/watson
+  path: /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_192861275/libs/watson
   deps:
   - ca-bundle
   - mqtt
@@ -1633,23 +1633,23 @@ libs_handled:
   - core
   - mqtt
   sources:
-  - /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_298354764/libs/watson/src/mgos_watson.c
+  - /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_192861275/libs/watson/src/mgos_watson.c
 - lib:
     origin: https://github.com/mongoose-os-libs/wifi
     location: https://github.com/mongoose-os-libs/wifi
     name: wifi
-  path: /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_298354764/libs/wifi
+  path: /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_192861275/libs/wifi
   init_deps:
   - core
   sources:
-  - /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_298354764/libs/wifi/src/mgos_wifi.c
-  - /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_298354764/libs/wifi/src/mjs_wifi.c
-  - /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_298354764/libs/wifi/esp32/src/esp32_wifi.c
+  - /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_192861275/libs/wifi/src/mgos_wifi.c
+  - /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_192861275/libs/wifi/src/mjs_wifi.c
+  - /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_192861275/libs/wifi/esp32/src/esp32_wifi.c
 - lib:
     origin: https://github.com/mongoose-os-libs/boards
     location: https://github.com/mongoose-os-libs/boards
     name: zz_boards
-  path: /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_298354764/libs/boards
+  path: /fwbuild-volumes/2.7.1/apps/Pollr.ESP32/esp32/build_contexts/build_ctx_192861275/libs/boards
 init_deps:
 - mongoose
 - ota-common

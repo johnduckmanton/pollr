@@ -9,7 +9,6 @@ load('api_rpc.js');
 load('api_shadow.js');
 load('api_sys.js');
 load('api_timer.js');
-load('api_watson.js');
 
 let BTN1 = 39,
   BTN2 = 38,
@@ -17,7 +16,7 @@ let BTN1 = 39,
 let LCD_BACKLIGHT = 32;
 
 let devID = Cfg.get('device.id');
-let greeting = '';
+let greeting = 'Welcome to Pollr.\nPlease select your answer';
 let btnc = [-1, 0, 0, 0];
 let netStatus = null;
 let cloudName = null;
@@ -43,22 +42,6 @@ if (Cfg.get('azure.enable')) {
     },
     null
   );
-} else if (Cfg.get('gcp.enable')) {
-  cloudName = 'GCP';
-} else if (Cfg.get('watson.enable')) {
-  cloudName = 'Watson';
-  Event.addGroupHandler(
-    Watson.EVENT_GRP,
-    function(ev, evdata, arg) {
-      if (ev === Watson.EV_CONNECT) {
-        cloudConnected = true;
-        watsonReportBtnStatus();
-      } else if (ev === Watson.EV_CLOSE) {
-        cloudConnected = false;
-      }
-    },
-    null
-  );
 } else if (Cfg.get('dash.enable')) {
   cloudName = 'Mongoose';
 } else if (Cfg.get('mqtt.enable')) {
@@ -70,7 +53,7 @@ if (Cfg.get('azure.enable')) {
 }
 
 MQTT.setEventHandler(function(conn, ev, edata) {
-  if (cloudName && cloudName !== 'Azure' && cloudName !== 'Watson') {
+  if (cloudName && cloudName !== 'Azure') {
     if (ev === MQTT.EV_CONNACK) {
       cloudConnected = true;
     } else if (ev === MQTT.EV_CLOSE) {
@@ -150,13 +133,24 @@ function printGreeting() {
   }
 }
 
+function printMessage(messageText) {
+  ILI9341.setFont(fonts[1]);
+  ILI9341.setFgColor565(ILI9341.WHITE);
+  if (messageText) {
+    printCentered(160, ILI9341.line(5), messageText);
+  }
+}
+
 function printBtnStatus() {
   ILI9341.setFont(fonts[2]);
   ILI9341.setFgColor565(ILI9341.WHITE);
   let y = ILI9341.line(-1);
-  printCentered(65, y, JSON.stringify(btnc[1]));
-  printCentered(160, y, JSON.stringify(btnc[2]));
-  printCentered(255, y, JSON.stringify(btnc[3]));
+  // printCentered(65, y, JSON.stringify(btnc[1]));
+  // printCentered(160, y, JSON.stringify(btnc[2]));
+  // printCentered(255, y, JSON.stringify(btnc[3]));
+  printCentered(65, y, 'A');
+  printCentered(160, y, 'B');
+  printCentered(255, y, 'C');
 }
 
 function printStatus() {
@@ -183,21 +177,13 @@ Event.addGroupHandler(
   null
 );
 
-function watsonReportBtnStatus() {
-  // Make sure BTN1 is always reported first, to make the QuickStart graph deterministic.
-  Watson.sendEventJSON('btnStatus', { d: { btn1: btnc[1] } });
-  Watson.sendEventJSON('btnStatus', { d: { btn2: btnc[2], btn3: btnc[3] } });
-}
-
 function reportBtnPress(n) {
   btnc[n] = btnc[n] + 1;
 
   let btns = JSON.stringify(n);
-  let msg = JSON.stringify({ btn: n, cnt: btnc[n] });
+  let msg = JSON.stringify({ op: 'vote', btn: n, cnt: btnc[n] });
   if (cloudName === 'Azure') {
     Azure.sendD2CMsg('btn=' + btns, msg);
-  } else if (cloudName === 'Watson') {
-    watsonReportBtnStatus();
   } else {
     MQTT.pub(devID + '/messages', msg);
   }
@@ -265,4 +251,5 @@ Shadow.addHandler(function(ev, obj) {
 });
 
 printStatus();
+printMessage('initializing...');
 Timer.set(1000 /* 1 sec */, Timer.REPEAT, printStatus, null);

@@ -2,5 +2,5 @@
   "arch": "esp32",
   "platform": "esp32",
   "app_name": "Pollr.ESP32",
-  "build_time_ms": 20817
+  "build_time_ms": 79771
 }

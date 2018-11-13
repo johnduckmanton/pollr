@@ -56,7 +56,7 @@ export class PollDataService {
   }
 
   //
-  // update a new poll definition. PUT /api/polldefinitions/{id}
+  // update a poll definition. PUT /api/polldefinitions/{id}
   //
   public updatePollDefinition$(
     pollDefinition: PollDefinition
@@ -116,6 +116,28 @@ export class PollDataService {
     const url = `${this.apiUrl}/polls`;
     return this.http
       .post<PollRequest>(url, pollRequest, this.getOptions())
+      .pipe(catchError(error => this._handleError(error)));
+  }
+
+  //
+  // update a poll. PUT /api/polls/{id}
+  //
+  public updatePoll$(
+    poll: Poll
+  ): Observable<Poll> {
+    const url = `${this.apiUrl}/polls/${poll.id}`;
+    return this.http
+      .put<Poll>(url, poll, this.getOptions())
+      .pipe(catchError(error => this._handleError(error)));
+  }
+
+  //
+  // Delete a poll. DELETE /api/polls
+  //
+  public deletePoll$(id: number): Observable<Poll> {
+    const url = `${this.apiUrl}/polls/${id}`;
+    return this.http
+      .delete<Poll>(url, this.getOptions())
       .pipe(catchError(error => this._handleError(error)));
   }
 

@@ -23,6 +23,7 @@ import { Question } from '../../shared/models/question.model';
 export class VoteStatusComponent implements OnInit {
   connectedUserCount = 0;
 
+  isLoading = false;
   poll: Poll = null;
   currentQuestion: Question;
   qrcodeElementType = 'url';
@@ -41,6 +42,9 @@ export class VoteStatusComponent implements OnInit {
   }
 
   ngOnInit() {
+
+    this.isLoading = true;
+
     const id: number = Number.parseInt(this.route.snapshot.paramMap.get('id'));
 
     this.dataService.getPoll$(id).subscribe(poll => {
@@ -52,11 +56,8 @@ export class VoteStatusComponent implements OnInit {
         return prev + next;
       });
 
-      // Generate URL to this poll
-      const urlTree = this.router.createUrlTree(['/vote', this.poll.handle]).toString();
-      const path = this.location.prepareExternalUrl(urlTree.toString());
-      this.pollVoteUrl = this.configService.config.voteUrl + path;
-
+      this.pollVoteUrl = this.configService.config.voteUrl;
+      this.isLoading = false;
     });
   }
 

@@ -1,0 +1,75 @@
+<h1>Polls</h1>
+
+<div *ngIf="!isLoading">
+  <div class="row">
+    <div class="col-md-12">
+      <button type="button" class="btn btn-success mt-3 mb-3" (click)="createPoll()">
+        <i class="fa fa-plus"></i> New Poll
+      </button>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-12">
+      <div *ngIf="polls">
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th scope="col">Name</th>
+              <th scope="col" width="50%">Description</th>
+              <th scope="col" align="center">Published</th>
+              <th scope="col">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let poll of polls; let i = index">
+              <th scope="row">
+                <p class="text-primary">
+                  <a class="link-text text-primary" (click)=" editPoll(poll.id)">{{ poll.name }}</a>
+                </p>
+              </th>
+              <td width="50%">{{ poll.description }}</td>
+              <td align="center">
+                <i class="fa fa-check text-primary" *ngIf="poll.isPublished"></i>
+              </td>
+              <td>
+                <span>
+                  <button type="button"
+                          class="btn btn-primary btn-sm mr-1"
+                          (click)="editPoll(poll.id)"
+                          placement="top"
+                          ngbTooltip="Edit">
+                    <i class="fa fa-edit"></i>
+                  </button>
+                  <button type="button"
+                          class="btn btn-danger btn-sm mr-1"
+                          (click)="deletePoll(poll)"
+                          placement="top"
+                          ngbTooltip="Delete">
+                    <i class="fa fa-trash"></i>
+                  </button>
+                  <button type="button"
+                          class="btn btn-warning btn-sm mr-1"
+                          (click)="openPoll(poll.id)"
+                          placement="top"
+                          ngbTooltip="Open the poll for voting"
+                          *ngIf="!poll.status != pollStatus.Open">
+                    <i class="fa fa-lock-open"></i>
+                  </button>
+                  <button type="button"
+                          class="btn btn-warning btn-sm mr-1"
+                          (click)="closePoll(poll.id)"
+                          placement="top"
+                          ngbTooltip="Close the poll"
+                          *ngIf="poll.status != pollStatus.Closed">
+                    <i class="fa fa-lock"></i>
+                  </button>
+                </span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

@@ -15,6 +15,7 @@ using Newtonsoft.Json.Serialization;
 using Pollr.Api.Data;
 using Pollr.Api.Exceptions;
 using Pollr.Api.Hubs;
+using System;
 
 namespace pollr.api
 {
@@ -46,6 +47,10 @@ namespace pollr.api
 
             services.AddDbContext<PollrContext>
                 (options => options.UseSqlServer(connectionString));
+
+            // Automatically perform database migration
+            // *** You may not want to do this in a real production app ***
+            services.BuildServiceProvider().GetService<PollrContext>().Database.Migrate();
 
             //services.AddAuthentication(AzureADDefaults.BearerAuthenticationScheme)
             //    .AddAzureADBearer(options => Configuration.Bind("AzureAd", options));
