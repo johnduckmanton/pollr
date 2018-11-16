@@ -15,7 +15,7 @@
               </h3>
               <img class="answer-image float-left img-thumbnail responsive"
                    src="{{answer.imagePath}}"
-                   *ngIf="answer.imagePath != ''" />
+                   *ngIf="answer.imagePath != null" />
             </div>
           </li>
         </ol>
@@ -26,7 +26,7 @@
                         [displayQuestionText]="false"></app-result-chart>
     </div>
   </div>
-
+  <p class="mt-5"></p>
   <div class="col-sm-6 col-md-6 offset-md-6 col-xs-6">
 
     <div class="thumbnail" style="border:none; background:white;">
@@ -37,7 +37,7 @@
                       [qrc-value]="pollVoteUrl"
                       qrc-class="qrcode"
                       qrc-errorCorrectionLevel="L">
-            </ngx-qrcode>
+          </ngx-qrcode>
         </div>
       </div>
 
@@ -48,3 +48,4 @@
     </div>
 
   </div>
+</div>

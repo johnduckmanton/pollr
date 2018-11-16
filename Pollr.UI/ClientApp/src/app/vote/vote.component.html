@@ -28,7 +28,7 @@
             <div class="list-group-item list-group-item-action flex-column align-items-start active" *ngFor="let answer of currentQuestion?.answers;let i=index" (click)="selectAnswer(i)" [class.active]="selectedAnswerIdx === i" [class.disabled]="hasVoted || answer.isDisabled">
               <div class="d-flex w-100 justify-content-between">
                 <h3 class="mb-1"><strong>{{answer.answerText}}</strong></h3>
-                <img class="answer-image float-left img-thumbnail responsive" src="{{answer.imagePath}}" *ngIf="answer.imagePath != ''" />
+                <img class="answer-image float-left img-thumbnail responsive" src="{{answer.imagePath}}" *ngIf="answer.imagePath != null" />
               </div>
             </div>
           </div>

@@ -12,11 +12,11 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{D363A5DD-E19A-4EFA-95A9-411E85F135D2}"
 	ProjectSection(SolutionItems) = preProject
 		LICENSE = LICENSE
-		pollrdeploy.ps1 = pollrdeploy.ps1
+		pollrdeploy.sh = pollrdeploy.sh
 		README.md = README.md
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pollr.VoteIoTFunction", "Pollr.VoteIoTFunction\Pollr.VoteIoTFunction.csproj", "{B486047C-BCB1-479E-9943-2CDF07EC48B0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pollr.VoteFunc", "Pollr.VoteFunc\Pollr.VoteFunc.csproj", "{10076F2F-CCE0-4048-A126-5EA0E6E5A0AF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -36,10 +36,10 @@ Global
 		{3DE1FE1C-02EF-4E73-9A9D-F91A3F3AFE29}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3DE1FE1C-02EF-4E73-9A9D-F91A3F3AFE29}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3DE1FE1C-02EF-4E73-9A9D-F91A3F3AFE29}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B486047C-BCB1-479E-9943-2CDF07EC48B0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B486047C-BCB1-479E-9943-2CDF07EC48B0}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B486047C-BCB1-479E-9943-2CDF07EC48B0}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B486047C-BCB1-479E-9943-2CDF07EC48B0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{10076F2F-CCE0-4048-A126-5EA0E6E5A0AF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{10076F2F-CCE0-4048-A126-5EA0E6E5A0AF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{10076F2F-CCE0-4048-A126-5EA0E6E5A0AF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{10076F2F-CCE0-4048-A126-5EA0E6E5A0AF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

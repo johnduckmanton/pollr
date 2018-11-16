@@ -137,6 +137,12 @@
                                     <label class="form-check-label"
                                            [attr.for]="'isDisabled' + j">disabled</label>
                                   </div>
+                                  <div class="form-group">
+                                    <input type="text"
+                                           class="form-control"
+                                           [attr.id]="'voteCount' + j"
+                                           formControlName="voteCount" />
+                                  </div>
                                 </td>
                                 <td class="text-right">
                                   <img src="/assets/icons/remove.svg"

@@ -89,6 +89,13 @@ export class DashboardComponent implements OnInit {
     });
   }
 
+  resetPoll(index: number): void {
+    this.dataService.resetPoll(this.polls[index].id).subscribe(updatedPoll => {
+      this.polls[index] = updatedPoll;
+      this.toastr.warning('Poll vote counts have been reset.');
+    });
+  }
+
   nextQuestion(index: number): void {
     this.dataService.nextQuestion$(this.polls[index].id).subscribe(
       updatedPoll => {

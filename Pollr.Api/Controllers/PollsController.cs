@@ -263,6 +263,59 @@ namespace pollr.api.Controllers
         }
 
         /// <summary>
+        /// Reset the vote counts for the poll 
+        /// </summary>
+        /// <param name="id">The id of the poll</param>
+        /// <returns></returns>
+        [HttpPut("{id}/actions/reset")]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(500)]
+        public async Task<ActionResult> ResetPoll(int id)
+        {
+            try
+            {
+                Poll poll = await _pollRepository.GetPollAsync(id);
+                if (poll != null)
+                {
+
+                    // Go through each question and reset the vote counts
+                    foreach (Question question in poll.Questions)
+                    {
+                        foreach (Answer answer in question.Answers)
+                        {
+                            answer.VoteCount = 0;
+                        }
+                    }
+
+                    poll.CurrentQuestion = 1;
+
+                    // Update the poll then notify connected clients of the poll status using SignalR
+                    poll = await _pollRepository.UpdatePollAsync(poll);
+                    PollResult message = PollHelper.GetPollResults(poll);
+
+                    await _hubContext.Clients.All.SendAsync(VOTE_RECEIVED, message);
+
+                    _logger.LogInformation(LoggingEvents.ResetPoll, "Poll {id} has been reset", id);
+                    return Ok(poll);
+                }
+                else
+                {
+                    return StatusCode(500, "Error occurred updating the database");
+                }
+            }
+            catch (PollNotFoundException e)
+            {
+                ApiStatusMessage a = ApiStatusMessage.CreateFromException(e);
+                return BadRequest(a);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(LoggingEvents.PollSetNextQuestion, "Error resetting poll {id}: Exception {ex}", id, e.Message);
+                return StatusCode(500, e.Message);
+            }
+        }
+
+        /// <summary>
         /// Sets the status to closed. This will prevent any further votes
         /// being taken against the poll
         /// </summary>

@@ -53,16 +53,23 @@
                           (click)="openPoll(poll.id)"
                           placement="top"
                           ngbTooltip="Open the poll for voting"
-                          *ngIf="!poll.status != pollStatus.Open">
+                          *ngIf="poll.status != pollStatus.Open">
                     <i class="fa fa-lock-open"></i>
                   </button>
                   <button type="button"
-                          class="btn btn-warning btn-sm mr-1"
+                          class="btn btn-success btn-sm mr-1"
                           (click)="closePoll(poll.id)"
                           placement="top"
                           ngbTooltip="Close the poll"
                           *ngIf="poll.status != pollStatus.Closed">
                     <i class="fa fa-lock"></i>
+                  </button>
+                  <button type="button"
+                          class="btn btn-warning btn-sm mr-1"
+                          (click)="resetPoll(poll.id)"
+                          placement="top"
+                          ngbTooltip="Reset the poll">
+                    <i class="fa fa-undo"></i>
                   </button>
                 </span>
               </td>

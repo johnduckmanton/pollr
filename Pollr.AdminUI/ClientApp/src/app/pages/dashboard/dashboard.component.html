@@ -1,6 +1,6 @@
 <div *ngIf="!isLoading && polls.length > 0">
   <div class="row dashboard-entry" *ngFor="let poll of polls; let i = index">
-    <div class="col-md-9">
+    <div class="col-md-8">
       <a routerLink="/poll-details/{{poll.id}}"><h1 class="text-primary">{{ poll.name }}</h1></a>
       <h5 class="text-primary">{{ poll.description }}</h5>
       <p class="text-primary">
@@ -16,7 +16,7 @@
         </strong>
       </h5>
     </div>
-    <div class="col-md-3">
+    <div class="col-md-4">
       <p>
         <button type="button"
                 class="btn btn-primary btn-sq" (click)="showVoteStatus(i)"
@@ -41,6 +41,10 @@
                 [disabled]="poll.currentQuestion === poll.questions.length"
                 ngbTooltip="Show the next question">
           <i class="fa fa-step-forward fa-3x"></i>
+        </button>
+        <button type="button" class="btn btn-warning btn-sq" (click)="resetPoll(i)"
+                ngbTooltip="reset the vote counts for this poll">
+          <i class="fa fa-undo fa-3x"></i>
         </button>
         <button type="button" class="btn btn-primary btn-sq" (click)="showResults(i)"
                 ngbTooltip="Show the results for this poll">

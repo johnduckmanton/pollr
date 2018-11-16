@@ -19,6 +19,7 @@ namespace Pollr.Api.Core
         public const int PollSetNextQuestion = 1008;
         public const int PollVoteRegistered = 1009;
         public const int GetPollResults = 1010;
+        public const int ResetPoll = 1011;
 
         // Poll Definition Events
         public const int GetPollDefinitions = 2000;

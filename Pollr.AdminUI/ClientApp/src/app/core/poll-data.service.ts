@@ -158,6 +158,14 @@ export class PollDataService {
   }
 
   //
+  // Reset a poll
+  //
+  public resetPoll(pollId: number): Observable<any> {
+    const url = `${this.apiUrl}/polls/${pollId}/actions/reset`;
+    return this.http.put(url, {}).pipe(catchError(error => this._handleError(error)));
+  }
+
+  //
   // Submit a vote
   //
   public vote$(pollId: number, question: number, answer: number): Observable<any> {

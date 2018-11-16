@@ -95,4 +95,10 @@ export class PollListComponent implements OnInit {
 
     this.router.navigate(['admin/create-poll'], navigationExtras);
   }
+
+  resetPoll(id: number): void {
+    this.dataService.resetPoll(id).subscribe(() => {
+      this.toastr.warning('Poll vote counts have been reset.');
+    });
+  }
 }

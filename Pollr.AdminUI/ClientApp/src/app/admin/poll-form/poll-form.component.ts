@@ -137,6 +137,7 @@ export class PollFormComponent implements OnInit {
         answerText: new FormControl(answer ? answer.answerText : '', Validators.required),
         imagePath: new FormControl(answer ? answer.imagePath : ''),
         isDisabled: new FormControl(answer ? answer.isDisabled : false),
+        voteCount: new FormControl(answer ? answer.voteCount : 0)
       })
     );
   }
