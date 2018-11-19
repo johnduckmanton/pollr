@@ -65,7 +65,7 @@ namespace Pollr.Api.Data
                         info.Database = connection.Database;
                         info.DataSource = connection.DataSource;
                         info.ServerVersion = connection.ServerVersion;
-                        info.Connectiontimeout = connection.ConnectionTimeout;
+                        info.ConnectionTimeout = connection.ConnectionTimeout;
                         connection.Close();
                     }
                 }
