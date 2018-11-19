@@ -12,7 +12,7 @@
           <span>{{ answer.answerText }}</span>
           <img class="answer-image img-thumbnail responsive"
                src="{{answer.imagePath}}"
-               *ngIf="answer.imagePath" />
+               *ngIf="answer.imagePath && answer.imagePath !== ''" />
         </div>
       </div>
     </div>
