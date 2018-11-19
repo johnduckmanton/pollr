@@ -15,7 +15,10 @@ using Newtonsoft.Json.Serialization;
 using Pollr.Api.Data;
 using Pollr.Api.Exceptions;
 using Pollr.Api.Hubs;
+using Swashbuckle.AspNetCore.Swagger;
 using System;
+using System.IO;
+using System.Reflection;
 
 namespace pollr.api
 {
@@ -41,12 +44,21 @@ namespace pollr.api
 
             // SQL Server Database
             string connectionString = Configuration.GetConnectionString("PollrDatabase");
-            if (string.IsNullOrEmpty(connectionString)) {
+            if (string.IsNullOrEmpty(connectionString))
+            {
                 throw new AppConfigErrorException("Database connection string is not configured");
             }
 
             services.AddDbContext<PollrContext>
-                (options => options.UseSqlServer(connectionString));
+                (options => options
+                .UseSqlServer(connectionString,
+                    sqlServerOptionsAction: sqlOptions =>
+                    {
+                        sqlOptions.EnableRetryOnFailure(
+                        maxRetryCount: 10,
+                        maxRetryDelay: TimeSpan.FromSeconds(30),
+                        errorNumbersToAdd: null);
+                    }));
 
             // Automatically perform database migration
             // *** You may not want to do this in a real production app ***
@@ -85,11 +97,40 @@ namespace pollr.api
             }
 
             services.AddMvc()
-                .AddJsonOptions(options => {
+                .AddJsonOptions(options =>
+                {
                     options.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
                     options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
                 })
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+
+            // Register the Swagger generator, defining 1 or more Swagger documents
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new Info
+                {
+                    Version = "v1",
+                    Title = "Pollr API",
+                    Description = "ASP.NET Core Web API for the Pollr Demo Application",
+                    TermsOfService = "None",
+                    Contact = new Contact
+                    {
+                        Name = "John Duckmanton",
+                        Email = "john.duckmanton@microsoft.com",
+                        Url = "https://github.com/johnduckmanton/pollr"
+                    },
+                    License = new License
+                    {
+                        Name = "Licensed under the MIT License"
+                    }
+                });
+
+                // Set the comments path for the Swagger JSON and UI.
+                var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+                c.IncludeXmlComments(xmlPath);
+
+            });
 
             services.AddTransient<IPollDefinitionRepository, PollDefinitionRepository>();
             services.AddTransient<IPollRepository, PollRepository>();
@@ -107,10 +148,12 @@ namespace pollr.api
                 .AddAzureWebAppDiagnostics();
 
             _logger.LogInformation($"### Environment: {0}", env.EnvironmentName);
-            if (env.IsDevelopment()) {
+            if (env.IsDevelopment())
+            {
                 app.UseDeveloperExceptionPage();
             }
-            else {
+            else
+            {
                 app.UseHsts();
             }
 
@@ -119,16 +162,31 @@ namespace pollr.api
 
             app.UseHttpsRedirection();
             //app.UseAuthentication();
+
+            // Enable middleware to serve generated Swagger as a JSON endpoint.
+            app.UseSwagger();
+
+            // Enable middleware to serve swagger-ui (HTML, JS, CSS, etc.), 
+            // specifying the Swagger JSON endpoint.
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Pollr API V1");
+            });
+
             app.UseMvc();
 
             // Configure Signalr
-            if (useAzureSignalRManagedHub) {
-                app.UseAzureSignalR(routes => {
+            if (useAzureSignalRManagedHub)
+            {
+                app.UseAzureSignalR(routes =>
+                {
                     routes.MapHub<VoteHub>("/votehub");
                 });
             }
-            else {
-                app.UseSignalR(routes => {
+            else
+            {
+                app.UseSignalR(routes =>
+                {
                     routes.MapHub<VoteHub>("/votehub");
                 });
             }

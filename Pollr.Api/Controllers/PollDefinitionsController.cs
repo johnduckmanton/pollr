@@ -77,7 +77,7 @@ namespace pollr.api.Controllers
         /// <summary>
         /// Create a poll definition
         /// </summary>
-        /// <param name="value"></param>
+        /// <param name="pollDefinition"></param>
         /// <returns></returns>
         [HttpPost]
         [ProducesResponseType(201, Type = typeof(PollDefinition))]
@@ -106,7 +106,7 @@ namespace pollr.api.Controllers
         /// Update a poll definition
         /// </summary>
         /// <param name="id"></param>
-        /// <param name="value"></param>
+        /// <param name="pollDefinition"></param>
         /// <returns></returns>
         [HttpPut("{id}")]
         [ProducesResponseType(204)]
@@ -162,6 +162,7 @@ namespace pollr.api.Controllers
         /// Publish a poll definition
         /// </summary>
         /// <param name="id"></param>
+        /// <param name="isPublished"></param>
         /// <returns></returns>
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]

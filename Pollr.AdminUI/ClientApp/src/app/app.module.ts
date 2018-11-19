@@ -33,7 +33,6 @@ import { ViewPollDetailsComponent } from './pages/view-poll-details/view-poll-de
 import { VoteStatusComponent } from './pages/vote-status/vote-status.component';
 
 
-
 @NgModule({
   declarations: [
     AboutComponent,
@@ -47,7 +46,7 @@ import { VoteStatusComponent } from './pages/vote-status/vote-status.component';
     ViewPollDetailsComponent,
     VoteStatusComponent,
     ResultComponent,
-    ResultChartComponent
+    ResultChartComponent,
   ],
   imports: [
     AppRoutingModule,

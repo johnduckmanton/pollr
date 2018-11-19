@@ -98,7 +98,7 @@ namespace Pollr.Api.Data
         /// <summary>
         /// Add a new poll
         /// </summary>
-        /// <param name="item"></param>
+        /// <param name="poll"></param>
         /// <returns></returns>
         public async Task AddPollAsync(Poll poll)
         {
@@ -126,8 +126,7 @@ namespace Pollr.Api.Data
         /// <summary>
         /// Update a poll
         /// </summary>
-        /// <param name="id"></param>
-        /// <param name="item"></param>
+        /// <param name="poll"></param>
         /// <returns></returns>
         public async Task<Poll> UpdatePollAsync(Poll poll)
         {
@@ -155,6 +154,8 @@ namespace Pollr.Api.Data
         /// Creates a poll for voting based on the specified poll definition
         /// </summary>
         /// <param name="pollDefinitionId">poll definition id</param>
+        /// <param name="handle"></param>
+        /// <param name="description"></param>
         /// <param name="name">The name of the poll</param>
         /// <param name="isOpen">If true the poll is created in an open state</param>
         /// <returns></returns>

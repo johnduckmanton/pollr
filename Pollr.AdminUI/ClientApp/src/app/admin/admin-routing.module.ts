@@ -11,6 +11,8 @@ import { PollDefinitionListComponent } from './poll-definition-list/poll-definit
 import { CreatePollComponent } from './create-poll/create-poll.component';
 import { PollListComponent } from './poll-list/poll-list.component';
 import { PollFormComponent } from './poll-form/poll-form.component';
+import { SysInfoComponent } from './sys-info/sys-info.component';
+
 
 const routes: Routes = [
   { path: 'poll-definitions', component: PollDefinitionListComponent },
@@ -20,6 +22,7 @@ const routes: Routes = [
   { path: 'polls', component: PollListComponent },
   { path: 'polls/:mode/:id', component: PollFormComponent },
   { path: 'polls/:mode', component: PollFormComponent },
+  { path: 'sysinfo', component: SysInfoComponent },
 ];
 
 @NgModule({

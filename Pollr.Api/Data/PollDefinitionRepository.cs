@@ -76,7 +76,7 @@ namespace Pollr.Api.Data
         /// <summary>
         /// Create a new poll definition
         /// </summary>
-        /// <param name="item"></param>
+        /// <param name="pollDefinition"></param>
         /// <returns></returns>
         public async Task<PollDefinition> AddPollDefinitionAsync(PollDefinition pollDefinition)
         {

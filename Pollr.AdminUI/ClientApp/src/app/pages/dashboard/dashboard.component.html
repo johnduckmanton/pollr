@@ -1,7 +1,7 @@
 <div *ngIf="!isLoading && polls.length > 0">
   <div class="row dashboard-entry" *ngFor="let poll of polls; let i = index">
     <div class="col-md-8">
-      <a routerLink="/poll-details/{{poll.id}}"><h1 class="text-primary">{{ poll.name }}</h1></a>
+      <a routerLink="/poll-details/{{poll.id}}"><h1>{{ poll.name }}</h1></a>
       <h5 class="text-primary">{{ poll.description }}</h5>
       <p class="text-primary">
         Event date: <strong>{{ poll.pollDate | date }}</strong><br />
@@ -24,14 +24,14 @@
           <i class="fa fa-info fa-3x"></i>
         </button>
         <button type="button"
-                class="btn btn-outline-success btn-sq"
+                class="btn btn-success btn-sq"
                 *ngIf="poll.status == pollStatus.Closed"
                 ngbTooltip="Open the poll"
                 (click)="startPoll(i)">
           <i class="fa fa-play fa-3x"></i>
         </button>
         <button type="button"
-                class="btn btn-outline-danger btn-sq"
+                class="btn btn-danger btn-sq"
                 *ngIf="poll.status == pollStatus.Open"
                 ngbTooltip="Close the poll"
                 (click)="stopPoll(i)">
@@ -43,7 +43,7 @@
           <i class="fa fa-step-forward fa-3x"></i>
         </button>
         <button type="button" class="btn btn-warning btn-sq" (click)="resetPoll(i)"
-                ngbTooltip="reset the vote counts for this poll">
+                ngbTooltip="Reset the vote counts for this poll">
           <i class="fa fa-undo fa-3x"></i>
         </button>
         <button type="button" class="btn btn-primary btn-sq" (click)="showResults(i)"

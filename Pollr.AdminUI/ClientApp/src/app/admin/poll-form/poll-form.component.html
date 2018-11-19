@@ -1,5 +1,5 @@
 <div class="container" *ngIf="!isLoading">
-  <h3>{{ isEditing ? 'Edit' : 'Create' }} Poll</h3>
+  <h1>{{ isEditing ? 'Edit' : 'Create' }} Poll</h1>
 
   <form [formGroup]="pollForm" (ngSubmit)="onSubmit()">
     <div class="card" style="width: 100%;">
@@ -67,7 +67,8 @@
             <!-- QUESTION LIST -->
             <button type="button"
                     class="btn btn-primary btn-sm mt-2 mb-2"
-                    (click)="addQuestion()">
+                    (click)="addQuestion()"
+                    ngbTooltip="Add a question">
               <i class="fa fa-plus"></i> Add Question
             </button>
 
@@ -90,7 +91,8 @@
                         <!-- ANSWERS -->
                         <button type="button"
                                 class="btn btn-primary btn-sm mt-2 mb-2"
-                                (click)="addAnswer(i)">
+                                (click)="addAnswer(i)"
+                                ngbTooltip="Add an answer">
                           <i class="fa fa-plus"></i> Add Answer
                         </button>
 
@@ -145,11 +147,11 @@
                                   </div>
                                 </td>
                                 <td class="text-right">
-                                  <img src="/assets/icons/remove.svg"
-                                       alt=""
-                                       width="24"
-                                       height="24"
-                                       (click)="question.controls['answers'].removeAt(j)" />
+                                  <button button type="button" class="btn btn-sm btn-danger"
+                                          (click)="question.controls['answers'].removeAt(j)"
+                                          ngbTooltip="Delete this entry">
+                                    <i class="fa fa-trash"></i>
+                                  </button>
                                 </td>
                               </tr>
                             </tbody>
@@ -166,12 +168,11 @@
                         </div>
                       </td>
                       <td class="text-right">
-                        <img src="/assets/icons/remove.svg"
-                             alt=""
-                             width="24"
-                             height="24"
-                             (click)="pollForm.controls['questions'].removeAt(i)" />
-                      </td>
+                        <button button type="button" class="btn btn-sm btn-danger"
+                                (click)="pollForm.controls['questions'].removeAt(j)"
+                                ngbTooltip="Delete this entry">
+                          <i class="fa fa-trash"></i>
+                        </button>
                     </tr>
                   </tbody>
                 </table>

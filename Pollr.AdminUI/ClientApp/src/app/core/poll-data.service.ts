@@ -200,6 +200,14 @@ export class PollDataService {
     return this.http.get(url).pipe(catchError(error => this._handleError(error)));
   }
 
+  //
+  // Get the system information
+  //
+  public getSysInfo$(): Observable<any> {
+    const url = `${this.apiUrl}/info`;
+    return this.http.get(url).pipe(catchError(error => this._handleError(error)));
+  }
+
   private getOptions() {
     return {
       headers: new HttpHeaders().append('Content-Type', 'application/json'),

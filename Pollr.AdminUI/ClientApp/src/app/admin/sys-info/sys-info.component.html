@@ -1,0 +1,39 @@
+<h1 class="text-primary">System Information</h1>
+
+<table *ngIf="!isLoading && info">
+  <tr colspan="2">
+    <th>Application</th>
+  </tr>
+  <tr>
+    <td>Api Application Name</td>
+    <td>{{info.appName}}</td>
+  </tr>
+  <tr>
+    <td>Api Version</td>
+    <td>{{info.appVersion}}</td>
+  </tr>
+  <tr colspan="2">
+    <th>Database</th>
+  </tr>
+  <tr>
+    <td>Connection State</td>
+    <td>{{info.dataBaseInfo.state}}</td>
+  </tr>
+  <tr>
+    <td>Database</td>
+    <td>{{info.dataBaseInfo.database}}</td>
+  </tr>
+  <tr>
+    <td>Data Source</td>
+    <td>{{info.dataBaseInfo.dataSource}}</td>
+  </tr>
+  <tr>
+    <td>Server Version</td>
+    <td>{{info.dataBaseInfo.serverVersion}}</td>
+  </tr>
+  <tr>
+    <td>Connection Timeout</td>
+    <td>{{info.dataBaseInfo.connectionTimeout}}</td>
+  </tr>
+</table>
+

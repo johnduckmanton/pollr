@@ -16,6 +16,8 @@ import { PollDefinitionFormComponent } from './poll-definition-form/poll-definit
 import { PollDefinitionListComponent } from './poll-definition-list/poll-definition-list.component';
 import { PollFormComponent } from './poll-form/poll-form.component';
 import { PollListComponent } from './poll-list/poll-list.component';
+import { SysInfoComponent } from './sys-info/sys-info.component';
+
 
 // import { QuestionFormComponent } from './poll-definition-form/question-form/question-form.component';
 // import { QuestionListComponent } from './poll-definition-form/question-list/question-list.component';
@@ -31,15 +33,12 @@ import { PollListComponent } from './poll-list/poll-list.component';
     TagInputModule,
   ],
   declarations: [
-    // AnswerListComponent,
-    // AnswerFormComponent,
     CreatePollComponent,
     PollDefinitionListComponent,
     PollDefinitionFormComponent,
     PollFormComponent,
     PollListComponent,
-    // QuestionFormComponent,
-    // QuestionListComponent
+    SysInfoComponent
   ],
   providers: [PollDataService],
 })

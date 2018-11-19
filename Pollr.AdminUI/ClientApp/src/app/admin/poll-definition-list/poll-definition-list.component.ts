@@ -36,15 +36,16 @@ export class PollDefinitionListComponent implements OnInit {
     this.dataService.getPollDefinitions$().subscribe(
       data => {
         this.pollDefinitions = data;
-        this.isLoading = false;
-
         if (this.pollDefinitions.length === 0) {
           this.messageService.add(`There are currently no poll definitions defined.`);
         }
       },
       error => {
-        this.isLoading = false;
+
         this.messageService.add('Error retrieving poll definition data');
+      },
+      () => {
+        this.isLoading = false;
       }
     );
   }

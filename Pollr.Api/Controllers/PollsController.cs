@@ -68,7 +68,6 @@ namespace pollr.api.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        [Route("{id}")]
         [HttpGet("{id}", Name = "GetPoll")]
         [ProducesResponseType(200, Type = typeof(Poll))]
         public async Task<ActionResult> Get(int id)
@@ -94,7 +93,7 @@ namespace pollr.api.Controllers
         /// </summary>
         /// <param name="handle"></param>
         /// <returns></returns>
-        [Route("handle/{handle}")]
+        [HttpGet("handle/{handle}", Name = "GetPollByHandle")]
         [ProducesResponseType(200, Type = typeof(Poll))]
         public async Task<ActionResult> GetPollByHandle([FromRoute]string handle)
         {
@@ -119,7 +118,7 @@ namespace pollr.api.Controllers
         /// </summary>
         /// <param name="request"></param>
         /// <returns>The new poll</returns>
-        [HttpPost]
+        [HttpPost()]
         [ProducesResponseType(201, Type = typeof(Poll))]
         [ProducesResponseType(400)]
         public async Task<ActionResult> Post([FromBody]PollRequest request)
@@ -143,7 +142,7 @@ namespace pollr.api.Controllers
         /// Update a poll
         /// </summary>
         /// <param name="id"></param>
-        /// <param name="pollData"></param>
+        /// <param name="poll"></param>
         /// <returns></returns>
         [HttpPut("{id}")]
         [ProducesResponseType(204)]
@@ -434,7 +433,6 @@ namespace pollr.api.Controllers
         [ProducesResponseType(200)]
         [ProducesResponseType(404)]
         [ProducesResponseType(500)]
-        [Route("{id}/results")]
         public async Task<ActionResult> GetPollResults(int id)
         {
             var poll = await _pollRepository.GetPollAsync(id) ?? new Poll();

@@ -99,7 +99,8 @@ export class PollDefinitionFormComponent implements OnInit {
           question.answers.forEach(answer => {
             this.addAnswer(questionIndex, answer);
           });
-        } else {
+        }
+        else {
           this.addAnswer(questionIndex);
         }
       });

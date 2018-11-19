@@ -1,6 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Pollr.Api.Models;
 using Pollr.Api.Models.PollDefinitions;
 using Pollr.Api.Models.Polls;
+using System;
+using System.Data;
 
 namespace Pollr.Api.Data
 {
@@ -36,12 +39,43 @@ namespace Pollr.Api.Data
                 .HasOne(p => p.Question)
                 .WithMany(b => b.Answers)
                 .OnDelete(DeleteBehavior.Cascade);
+
+            // Unique constraint for Poll handle
+            modelBuilder.Entity<Poll>()
+                .HasIndex(p => p.Handle)
+                .IsUnique();
         }
 
-        public bool Ping()
+        public DbConnectionInfo GetConnectionInfo()
         {
-            // TODO: Add database keepalive code
-            return true;
+            var info = new DbConnectionInfo
+            {
+                State = "Disconnected"
+            };
+
+            using (this)
+            {
+                try
+                {
+                    var connection = this.Database.GetDbConnection();
+                    connection.Open();
+                    if (connection.State == ConnectionState.Open)
+                    {
+                        info.State = connection.State.ToString();
+                        info.Database = connection.Database;
+                        info.DataSource = connection.DataSource;
+                        info.ServerVersion = connection.ServerVersion;
+                        info.Connectiontimeout = connection.ConnectionTimeout;
+                        connection.Close();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+            }
+
+            return info;
         }
 
         public DbSet<PollDefinition> PollDefinitions { get; set; }

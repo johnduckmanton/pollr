@@ -10,16 +10,118 @@
     padding: 0;
   }*/
 
-.answers ol li:before {
+/*.answers ol li:before {
   counter-increment: list;
   content: counter(list, upper-alpha) '. ';
   color: #008cba;
   font-size: large;
   font-weight: 700;
-}
+}*/
 
 .answer-image {
-  width: 15%;
+  width: 19%;
   height: 15%;
   margin-left: 2rem;
+  max-width: 7em;
+  border: 1px solid #008cba;
 }
+
+.answer-list {
+  /* Create a new instance of a counter called "my-answer-list" and set the counter to 0. */
+  counter-reset: my-answer-list;
+  display: inline-block;
+  vertical-align: middle;
+  position: relative;
+}
+
+.answer-list-item {
+  /* Increment the "my-answer-list" counter for every list item. */
+  counter-increment: my-answer-list;
+  margin: 1em 0;
+  position: relative;
+  width: 100%;
+}
+
+  .answer-list-item::before {
+    /* Display the counter and set the list style for the list. */
+    content: counter(my-answer-list, upper-alpha);
+    background: #FFF;
+    border: 10px solid #ffffff;
+    border-radius: 50%;
+    color: #FFF;
+    display: inline-block;
+    font-weight: bold;
+    font-size: 1.8em;
+    line-height: 2.6em;
+    position: relative;
+    text-align: center;
+    vertical-align: middle;
+    width: 3.2em;
+    z-index: 2;
+  }
+
+  .answer-list-item > span {
+    background: #008cba;
+    border-radius: 6px;
+    color: #FFF;
+    display: inline-block;
+    position: relative;
+    line-height: 2em;
+    margin: 0 0 0 -2em;
+    padding: 1.2em 2em 1.2em 3em;
+    vertical-align: middle;
+  }
+
+    .answer-list-item > span::after {
+      background: transparent;
+      content: "";
+      position: absolute;
+      top: 24%;
+      right: 2%;
+      width: 50%;
+      height: 50%;
+      max-width: 300px;
+      z-index: -1;
+      /*box-shadow: 0 15px 10px rgba(0, 0, 0, 0.4);*/
+      transform: rotate(3deg);
+    }
+
+  .answer-list-item:nth-child(1)::before {
+    background: #008cba;
+    border-color: #FFFFFF;
+    box-shadow: 0 0 0 3px #008cba;
+  }
+
+  .answer-list-item:nth-child(1) > span {
+    background: #008cba;
+  }
+
+  .answer-list-item:nth-child(2)::before {
+    background: #008cba;
+    border-color: #FFFFFF;
+    box-shadow: 0 0 0 3px #008cba;
+  }
+
+  .answer-list-item:nth-child(2) > span {
+    background: #008cba;
+  }
+
+  .answer-list-item:nth-child(3)::before {
+    background: #008cba;
+    border-color: #FFFFFF;
+    box-shadow: 0 0 0 3px #008cba;
+  }
+
+  .answer-list-item:nth-child(3) > span {
+    background: #008cba;
+  }
+
+  .answer-list-item:nth-child(4)::before {
+    background: #16A085;
+    border-color: #FFFFFF;
+    box-shadow: 0 0 0 3px #008cba;
+  }
+
+  .answer-list-item:nth-child(4) > span {
+    background: #16A085;
+  }

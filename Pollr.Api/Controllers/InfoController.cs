@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Pollr.Api.Data;
+using Pollr.Api.Models;
 using System.Reflection;
 
 namespace Pollr.Api.Controllers
@@ -29,20 +30,22 @@ namespace Pollr.Api.Controllers
             {
 
                 // Get Application Version
+                AppName = typeof(InfoController).Assembly.GetName().Name,
                 AppVersion = typeof(InfoController).Assembly
                 .GetCustomAttribute<AssemblyFileVersionAttribute>().Version,
-
-                // Ping the database to check if the connection is OK
-                IsDatabaseConnected = _context.Ping()
             };
+
+            // Ping the database to check if the connection is OK
+            info.DataBaseInfo = _context.GetConnectionInfo();
 
             return Ok(info);
         }
 
         private class StatusInfo
         {
-            public string AppVersion { get; set; }
-            public bool IsDatabaseConnected { get; set; }
+            public string AppName { get; internal set; }
+            public string AppVersion { get; internal set; }
+            public DbConnectionInfo DataBaseInfo { get; internal set; }
         }
     }
 }
