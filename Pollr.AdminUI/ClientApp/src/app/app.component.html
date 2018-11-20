@@ -1,9 +1,10 @@
-<header>
-  <!-- loading spinne r -->
-  <div class="loading" *ngIf="(loaderService.isLoading | async)"></div>
+  <!-- loading spinner -->
+<ng-http-loader></ng-http-loader>
 
+<header>
   <app-navbar></app-navbar>
 </header>
+
 <main role="main" class="container">
   <app-messages></app-messages>
   <router-outlet></router-outlet>

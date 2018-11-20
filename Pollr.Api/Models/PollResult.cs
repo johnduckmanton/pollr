@@ -14,6 +14,7 @@ namespace Pollr.Api.Models
         public DateTime PollDate { get; set; }
         public int TotalVotes { get; set; }
         public QuestionResult[] Questions { get; set; }
+        public short CurrentQuestion { get; set; }
 
     }
 

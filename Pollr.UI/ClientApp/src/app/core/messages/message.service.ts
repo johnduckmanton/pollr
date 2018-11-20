@@ -4,13 +4,20 @@
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 import { Injectable } from '@angular/core';
-import { Observable, ReplaySubject, BehaviorSubject } from 'rxjs';
 
-@Injectable()
-export class LoadingService {
-    public isLoading = new BehaviorSubject(false);
+@Injectable({
+  providedIn: 'root'
+})
+export class MessageService {
+  constructor() {}
 
-    constructor() {}
+  messages: string[] = [];
+
+  add(message: string) {
+    this.messages.push(message);
+  }
+
+  clear() {
+    this.messages = [];
+  }
 }
-
-

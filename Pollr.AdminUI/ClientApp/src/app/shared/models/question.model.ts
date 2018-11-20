@@ -6,7 +6,7 @@
 import { Answer } from './answer.model';
 
 export class Question {
-  id: number;
+  id: number = 0;
   questionText: string;
   isDisabled: boolean;
   totalVotes: number;

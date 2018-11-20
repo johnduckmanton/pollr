@@ -6,6 +6,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+
 import { MessageService } from '../../core/messages/message.service';
 import { PollDataService } from '../../core/poll-data.service';
 import { PollDefinition } from '../../shared/models/poll-definition.model';
@@ -25,7 +26,7 @@ export class PollDefinitionListComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private toastr: ToastrService
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.isLoading = true;

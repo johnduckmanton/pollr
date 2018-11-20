@@ -4,7 +4,7 @@
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 export class Answer {
-  id: number;
+  id: number = 0;
   answerText: string;
   imagePath: string;
   voteCount: number;

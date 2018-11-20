@@ -3,10 +3,9 @@
  *  All rights reserved.
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-import { Location } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { NgxSpinnerService } from 'ngx-spinner';
+import { Component, OnInit } from '@angular/core';
+import { Location } from '@angular/common';
 
 import { ConfigurationService } from '../../core/configuration/configuration.service';
 import { SignalRService } from '../../core/signalr.service';
@@ -31,7 +30,6 @@ export class VoteStatusComponent implements OnInit {
 
   constructor(
     private configService: ConfigurationService,
-    private spinner: NgxSpinnerService,
     private router: Router,
     private route: ActivatedRoute,
     private location: Location,
@@ -77,6 +75,12 @@ export class VoteStatusComponent implements OnInit {
     // when new messages are received
     this.signalrService.newConnection.subscribe(count => {
       this.connectedUserCount = count;
+    });
+
+    // Event to indicate that the poll has been reset.
+    // Reload the first question in the poll
+    this.signalrService.resetPoll.subscribe((message) => {
+      this.currentQuestion = message.questions[message.currentQuestion - 1];
     });
   }
 

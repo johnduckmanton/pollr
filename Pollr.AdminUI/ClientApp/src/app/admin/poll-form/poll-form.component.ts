@@ -14,9 +14,10 @@ import {
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { Subscription } from 'rxjs';
-import { PollDataService } from '../../core/poll-data.service';
+
 import { Answer } from '../../shared/models/answer.model';
 import { Poll } from '../../shared/models/poll.model';
+import { PollDataService } from '../../core/poll-data.service';
 import { Question } from '../../shared/models/question.model';
 
 @Component({
@@ -33,10 +34,10 @@ export class PollFormComponent implements OnInit {
   sub: Subscription;
 
   constructor(
-    private router: Router,
     private activeRoute: ActivatedRoute,
-    private fb: FormBuilder,
     private dataService: PollDataService,
+    private fb: FormBuilder,
+    private router: Router,
     private toastr: ToastrService
   ) { }
 
@@ -57,12 +58,13 @@ export class PollFormComponent implements OnInit {
         .subscribe((data: Poll) => {
           this.poll = data;
           this.updateForm(this.poll);
-          this.isLoading = false;
         });
     } else {
       this.poll.id = 0;
-      this.isLoading = false;
     }
+
+    this.isLoading = false;
+
   }
 
   // Initialise the form with default data
@@ -78,7 +80,7 @@ export class PollFormComponent implements OnInit {
     });
   }
 
-  // Update the form data fields
+  // Update the form data fields with our data
   updateForm(poll: Poll): void {
     this.pollForm.patchValue({
       id: poll.id,

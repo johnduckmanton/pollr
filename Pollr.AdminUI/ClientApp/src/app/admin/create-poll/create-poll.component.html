@@ -11,19 +11,15 @@
           <div class="col-md-12">
             <div class="form-group">
               <label for="name">Name</label>
-              <input
-                type="text"
-                class="form-control"
-                id="name"
-                placeholder="Enter name"
-                [(ngModel)]="pollRequest.name"
-                name="name"
-                #name="ngModel"
-                required
-              />
-              <small id="nameHelp" class="form-text text-muted"
-                >Enter a unique name for your poll.</small
-              >
+              <input type="text"
+                     class="form-control"
+                     id="name"
+                     placeholder="Enter name"
+                     [(ngModel)]="pollRequest.name"
+                     name="name"
+                     #name="ngModel"
+                     required />
+              <small id="nameHelp" class="form-text text-muted">Enter a unique name for your poll.</small>
               <div [hidden]="name.valid || name.pristine" class="alert alert-danger">
                 Name is required
               </div>
@@ -31,13 +27,11 @@
 
             <div class="form-group">
               <label for="description">Description</label>
-              <textarea
-                class="form-control"
-                id="description"
-                [(ngModel)]="pollRequest.description"
-                name="description"
-                #description="ngModel"
-              ></textarea>
+              <textarea class="form-control"
+                        id="description"
+                        [(ngModel)]="pollRequest.description"
+                        name="description"
+                        #description="ngModel"></textarea>
             </div>
           </div>
         </div>
@@ -50,19 +44,15 @@
           <div class="col-md-6">
             <div class="form-group">
               <label for="name">Handle</label>
-              <input
-                type="text"
-                class="form-control"
-                id="handle"
-                [(ngModel)]="pollRequest.handle"
-                name="handle"
-                #handle="ngModel"
-                placeholder="Enter handle"
-                required
-              />
-              <small id="nameHelp" class="form-text text-muted"
-                >Enter a unique short code for your poll.</small
-              >
+              <input type="text"
+                     class="form-control"
+                     id="handle"
+                     [(ngModel)]="pollRequest.handle"
+                     name="handle"
+                     #handle="ngModel"
+                     placeholder="Enter handle"
+                     required />
+              <small id="nameHelp" class="form-text text-muted">Enter a unique short code for your poll.</small>
               <div class="invalid-feedback">Handle is required.</div>
             </div>
           </div>

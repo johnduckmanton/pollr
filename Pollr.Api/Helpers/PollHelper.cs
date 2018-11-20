@@ -18,7 +18,8 @@ namespace Pollr.Api.Helpers
                 Id = poll.Id.ToString(),
                 Name = poll.Name,
                 PollDate = poll.PollDate,
-                TotalVotes = 0
+                TotalVotes = 0,
+                CurrentQuestion = poll.CurrentQuestion
             };
 
             List<QuestionResult> questionList = new List<QuestionResult>();

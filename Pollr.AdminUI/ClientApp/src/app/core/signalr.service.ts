@@ -8,9 +8,13 @@ import { HubConnection, HubConnectionBuilder } from '@aspnet/signalr';
 
 import { ConfigurationService } from '../core/configuration/configuration.service';
 
-const newConnection = 'NewConnection';
-const voteReceived = 'VoteReceived';
-const broadcast = 'Broadcast';
+// Signalr message types
+const voteReceivedMessage = 'VoteReceived';
+const broadcastMessage = 'Broadcast';
+const connectionCountMessage = 'ConnectionCount';
+const newConnectionMessage = 'NewConnection';
+const resetPollMessage = 'ResetPoll';
+const loadQuestionMessage: string = 'LoadQuestion';
 
 @Injectable()
 export class SignalRService {
@@ -18,6 +22,7 @@ export class SignalRService {
   newConnection = new EventEmitter<number>();
   broadcast = new EventEmitter<any>();
   connectionEstablished = new EventEmitter<Boolean>();
+  resetPoll = new EventEmitter<any>();
 
   private connectionIsEstablished = false;
   private _hubConnection: HubConnection;
@@ -51,15 +56,19 @@ export class SignalRService {
   }
 
   private registerOnServerEvents(): void {
-    this._hubConnection.on(voteReceived, (data: any) => {
+    this._hubConnection.on(voteReceivedMessage, (data: any) => {
       this.resultsReceived.emit(data);
     });
 
-    this._hubConnection.on(newConnection, (data: number) => {
+    this._hubConnection.on(newConnectionMessage, (data: number) => {
       this.newConnection.emit(data);
     });
 
-    this._hubConnection.on(broadcast, (data: any) => {
+    this._hubConnection.on(resetPollMessage, (data: number) => {
+      this.resetPoll.emit(data);
+    });
+
+    this._hubConnection.on(broadcastMessage, (data: any) => {
       this.broadcast.emit(data);
     });
   }

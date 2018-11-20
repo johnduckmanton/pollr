@@ -7,10 +7,11 @@ import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http
 import { Injectable } from '@angular/core';
 import { Observable, throwError as ObservableThrowError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
+
+import { ConfigurationService } from './configuration/configuration.service';
 import { PollDefinition } from '../shared/models/poll-definition.model';
 import { PollRequest } from '../shared/models/poll-request.model';
 import { Poll, PollStatus } from '../shared/models/poll.model';
-import { ConfigurationService } from './configuration/configuration.service';
 import { MessageService } from './messages/message.service';
 
 @Injectable({

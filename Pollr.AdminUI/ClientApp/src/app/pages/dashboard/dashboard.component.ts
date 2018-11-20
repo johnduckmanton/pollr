@@ -26,11 +26,11 @@ export class DashboardComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private toastr: ToastrService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.isLoading = true;
-    this.getPolls(PollStatus.Undefined);
+    this.getPolls(PollStatus.Undefined);  // Undefined = All polls
   }
 
   getPolls(status: PollStatus): void {

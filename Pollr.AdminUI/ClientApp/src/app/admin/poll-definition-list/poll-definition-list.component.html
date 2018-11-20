@@ -26,7 +26,7 @@
               <th scope="row">
                 <p class="text-primary">
                   <a class="link-text text-primary" (click)=" editPollDefinition(definition.id)">{{ definition.name }}</a>
-                  <span *ngIf="definition.owner"><br/><small>Owned by {{ definition.owner }}</small></span>
+                  <span *ngIf="definition.owner"><br /><small>Owned by {{ definition.owner }}</small></span>
                 </p>
               </th>
               <td width="50%">{{ definition.description }}</td>
@@ -35,51 +35,41 @@
               </td>
               <td>
                 <span>
-                  <button
-                    type="button"
-                    class="btn btn-primary btn-sm mr-1"
-                    (click)="editPollDefinition(definition.id)"
-                    placement="top"
-                    ngbTooltip="Edit"
-                  >
+                  <button type="button"
+                          class="btn btn-primary btn-sm mr-1"
+                          (click)="editPollDefinition(definition.id)"
+                          placement="top"
+                          ngbTooltip="Edit">
                     <i class="fa fa-edit"></i>
                   </button>
-                  <button
-                    type="button"
-                    class="btn btn-danger btn-sm mr-1"
-                    (click)="deletePollDefinition(definition)"
-                    placement="top"
-                    ngbTooltip="Delete"
-                  >
+                  <button type="button"
+                          class="btn btn-danger btn-sm mr-1"
+                          (click)="deletePollDefinition(definition)"
+                          placement="top"
+                          ngbTooltip="Delete">
                     <i class="fa fa-trash"></i>
                   </button>
-                  <button
-                    type="button"
-                    class="btn btn-warning btn-sm mr-1"
-                    (click)="publishPollDefinition(definition.id)"
-                    placement="top"
-                    ngbTooltip="Publish"
-                    *ngIf="!definition.isPublished"
-                  >
+                  <button type="button"
+                          class="btn btn-warning btn-sm mr-1"
+                          (click)="publishPollDefinition(definition.id)"
+                          placement="top"
+                          ngbTooltip="Publish"
+                          *ngIf="!definition.isPublished">
                     <i class="fa fa-upload"></i>
                   </button>
-                  <button
-                    type="button"
-                    class="btn btn-warning btn-sm mr-1"
-                    (click)="unpublishPollDefinition(definition.id)"
-                    placement="top"
-                    ngbTooltip="Unpublish"
-                    *ngIf="definition.isPublished"
-                  >
+                  <button type="button"
+                          class="btn btn-warning btn-sm mr-1"
+                          (click)="unpublishPollDefinition(definition.id)"
+                          placement="top"
+                          ngbTooltip="Unpublish"
+                          *ngIf="definition.isPublished">
                     <i class="fa fa-download"></i>
                   </button>
-                  <button
-                    type="button"
-                    class="btn btn-primary btn-sm mr-1"
-                    (click)="createPoll(definition)"
-                    placement="top"
-                    ngbTooltip="Create a poll based on this definition"
-                  >
+                  <button type="button"
+                          class="btn btn-primary btn-sm mr-1"
+                          (click)="createPoll(definition)"
+                          placement="top"
+                          ngbTooltip="Create a poll based on this definition">
                     <i class="fa fa-poll-h"></i>
                   </button>
                 </span>

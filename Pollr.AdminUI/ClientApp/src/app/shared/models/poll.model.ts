@@ -6,7 +6,7 @@
 import { Question } from './question.model';
 
 export class Poll {
-  id: number;
+  id: number = 0;
   name: string;
   handle: string;
   description: string;

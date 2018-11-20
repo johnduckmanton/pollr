@@ -6,8 +6,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { PollRequest } from 'src/app/shared/models/poll-request.model';
 import { PollDataService } from '../../core/poll-data.service';
+import { PollRequest } from 'src/app/shared/models/poll-request.model';
 
 @Component({
   selector: 'app-create-poll',
@@ -16,11 +16,11 @@ import { PollDataService } from '../../core/poll-data.service';
 })
 export class CreatePollComponent implements OnInit {
   constructor(
-    private router: Router,
     private activeRoute: ActivatedRoute,
     private dataService: PollDataService,
+    private router: Router,
     private toastr: ToastrService
-  ) {}
+  ) { }
 
   isEditing: false;
   pollRequest: PollRequest = new PollRequest();
@@ -31,14 +31,14 @@ export class CreatePollComponent implements OnInit {
     this.pollDefinitionId = +this.activeRoute.snapshot.queryParamMap.get(
       'pollDefinitionId'
     );
-    console.log(`Poll Definition id: ${this.pollDefinitionId}`);
+
     this.pollDefinitionName = this.activeRoute.snapshot.queryParamMap.get(
       'pollDefinitionName'
     );
   }
 
   onSubmit() {
-    console.log(this.pollRequest);
+
     this.pollRequest.pollDefinitionId = this.pollDefinitionId;
 
     this.dataService.createPoll$(this.pollRequest).subscribe(

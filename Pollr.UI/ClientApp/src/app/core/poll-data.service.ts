@@ -1,11 +1,16 @@
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) John Duckmanton.
+ *  All rights reserved.
+ *  Licensed under the MIT License. See LICENSE in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 
-import { ConfigurationService } from './core/configuration/configuration.service';
-import { Poll } from './poll.model';
-import { MessageService } from './message.service';
+import { ConfigurationService } from '../core/configuration/configuration.service';
+import { MessageService } from '../core/messages/message.service';
+import { Poll } from '../shared/models/poll.model';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })

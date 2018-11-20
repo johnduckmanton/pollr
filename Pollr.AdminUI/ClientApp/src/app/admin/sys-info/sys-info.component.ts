@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
+import { ConfigurationService } from '../../core/configuration/configuration.service';
 import { PollDataService } from '../../core/poll-data.service';
 import { MessageService } from '../../core/messages/message.service';
 
@@ -11,14 +12,17 @@ import { MessageService } from '../../core/messages/message.service';
 export class SysInfoComponent implements OnInit {
   isLoading = false;
   info: any;
+  private apiUrl = this.configService.config.apiUrl;
 
   constructor(
+    private configService: ConfigurationService,
     private dataService: PollDataService,
     private messageService: MessageService,
   ) { }
 
   ngOnInit() {
     this.isLoading = true;
+
     this.dataService.getSysInfo$().subscribe(
       data => {
         this.info = data;

@@ -1,15 +1,21 @@
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) John Duckmanton.
+ *  All rights reserved.
+ *  Licensed under the MIT License. See LICENSE in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
 import { EventEmitter, Injectable } from '@angular/core';
 import { HubConnection, HubConnectionBuilder } from '@aspnet/signalr';
 
-import { ConfigurationService } from './core/configuration/configuration.service';
+import { ConfigurationService } from '../core/configuration/configuration.service';
 import { Promise } from 'q';
-import { VoteResult } from './shared/vote-result.model';
+import { VoteResult } from '../shared/models/vote-result.model';
 
 
 // Signalr message types
 const broadcastMessage = 'Broadcast';
 const connectionCountMessage = 'ConnectionCount';
 const newConnectionMessage = 'NewConnection';
+const resetPollMessage = 'ResetPoll';
 const loadQuestionMessage: string = 'LoadQuestion';
 
 @Injectable()
@@ -20,6 +26,7 @@ export class SignalRService {
   connectionCount = new EventEmitter<any>();
   connectionEstablished = new EventEmitter<Boolean>();
   newConnection = new EventEmitter<any>();
+  resetPoll = new EventEmitter<any>();
   loadQuestion = new EventEmitter<any>();
 
 
@@ -66,6 +73,10 @@ export class SignalRService {
 
     this._hubConnection.on(loadQuestionMessage, (data: number) => {
       this.loadQuestion.emit(data);
+    });
+
+    this._hubConnection.on(resetPollMessage, (data: number) => {
+      this.resetPoll.emit(data);
     });
 
     this._hubConnection.on(broadcastMessage, (data: any) => {

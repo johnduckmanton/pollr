@@ -4,6 +4,7 @@
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 using Microsoft.AspNetCore.SignalR;
+using Pollr.Api.Core;
 using Pollr.Api.Data;
 using Pollr.Api.Helpers;
 using Pollr.Api.Models;
@@ -20,11 +21,6 @@ namespace Pollr.Api.Hubs
     {
         public const string VOTERS_GROUP = "voters_group";
         public const string WATCHERS_GROUP = "watchers_group";
-
-        public static string LOAD_QUESTION = "LoadQuestion";
-        public static string NEW_CONNECTION = "NewConnection";
-        public static string VOTE_RECEIVED = "VoteReceived";
-        public static string BROADCAST = "Broadcast";
 
         private readonly IPollRepository _pollRepository;
         public static HashSet<string> connectedIds = new HashSet<string>();
@@ -60,7 +56,7 @@ namespace Pollr.Api.Hubs
 
                     // then notify other connected clients of the poll status using SignalR
                     PollResult message = PollHelper.GetPollResults(updatedPoll);
-                    await SendMessageToOthers(VOTE_RECEIVED, message);
+                    await SendMessageToOthers(MessageTypes.VOTE_RECEIVED, message);
 
                     result.StatusCode = 200;
                 }
@@ -105,7 +101,7 @@ namespace Pollr.Api.Hubs
             // HACK: This doesn't scale across multiple servers without adding something like Redis
             // but is just for demo purposes
             connectedIds.Add(Context.ConnectionId);
-            await SendMessageToAll(NEW_CONNECTION, connectedIds.Count);
+            await SendMessageToAll(MessageTypes.NEW_CONNECTION, connectedIds.Count);
             await base.OnConnectedAsync();
 
         }

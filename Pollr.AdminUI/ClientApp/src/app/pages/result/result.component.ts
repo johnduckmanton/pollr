@@ -3,10 +3,9 @@
  *  All rights reserved.
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-import { Location } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { NgxSpinnerService } from 'ngx-spinner';
+import { Component, OnInit } from '@angular/core';
+import { Location } from '@angular/common';
 import { Subscription } from 'rxjs';
 
 import { MessageService } from '../../core/messages/message.service';
@@ -24,7 +23,6 @@ export class ResultComponent implements OnInit {
   public results;
 
   constructor(
-    private spinner: NgxSpinnerService,
     private route: ActivatedRoute,
     private location: Location,
     private dataService: PollDataService,
@@ -35,7 +33,6 @@ export class ResultComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.spinner.show();
     const id: number = Number.parseInt(this.route.snapshot.paramMap.get('id'));
 
     // Get the current results
@@ -44,7 +41,6 @@ export class ResultComponent implements OnInit {
       console.log(results);
     });
 
-    this.spinner.hide();
   }
 
   private subscribeToEvents(): void {

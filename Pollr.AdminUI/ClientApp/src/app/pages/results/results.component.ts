@@ -6,8 +6,8 @@
 import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { NgxSpinnerService } from 'ngx-spinner';
 import { Subscription } from 'rxjs';
+
 import { MessageService } from '../../core/messages/message.service';
 import { SignalRService } from '../../core/signalr.service';
 import { PollDataService } from '../../core/poll-data.service';
@@ -23,7 +23,6 @@ export class ResultsComponent implements OnInit {
   public results;
 
   constructor(
-    private spinner: NgxSpinnerService,
     private route: ActivatedRoute,
     private location: Location,
     private dataService: PollDataService,
@@ -34,7 +33,6 @@ export class ResultsComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.spinner.show();
     const id: number = Number.parseInt(this.route.snapshot.paramMap.get('id'));
 
     // Get the current results
@@ -43,7 +41,6 @@ export class ResultsComponent implements OnInit {
       console.log(results);
     });
 
-    this.spinner.hide();
   }
 
   private subscribeToEvents(): void {

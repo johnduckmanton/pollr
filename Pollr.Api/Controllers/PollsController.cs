@@ -31,8 +31,6 @@ namespace pollr.api.Controllers
         private readonly ILogger<PollsController> _logger;
         private IHubContext<VoteHub> _hubContext;
 
-        private static string VOTE_RECEIVED = "VoteReceived";
-
         public PollsController(IPollRepository pollRepository, IHubContext<VoteHub> hubContext, ILogger<PollsController> logger)
         {
             _pollRepository = pollRepository;
@@ -292,7 +290,7 @@ namespace pollr.api.Controllers
                     poll = await _pollRepository.UpdatePollAsync(poll);
                     PollResult message = PollHelper.GetPollResults(poll);
 
-                    await _hubContext.Clients.All.SendAsync(VOTE_RECEIVED, message);
+                    await _hubContext.Clients.All.SendAsync(MessageTypes.RESET_POLL, message);
 
                     _logger.LogInformation(LoggingEvents.ResetPoll, "Poll {id} has been reset", id);
                     return Ok(poll);
@@ -462,7 +460,7 @@ namespace pollr.api.Controllers
 
                 // then notify connected clients of the poll status using SignalR
                 PollResult message = PollHelper.GetPollResults(updatedPoll);
-                await _hubContext.Clients.All.SendAsync(VOTE_RECEIVED, message);
+                await _hubContext.Clients.All.SendAsync(MessageTypes.VOTE_RECEIVED, message);
                 _logger.LogInformation(LoggingEvents.PollVoteRegistered, "Poll {id} vote registered", pollId);
             }
         }

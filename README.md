@@ -7,7 +7,7 @@ This application is a full stack ASP.NET Core/Angular application. I am using it
 The project directory structure is as follows:
 
 ```
-/Pollr.UI		- Angular Web User Interface
+/Pollr.UI		- Angular Web User Interface for voting
 /Pollr.AdminUI	- Angular Administration Web User Interface
 /Pollr.Api		- ASP.NET Core Web Api
 
@@ -16,7 +16,16 @@ The project directory structure is as follows:
 # Components
 
 ## Angular Web User Interface
-This application is an Angular application build initially using the Angular CLI and hosted in an ASP.NET Core Web Application.
+This application is an Angular application built initially using the Angular CLI and hosted in an ASP.NET Core Web Application. This application is designed primarily to display on mobule devices
+
+### Building the application
+
+- `npm run build`- to build the application
+- `npm run docker:build` - to build the Docker image
+
+## Angular Administration Web User Interface
+This application is an Angular application built initially using the Angular CLI and hosted in an ASP.NET Core Web Application.
+The purpose of this application is to provide an administrative user interface for creating and maintaining poll definitions and for viewing poll results.
 
 ### Building the application
 
@@ -25,16 +34,11 @@ This application is an Angular application build initially using the Angular CLI
 
 ## ASP.NET Core REST API Component
 
-This project is an implementation of the REST API using ASP.NET Core Web Api.
-The application directory structure is as follows:
-
-**Diag:**
-
-- `GET /api/diag/info` - Get system information for the Rest Api server
+This project is an implementation of the REST API using ASP.NET Core 2.1 Web Api.
 
 ### Swagger/OpenAPI Definition
 
-There is a [Swagger definition file for the API] and Swagger UI is also available, just use `/api-docs` as the URL, e.g. **http://localhost:5000/api-docs/**
+There is a [Swagger definition file for the API] and Swagger UI is also available, just use `/swagger` as the URL, e.g. **http://localhost:5000/swagger/**
 
 ### Building the application
 
@@ -46,15 +50,6 @@ There is a [Swagger definition file for the API] and Swagger UI is also availabl
 #### Docker
 
 `docker compose up`
-
-  "MongoConnection": {
-    "ConnectionString": <Connection string>
-    "Database": "pollr"
-  },
-  "SignalR": {
-    "UseAzureSignalRManagedHub": false,
-    "Azure:SignalR:ConnectionString": <Connection string>
-  }
 
 # Code of Conduct
 

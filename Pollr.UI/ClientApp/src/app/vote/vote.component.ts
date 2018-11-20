@@ -1,14 +1,18 @@
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) John Duckmanton.
+ *  All rights reserved.
+ *  Licensed under the MIT License. See LICENSE in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
-import { NgxSpinnerService } from 'ngx-spinner';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
-import { Poll, PollStatus } from '../poll.model';
-import { PollDefinition } from '../poll-definition.model';
-import { PollDataService } from '../poll-data.service';
-import { MessageService } from '../message.service';
-import { SignalRService } from '../signalr.service';
+import { Poll, PollStatus } from '../shared/models/poll.model';
+import { PollDefinition } from '../shared/models/poll-definition.model';
+import { PollDataService } from '../core/poll-data.service';
+import { MessageService } from '../core/messages/message.service';
+import { SignalRService } from '../core/signalr.service';
 
 @Component({
   selector: 'app-vote',
@@ -34,7 +38,6 @@ export class VoteComponent implements OnInit {
   selectedAnswerIdx: number = -1;
 
   constructor(
-    private spinner: NgxSpinnerService,
     private route: ActivatedRoute,
     private pollDataService: PollDataService,
     private messageService: MessageService,
@@ -47,9 +50,9 @@ export class VoteComponent implements OnInit {
   ngOnInit(): void {
     const handle: string = this.route.snapshot.paramMap.get('handle');
 
-    this.spinner.show();
+    this.isLoading = true;
     this.getPoll(handle);
-    this.spinner.hide();
+    this.isLoading = false;
   }
 
   //
@@ -101,13 +104,11 @@ export class VoteComponent implements OnInit {
     console.log(this.canSendMessage);
 
     if (this.canSendMessage) {
-      this.spinner.show();
       this.signalrService.vote(this.poll.id, this.currentQuestionIndex, this.selectedAnswerIdx + 1)
         .then((data) => {
           console.log(data);
           let result = data.statusCode;
           console.log(result);
-          this.spinner.hide();
 
           this.hasVoted = true;
           this.votedMessage = `You have voted for ${this.currentQuestion.answers[this.selectedAnswerIdx].answerText}.`;
@@ -126,8 +127,14 @@ export class VoteComponent implements OnInit {
       this.canSendMessage = true;
     });
 
+    // Event to indicate that the poll has been reset
+    this.signalrService.resetPoll.subscribe((data) => {
+      this.currentQuestionIndex == data.currentQuestion || 1;
+      this.loadQuestion();
+    });
+
     // Event to trigger loading of the next question
-    this.signalrService.loadQuestion.subscribe((daTA) => {
+    this.signalrService.loadQuestion.subscribe((data) => {
       this.currentQuestionIndex += 1;
       this.loadQuestion();
     });

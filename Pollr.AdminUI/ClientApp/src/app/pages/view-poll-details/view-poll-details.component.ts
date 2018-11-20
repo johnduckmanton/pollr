@@ -3,10 +3,9 @@
  *  All rights reserved.
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-import { Location } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { NgxSpinnerService } from 'ngx-spinner';
+import { Component, OnInit } from '@angular/core';
+import { Location } from '@angular/common';
 
 import { ConfigurationService } from '../../core/configuration/configuration.service';
 import { MessageService } from '../../core/messages/message.service';
@@ -30,7 +29,6 @@ export class ViewPollDetailsComponent implements OnInit {
 
   constructor(
     private configService: ConfigurationService,
-    private spinner: NgxSpinnerService,
     private router: Router,
     private route: ActivatedRoute,
     private location: Location,
@@ -58,7 +56,6 @@ export class ViewPollDetailsComponent implements OnInit {
     // Subscribe to new connection messages and update the connectedUsers count
     // when new messages are received
     this.signalrService.newConnection.subscribe(count => {
-      console.log(count);
       this.connectedUserCount = count;
     });
   }

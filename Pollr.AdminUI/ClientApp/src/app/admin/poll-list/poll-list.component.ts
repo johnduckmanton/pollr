@@ -37,15 +37,15 @@ export class PollListComponent implements OnInit {
     this.dataService.getAllPolls$().subscribe(
       data => {
         this.polls = data;
-        this.isLoading = false;
-
         if (this.polls.length === 0) {
           this.messageService.add(`There are currently no polls defined.`);
         }
       },
       error => {
-        this.isLoading = false;
         this.messageService.add('Error retrieving poll data');
+      },
+      () => {
+        this.isLoading = false;
       }
     );
   }
@@ -55,8 +55,6 @@ export class PollListComponent implements OnInit {
   }
 
   deletePoll(def: Poll): void {
-
-    console.log(def);
 
     if (def != null) {
       this.dataService.deletePoll$(def.id).subscribe(
