@@ -236,8 +236,10 @@ namespace pollr.api.Controllers
             try {
                 Poll updatedPoll = await _pollRepository.SetNextQuestionAsync(id);
                 if (updatedPoll != null) {
+                    PollResult message = PollHelper.GetPollResults(updatedPoll);
 
-                    await _hubContext.Clients.All.SendAsync("LoadQuestion", new LoadQuestionRequest() { PollId = id, QuestionIndex = updatedPoll.CurrentQuestion -1 });
+                    await _hubContext.Clients.All.SendAsync(MessageTypes.LOAD_QUESTION, message);
+
                     _logger.LogInformation(LoggingEvents.PollSetNextQuestion, "Poll {id} next question updated", id);
                     return Ok(updatedPoll);
                 }

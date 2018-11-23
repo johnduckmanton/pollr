@@ -19,6 +19,7 @@ const loadQuestionMessage: string = 'LoadQuestion';
 @Injectable()
 export class SignalRService {
   resultsReceived = new EventEmitter<any>();
+  loadQuestion = new EventEmitter<any>();
   newConnection = new EventEmitter<number>();
   broadcast = new EventEmitter<any>();
   connectionEstablished = new EventEmitter<Boolean>();
@@ -56,8 +57,20 @@ export class SignalRService {
   }
 
   private registerOnServerEvents(): void {
+
+    // Restart the connection if it closes
+    this._hubConnection.onclose(() => {
+      this.connectionEstablished.emit(false);
+      console.log('Signalr connection lost, retrying...');
+      setTimeout(this.startConnection(), 5000);
+    });
+
     this._hubConnection.on(voteReceivedMessage, (data: any) => {
       this.resultsReceived.emit(data);
+    });
+
+    this._hubConnection.on(loadQuestionMessage, (data: any) => {
+      this.loadQuestion.emit(data);
     });
 
     this._hubConnection.on(newConnectionMessage, (data: number) => {

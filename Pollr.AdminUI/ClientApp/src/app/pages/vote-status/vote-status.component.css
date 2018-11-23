@@ -24,6 +24,7 @@
   margin-left: 2rem;
   max-width: 7em;
   border: 1px solid #008cba;
+  margin: 1rem;
 }
 
 .answer-list {
@@ -51,24 +52,25 @@
     color: #FFF;
     display: inline-block;
     font-weight: bold;
-    font-size: 1.8em;
-    line-height: 2.6em;
+    font-size: 1.4em;
+    line-height: 2.2em;
     position: relative;
     text-align: center;
     vertical-align: middle;
-    width: 3.2em;
+    width: 3.4em;
     z-index: 2;
   }
 
   .answer-list-item > span {
     background: #008cba;
-    border-radius: 6px;
+    border-radius: 0.75em;
     color: #FFF;
     display: inline-block;
     position: relative;
     line-height: 2em;
     margin: 0 0 0 -2em;
     padding: 1.2em 2em 1.2em 3em;
+    min-width: 18em;
     vertical-align: middle;
   }
 
@@ -125,3 +127,19 @@
   .answer-list-item:nth-child(4) > span {
     background: #16A085;
   }
+
+.qr-text {
+  font-size: 1.6em;
+  word-wrap: break-word;
+  padding: 0.75em;
+}
+
+@media (min-width: 375px) {
+
+  .qr-text {
+    font-size: 1.2em;
+    word-wrap: break-word;
+    padding: 0.75em;
+  }
+
+}

@@ -135,7 +135,7 @@ export class VoteComponent implements OnInit {
 
     // Event to trigger loading of the next question
     this.signalrService.loadQuestion.subscribe((data) => {
-      this.currentQuestionIndex += 1;
+      this.currentQuestionIndex == data.currentQuestion || 1;
       this.loadQuestion();
     });
   }

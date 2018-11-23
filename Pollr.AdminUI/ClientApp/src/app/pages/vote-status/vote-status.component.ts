@@ -10,8 +10,9 @@ import { Location } from '@angular/common';
 import { ConfigurationService } from '../../core/configuration/configuration.service';
 import { SignalRService } from '../../core/signalr.service';
 import { PollDataService } from '../../core/poll-data.service';
-import { Poll } from '../../shared/models/poll.model';
+import { Poll, PollStatus } from '../../shared/models/poll.model';
 import { Question } from '../../shared/models/question.model';
+import { MessageService } from '../../core/messages/message.service';
 
 
 @Component({
@@ -27,13 +28,17 @@ export class VoteStatusComponent implements OnInit {
   currentQuestion: Question;
   qrcodeElementType = 'url';
   pollVoteUrl = '';
+  isPollOpen = true;
+  connectedToHub: boolean;
+  pollStatus = PollStatus;
 
   constructor(
     private configService: ConfigurationService,
+    private dataService: PollDataService,
     private router: Router,
     private route: ActivatedRoute,
     private location: Location,
-    private dataService: PollDataService,
+    private messageService: MessageService,
     private signalrService: SignalRService
   ) {
     this.subscribeToEvents();
@@ -49,6 +54,11 @@ export class VoteStatusComponent implements OnInit {
       this.poll = poll;
       this.currentQuestion = this.poll.questions[this.poll.currentQuestion - 1];
 
+      // Check the poll is open for voting
+      if (this.poll.status != this.pollStatus.Open) {
+        this.messageService.add('Poll is not open for voting');
+      }
+
       // Calculate the total votes
       this.currentQuestion.totalVotes = this.currentQuestion.answers.map(answer => answer.voteCount).reduce(function sum(prev, next) {
         return prev + next;
@@ -56,15 +66,32 @@ export class VoteStatusComponent implements OnInit {
 
       this.pollVoteUrl = this.configService.config.voteUrl;
       this.isLoading = false;
-      console.log(poll);
     });
   }
 
   private subscribeToEvents(): void {
 
+    // Event to indicate that the signalr hub is ready
+    this.signalrService.connectionEstablished.subscribe(() => {
+      console.log('### Connected to Signalr hub');
+      this.connectedToHub = true;
+    });
+
+    // Subscribe to vote messages and update the result dataset when
+    // new messages are received
+    this.signalrService.loadQuestion.subscribe(message => {
+      console.log('### Load Question message received');
+      console.log(message);
+
+      if (message) {
+        this.currentQuestion = message.questions[message.currentQuestion - 1];
+      }
+    });
+
     // Subscribe to vote messages and update the result dataset when
     // new messages are received
     this.signalrService.resultsReceived.subscribe(message => {
+      console.log('### New vote message received');
 
       // We will get back a result for the whole poll so we need to
       // dig out the current question from the results and update the vote counts
@@ -74,13 +101,19 @@ export class VoteStatusComponent implements OnInit {
     // Subscribe to new connection messages and update the connectedUsers count
     // when new messages are received
     this.signalrService.newConnection.subscribe(count => {
+      console.log('### New use connected message received');
       this.connectedUserCount = count;
     });
 
     // Event to indicate that the poll has been reset.
     // Reload the first question in the poll
     this.signalrService.resetPoll.subscribe((message) => {
-      this.currentQuestion = message.questions[message.currentQuestion - 1];
+      console.log('### Reset message received');
+      console.log(message);
+
+      if (message) {
+        this.currentQuestion = message.questions[message.currentQuestion - 1];
+      }
     });
   }
 

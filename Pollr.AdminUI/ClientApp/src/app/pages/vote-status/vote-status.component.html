@@ -1,11 +1,15 @@
 <div *ngIf="!isLoading">
+  <div class="connection-indicator">
+    <i class="fa fa-cloud" [ngClass]="connectedToHub ? 'text-success' : 'text-danger'"></i>
+  </div>
+
   <div class="row">
-    <div class="col-md-12">
+    <div class="col-md-12 col-sm-12 col-xs-12">
       <h1 class="text-primary text-center mb-5">{{ currentQuestion?.questionText }}</h1>
     </div>
   </div>
   <div class="row">
-    <div class="col-md-6">
+    <div class="col-sm-12 col-md-6 col-xs-12">
       <div class="answers answer-list">
         <div *ngFor="let answer of currentQuestion?.answers; let i = index" class="answer-list-item">
           <!--<div class="d-flex w-100 justify-content-between mb-3">-->
@@ -16,29 +20,27 @@
         </div>
       </div>
     </div>
-    <div class="col-sm-6 col-md-6 col-xs-6">
-      <app-result-chart [question]="currentQuestion"
-                        [displayQuestionText]="false"></app-result-chart>
-
-      <div class="mt-5">
-        <div class="thumbnail" style="border:none; background:white;">
-
-          <div class="col-sm-12 col-md-12 col-xs-12 image-container">
-            <div class="qrcode float-right">
-              <ngx-qrcode [qrc-element-type]="qrcodeElementType"
-                          [qrc-value]="pollVoteUrl"
-                          qrc-class="qrcode"
-                          qrc-errorCorrectionLevel="L">
-              </ngx-qrcode>
-            </div>
-          </div>
-
-          <div class="col-sm-12 col-md-12 col-xs-12">
-
-            <h3>To cast your vote go to <a href="{{ pollVoteUrl }}">{{ pollVoteUrl }}</a> and enter code <strong>{{poll.handle}}</strong></h3>
-          </div>
-        </div>
+    <div class="col-sm-12 col-md-6 col-xs-12">
+      <div>
+        <h3 class="text-primary">Results</h3>
+        <app-result-chart [question]="currentQuestion"
+                          [displayQuestionText]="false"></app-result-chart>
       </div>
 
+      <div class="mt-5">
+        <div class="thumbnail" style="border:none; background:white;" image-container mt-5>
+          <div class="qrcode float-right">
+            <ngx-qrcode [qrc-element-type]="qrcodeElementType"
+                        [qrc-value]="pollVoteUrl"
+                        qrc-class="qrcode"
+                        qrc-errorCorrectionLevel="L">
+            </ngx-qrcode>
+          </div>
+
+          <div class="qr-text">To cast your vote go to <a href="{{ pollVoteUrl }}">{{ pollVoteUrl }}</a> and enter code <strong>{{poll.handle}}</strong></div>
+        </div>
+      </div>
     </div>
   </div>
+</div>
+
