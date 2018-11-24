@@ -12,8 +12,8 @@ import { MessageService } from '../../core/messages/message.service';
 export class SysInfoComponent implements OnInit {
   isLoading = false;
   info: any;
-  private apiUrl = this.configService.config.apiUrl;
-  private appVersion = this.configService.config.appVersion;
+  apiUrl = this.configService.config.apiUrl;
+  appVersion = this.configService.config.appVersion;
 
 
 

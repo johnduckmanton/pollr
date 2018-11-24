@@ -13,7 +13,7 @@ import { ConfigurationService } from '../../core/configuration/configuration.ser
 })
 export class AboutComponent implements OnInit {
 
-  private appVersion = this.configService.config.appVersion;
+  appVersion = this.configService.config.appVersion;
 
   constructor(public configService: ConfigurationService) {
   }
