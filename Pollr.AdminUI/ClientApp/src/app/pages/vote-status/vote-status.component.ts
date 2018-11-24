@@ -101,7 +101,7 @@ export class VoteStatusComponent implements OnInit {
     // Subscribe to new connection messages and update the connectedUsers count
     // when new messages are received
     this.signalrService.newConnection.subscribe(count => {
-      console.log('### New use connected message received');
+      console.log('### New user connected message received');
       this.connectedUserCount = count;
     });
 

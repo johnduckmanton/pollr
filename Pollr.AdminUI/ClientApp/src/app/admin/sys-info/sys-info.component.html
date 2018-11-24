@@ -2,6 +2,13 @@
 
 <table *ngIf="!isLoading && info">
   <tr colspan="2">
+    <th>UI</th>
+  </tr>
+  <tr>
+    <td>UI Version</td>
+    <td>{{appVersion}}</td>
+  </tr>
+  <tr colspan="2">
     <th>API</th>
   </tr>
   <tr>
@@ -37,7 +44,7 @@
   </tr>
   <tr>
     <td>Connection Timeout</td>
-    <td>{{info.dataBaseInfo.connectionTimeout}}</td>
+    <td>{{info.dataBaseInfo.connectionTimeout}} seconds</td>
   </tr>
 </table>
 

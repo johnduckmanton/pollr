@@ -9,6 +9,8 @@ namespace Pollr.AdminUI.Models
     {
         // Production Mode Flag
         public string Production { get; set; }  
+        // App version number
+        public string AppVersion { get; set; }
         // The URL of the Web Api
         public string ApiUrl { get; set; }
         //The URL of the SignalR hub

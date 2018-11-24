@@ -13,6 +13,9 @@ export class SysInfoComponent implements OnInit {
   isLoading = false;
   info: any;
   private apiUrl = this.configService.config.apiUrl;
+  private appVersion = this.configService.config.appVersion;
+
+
 
   constructor(
     private configService: ConfigurationService,

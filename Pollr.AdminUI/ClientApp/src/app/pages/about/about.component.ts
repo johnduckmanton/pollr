@@ -4,6 +4,7 @@
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 import { Component, OnInit } from '@angular/core';
+import { ConfigurationService } from '../../core/configuration/configuration.service';
 
 @Component({
   selector: 'app-about',
@@ -12,8 +13,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AboutComponent implements OnInit {
 
-  constructor() { }
+  private appVersion = this.configService.config.appVersion;
 
+  constructor(public configService: ConfigurationService) {
+  }
   ngOnInit() {
   }
 

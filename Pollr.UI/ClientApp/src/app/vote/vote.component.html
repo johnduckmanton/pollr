@@ -7,15 +7,15 @@
   <div class="poll" *ngIf="poll && isPollOpen">
     <div class="row">
       <div class="col-md-8 offset-md-2 col-sm-12 col-xs-12">
-        <h1 class="text-primary text-center mb-5">{{ currentQuestion?.questionText }}</h1>
+        <h1 class="question-text">{{ currentQuestion?.questionText }}</h1>
 
-        <span class="text-muted mb-3">Please select one answer</span>
+        <div class="text-muted mb-3">Please select one answer</div>
 
         <div class="answers">
           <div class="list-group">
             <div class="list-group-item list-group-item-action flex-column align-items-start active" *ngFor="let answer of currentQuestion?.answers;let i=index" (click)="selectAnswer(i)" [class.active]="selectedAnswerIdx === i" [class.disabled]="hasVoted || answer.isDisabled">
               <div class="d-flex w-100 justify-content-between">
-                <h3 class="mb-1"><strong>{{answer.answerText}}</strong></h3>
+                <div class="answer-text">{{answer.answerText}}</div>
                 <img class="answer-image float-left img-thumbnail responsive" src="{{answer.imagePath}}"                *ngIf="answer.imagePath && answer.imagePath !== ''" />
               </div>
             </div>

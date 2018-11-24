@@ -5,6 +5,8 @@
  *--------------------------------------------------------------------------------------------*/
 import { Component, OnInit } from '@angular/core';
 
+import { ConfigurationService } from '../core/configuration/configuration.service';
+
 @Component({
   selector: 'app-about',
   templateUrl: './about.component.html',
@@ -12,7 +14,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AboutComponent implements OnInit {
 
-  constructor() { }
+  private appVersion = this.configService.config.appVersion;
+
+  constructor(public configService: ConfigurationService) {
+  }
 
   ngOnInit() {
   }

@@ -5,6 +5,7 @@
  *--------------------------------------------------------------------------------------------*/
 export class Configuration {
   public production: string;
+  public appVersion: string;
   public apiUrl: string;
   public hubUrl: string;
   public voteUrl: string;

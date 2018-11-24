@@ -17,6 +17,7 @@ export class AppComponent {
   title = 'pollr';
 
   constructor(public configService: ConfigurationService, private messageService: MessageService) {
+    console.log(`App version: ${this.configService.config.appVersion}`);
     console.log(`Production environment: ${this.configService.config.production}`);
     console.log(`Api URL: ${this.configService.config.apiUrl}`);
     console.log(`Hub URL: ${this.configService.config.hubUrl}`);

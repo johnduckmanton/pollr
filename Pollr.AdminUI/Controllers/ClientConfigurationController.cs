@@ -1,10 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Pollr.AdminUI.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using System.Reflection;
+
 
 namespace Pollr.AdminUI.Controllers
 {
@@ -15,8 +13,9 @@ namespace Pollr.AdminUI.Controllers
         public ClientConfigurationController(IOptions<ClientConfiguration> clientConfigOptions)
         {
             clientConfig = clientConfigOptions.Value;
+            clientConfig.AppVersion = typeof(ClientConfigurationController).Assembly
+                .GetCustomAttribute<AssemblyFileVersionAttribute>().Version;
         }
-
         [HttpGet]
         [Route("[controller]")]
         public IActionResult Index()
