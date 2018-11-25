@@ -38,7 +38,7 @@ export class PollDefinitionFormComponent implements OnInit {
     private fb: FormBuilder,
     private dataService: PollDataService,
     private toastr: ToastrService
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.isLoading = true;
@@ -106,6 +106,8 @@ export class PollDefinitionFormComponent implements OnInit {
       });
     }
   }
+
+  get name() { return this.pollDefinitionForm.get('name'); }
 
   // Getter for the form questions FormArray
   get questions(): FormArray {

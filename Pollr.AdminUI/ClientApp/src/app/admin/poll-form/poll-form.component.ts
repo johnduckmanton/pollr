@@ -106,6 +106,11 @@ export class PollFormComponent implements OnInit {
     }
   }
 
+  get name() { return this.pollForm.get('name'); }
+
+  get handle() { return this.pollForm.get('handle'); }
+
+
   // Getter for the form questions FormArray
   get questions(): FormArray {
     return this.pollForm.get('questions') as FormArray;

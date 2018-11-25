@@ -21,6 +21,7 @@ export class ResultsComponent implements OnInit {
   voteSubscription: Subscription;
   canSendMessage: boolean;
   public results;
+  isLoading = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -34,12 +35,15 @@ export class ResultsComponent implements OnInit {
 
   ngOnInit() {
     const id: number = Number.parseInt(this.route.snapshot.paramMap.get('id'));
+    this.isLoading = true;
 
     // Get the current results
     this.results = this.dataService.getPollResults$(id).subscribe(results => {
       this.results = results;
       console.log(results);
     });
+
+    this.isLoading = false;
 
   }
 

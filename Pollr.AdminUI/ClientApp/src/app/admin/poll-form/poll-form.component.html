@@ -12,9 +12,14 @@
                      class="form-control"
                      id="name"
                      placeholder="Enter name"
-                     formControlName="name" />
+                     formControlName="name" required
+                     [ngClass]="{ 'is-invalid': name?.errors }" />
               <small id="nameHelp" class="form-text text-muted">Enter a unique name for your poll.</small>
-              <div class="invalid-feedback">Name is required.</div>
+              <div class="invalid-feedback" *ngIf="name?.invalid && (name?.dirty || name?.touched)">
+                <div *ngIf="name?.errors.required">
+                  You must supply a name for your poll.
+                </div>
+              </div>
             </div>
 
             <div class="form-group">
@@ -23,9 +28,15 @@
                      class="form-control"
                      id="handle"
                      placeholder="Enter short code"
-                     formControlName="handle" />
-              <small id="nameHelp" class="form-text text-muted">Enter a unique name for short code your poll.</small>
-              <div class="invalid-feedback">Short code is required.</div>
+                     formControlName="handle"
+                     required
+                     [ngClass]="{ 'is-invalid': handle?.errors }" />
+              <small id="handleHelp" class="form-text text-muted">Enter a unique short code your poll. This will be used to access the poll when voting.</small>
+              <div class="invalid-feedback" *ngIf="handle?.invalid && (handle?.dirty || handle?.touched)">
+                <div *ngIf="handle?.errors.required">
+                  You must supply a short code for your poll.
+                </div>
+              </div>
             </div>
 
             <div class="form-group">
@@ -78,8 +89,13 @@
                                     [attr.id]="'questionText' + i"
                                     formControlName="questionText"
                                     placeholder="Question text"
+                                    [ngClass]="{ 'is-invalid': question?.controls.questionText.errors }"
                                     required></textarea>
-                          <div class="invalid-feedback">This field is required.</div>
+                          <div class="invalid-feedback" *ngIf="question?.controls.questionText.invalid && (question?.controls.questionText.dirty || question?.controls.questionText.touched)">
+                            <div *ngIf="question.hasError('required', 'questionText')">
+                              This field is required.
+                            </div>
+                          </div>
                         </div>
 
                         <!-- ANSWERS -->
@@ -105,9 +121,12 @@
                                            [attr.id]="'answerText' + j"
                                            formControlName="answerText"
                                            placeholder="Answer text"
+                                           [ngClass]="{ 'is-invalid': answer?.controls.answerText.errors }"
                                            required />
-                                    <div class="invalid-feedback">
-                                      This field is required.
+                                    <div class="invalid-feedback" *ngIf="answer?.controls.answerText.invalid && (answer?.controls.answerText.dirty || answer?.controls.answerText.touched)">
+                                      <div *ngIf="answer.hasError('required', 'answerText')">
+                                        This field is required.
+                                      </div>
                                     </div>
                                   </div>
 

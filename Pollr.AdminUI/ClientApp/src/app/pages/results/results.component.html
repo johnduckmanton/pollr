@@ -1,7 +1,14 @@
-<div *ngIf="results.questions">
-  <div class="row">
-    <div class="col-md-6 col-sm-12 h-100 mb-3" *ngFor="let question of results.questions">
-      <app-result-chart [question]="question"></app-result-chart>
+<div *ngIf="!isLoading">
+  <div *ngIf="results">
+    <h1>{{results.name}}</h1>
+    <h5>{{results.pollDate | date}}</h5>
+    <h5 class="mb-3">{{results.totalVotes}} votes cast</h5>
+    <div *ngIf="results.questions">
+      <div class="row">
+        <div class="col-md-6 col-sm-12 h-100 mb-3" *ngFor="let question of results.questions">
+          <app-result-chart [question]="question"></app-result-chart>
+        </div>
+      </div>
     </div>
   </div>
 </div>
