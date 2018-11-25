@@ -74,15 +74,12 @@ export class VoteStatusComponent implements OnInit {
 
     // Event to indicate that the signalr hub is ready
     this.signalrService.connectionEstablished.subscribe(() => {
-      console.log('### Connected to Signalr hub');
       this.connectedToHub = true;
     });
 
     // Subscribe to vote messages and update the result dataset when
     // new messages are received
-    this.signalrService.loadQuestion.subscribe(message => {
-      console.log('### Load Question message received');
-      console.log(message);
+    this.signalrService.loadQuestion.subscribe((message) => {
 
       if (message) {
         this.currentQuestion = message.questions[message.currentQuestion - 1];
@@ -91,8 +88,7 @@ export class VoteStatusComponent implements OnInit {
 
     // Subscribe to vote messages and update the result dataset when
     // new messages are received
-    this.signalrService.resultsReceived.subscribe(message => {
-      console.log('### New vote message received');
+    this.signalrService.voteReceived.subscribe((message) => {
 
       // We will get back a result for the whole poll so we need to
       // dig out the current question from the results and update the vote counts
@@ -101,16 +97,13 @@ export class VoteStatusComponent implements OnInit {
 
     // Subscribe to new connection messages and update the connectedUsers count
     // when new messages are received
-    this.signalrService.newConnection.subscribe(count => {
-      console.log('### New user connected message received');
+    this.signalrService.newConnection.subscribe((count) => {
       this.connectedUserCount = count;
     });
 
     // Event to indicate that the poll has been reset.
     // Reload the first question in the poll
     this.signalrService.resetPoll.subscribe((message) => {
-      console.log('### Reset message received');
-      console.log(message);
 
       if (message) {
         this.currentQuestion = message.questions[message.currentQuestion - 1];

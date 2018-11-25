@@ -5,3 +5,17 @@
   .control-buttons img {
     cursor: pointer;
   }
+
+
+@media only screen and (max-width: 900px) {
+  .stack-small table,
+  .stack-small thead,
+  .stack-small tbody,
+  .stack-small th,
+  .stack-small td,
+  .stack-small tr {
+    display: block;
+    width: 100%;
+  }
+}
+

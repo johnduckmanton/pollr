@@ -18,7 +18,7 @@ const loadQuestionMessage: string = 'LoadQuestion';
 
 @Injectable()
 export class SignalRService {
-  resultsReceived = new EventEmitter<any>();
+  voteReceived = new EventEmitter<any>();
   loadQuestion = new EventEmitter<any>();
   newConnection = new EventEmitter<number>();
   broadcast = new EventEmitter<any>();
@@ -68,7 +68,7 @@ export class SignalRService {
     this._hubConnection.on(voteReceivedMessage, (data: any) => {
       console.log('### Vote message received');
       console.log(data);
-      this.resultsReceived.emit(data);
+      this.voteReceived.emit(data);
     });
 
     this._hubConnection.on(loadQuestionMessage, (data: any) => {

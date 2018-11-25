@@ -50,7 +50,7 @@ export class ResultsComponent implements OnInit {
 
     // Subscribe to vote messages and update the result dataset when
     // new messages are received
-    this.signalrService.resultsReceived.subscribe(message => {
+    this.signalrService.voteReceived.subscribe(message => {
       console.log(message);
       this.results = message;
     });

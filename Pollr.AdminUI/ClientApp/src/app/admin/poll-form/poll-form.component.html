@@ -67,12 +67,12 @@
             </button>
 
             <div class="panel panel-default">
-              <div class="panel-body" formArrayName="questions">
-                <table class="table borderless">
+              <div class="panel-body stack-small" formArrayName="questions">
+                <table class="table borderless table-responsive">
                   <tbody>
                     <tr *ngFor="let question of questions.controls; let i = index"
                         formGroupName="{{i}}">
-                      <td style="width:90%">
+                      <td style="width:100%">
                         <div class="form-group">
                           <textarea class="form-control"
                                     [attr.id]="'questionText' + i"
@@ -90,15 +90,15 @@
                           <i class="fa fa-plus"></i> Add Answer
                         </button>
 
-                        <div formArrayName="answers">
-                          <table class="table borderless">
+                        <div class="stack-small" formArrayName="answers">
+                          <table class="table borderless table-responsive">
                             <tbody>
                               <tr *ngFor="
                                   let answer of question.controls['answers'].controls;
                                   let j = index
                                 "
                                   formGroupName="{{j}}">
-                                <td style="width:90%">
+                                <td style="width:100%">
                                   <div class="form-group">
                                     <input type="text"
                                            class="form-control"
