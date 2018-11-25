@@ -65,6 +65,7 @@ export class VoteStatusComponent implements OnInit {
       });
 
       this.pollVoteUrl = this.configService.config.voteUrl;
+
       this.isLoading = false;
     });
   }

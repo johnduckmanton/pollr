@@ -25,7 +25,7 @@ export class SignalRService {
   connectionEstablished = new EventEmitter<Boolean>();
   resetPoll = new EventEmitter<any>();
 
-  private connectionIsEstablished = false;
+  public connectionIsEstablished = false;
   private _hubConnection: HubConnection;
   private hubUrl = this.configService.config.hubUrl;
 
@@ -66,22 +66,32 @@ export class SignalRService {
     });
 
     this._hubConnection.on(voteReceivedMessage, (data: any) => {
+      console.log('### Vote message received');
+      console.log(data);
       this.resultsReceived.emit(data);
     });
 
     this._hubConnection.on(loadQuestionMessage, (data: any) => {
+      console.log('### Load question message received');
+      console.log(data);
       this.loadQuestion.emit(data);
     });
 
     this._hubConnection.on(newConnectionMessage, (data: number) => {
+      console.log('### New connection message received');
+      console.log(data);
       this.newConnection.emit(data);
     });
 
     this._hubConnection.on(resetPollMessage, (data: number) => {
+      console.log('### Reset poll message received');
+      console.log(data);
       this.resetPoll.emit(data);
     });
 
     this._hubConnection.on(broadcastMessage, (data: any) => {
+      console.log('### Broadcast message received');
+      console.log(data);
       this.broadcast.emit(data);
     });
   }

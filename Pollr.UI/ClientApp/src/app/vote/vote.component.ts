@@ -22,7 +22,7 @@ import { SignalRService } from '../core/signalr.service';
 export class VoteComponent implements OnInit {
   poll: Poll;
   currentPollDef: PollDefinition;
-  currentQuestionIndex = 0;
+  currentQuestionIndex = -1;
   currentQuestion;
   currentQuestionDef =
     this.currentPollDef == null
@@ -62,6 +62,7 @@ export class VoteComponent implements OnInit {
     this.pollDataService.getPollByHandle(handle)
       .subscribe(poll => {
         this.poll = poll;
+        console.log(poll);
         if (this.poll) {
           if (this.poll.status !== PollStatus.Open) {
             this.isPollOpen = false;
@@ -101,17 +102,18 @@ export class VoteComponent implements OnInit {
   //
   vote(votedMessageDlg: any) {
 
-    console.log(this.canSendMessage);
-
     if (this.canSendMessage) {
       this.signalrService.vote(this.poll.id, this.currentQuestionIndex, this.selectedAnswerIdx + 1)
         .then((data) => {
-          console.log(data);
           let result = data.statusCode;
-          console.log(result);
 
           this.hasVoted = true;
           this.votedMessage = `You have voted for ${this.currentQuestion.answers[this.selectedAnswerIdx].answerText}.`;
+          this.modalService.open(votedMessageDlg, { size: 'sm', centered: true });
+        })
+        .catch((error) => {
+          this.hasVoted = false;
+          this.votedMessage = `Vote not registered: ${error.message}`;
           this.modalService.open(votedMessageDlg, { size: 'sm', centered: true });
         });
     }
@@ -128,14 +130,16 @@ export class VoteComponent implements OnInit {
     });
 
     // Event to indicate that the poll has been reset
+    // The first question in the poll will be set as the
+    // current question by the server
     this.signalrService.resetPoll.subscribe((data) => {
-      this.currentQuestionIndex == data.currentQuestion || 1;
+      this.currentQuestionIndex = data.currentQuestion;
       this.loadQuestion();
     });
 
     // Event to trigger loading of the next question
     this.signalrService.loadQuestion.subscribe((data) => {
-      this.currentQuestionIndex == data.currentQuestion || 1;
+      this.currentQuestionIndex = data.currentQuestion;
       this.loadQuestion();
     });
   }

@@ -30,7 +30,7 @@ export class SignalRService {
   loadQuestion = new EventEmitter<any>();
 
 
-  private connectionIsEstablished: boolean = false;
+  public connectionIsEstablished: boolean = false;
   private _hubConnection: HubConnection;
   private hubUrl = this.configService.config.hubUrl;
 
@@ -52,7 +52,7 @@ export class SignalRService {
       .start()
       .then(() => {
         this.connectionIsEstablished = true;
-        console.log('SignalR Hub connection started');
+        console.log('### SignalR Hub connection started');
         this.connectionEstablished.emit(true);
       })
       .catch(err => {
@@ -64,22 +64,32 @@ export class SignalRService {
   private registerOnServerEvents(): void {
 
     this._hubConnection.on(newConnectionMessage, (data: number) => {
+      console.log('### New connection message received');
+      console.log(data);
       this.newConnection.emit(data);
     });
 
     this._hubConnection.on(connectionCountMessage, (data: number) => {
+      console.log('### Connection count message received');
+      console.log(data);
       this.connectionCount.emit(data);
     });
 
     this._hubConnection.on(loadQuestionMessage, (data: number) => {
+      console.log('### Load question message received');
+      console.log(data);
       this.loadQuestion.emit(data);
     });
 
     this._hubConnection.on(resetPollMessage, (data: number) => {
+      console.log('### Reset poll message received');
+      console.log(data);
       this.resetPoll.emit(data);
     });
 
     this._hubConnection.on(broadcastMessage, (data: any) => {
+      console.log('### Broadcast message received');
+      console.log(data);
       this.broadcast.emit(data);
     });
 

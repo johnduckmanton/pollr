@@ -1,6 +1,6 @@
 <div *ngIf="!isLoading">
   <div class="connection-indicator">
-    <i class="fa fa-cloud" [ngClass]="connectedToHub ? 'text-success' : 'text-danger'"></i>
+    <i class="fa fa-cloud" [ngClass]="signalrService.connectionIsEstablished ? 'text-success' : 'text-danger'"></i>
   </div>
 
   <div class="row">
@@ -37,7 +37,11 @@
             </ngx-qrcode>
           </div>
 
-          <div class="qr-text">To cast your vote go to <a href="{{ pollVoteUrl }}">{{ pollVoteUrl }}</a> and enter code <strong>{{poll.handle}}</strong></div>
+          <div class="qr-text">
+            To cast your vote go to <a href="{{ pollVoteUrl }}">{{ pollVoteUrl }}</a> and enter code <strong>{{poll.handle}}</strong>
+
+            <h5 class="mt-5"><span class="user-count text-primary"><strong>{{connectedUserCount}}</strong></span> user(s) connected</h5>
+          </div>
         </div>
       </div>
     </div>
