@@ -55,7 +55,25 @@ namespace Pollr.Api.Data
                 .ThenInclude(a => a.Answers)
                 .ToListAsync();
         }
-               
+
+        /// <summary>
+        /// Return the first poll with a status of open
+        /// </summary>
+        /// <param></param>
+        /// <returns></returns>
+        public async Task<Poll> GetFirstOpenPollAsync()
+        {
+            var poll = await _context.Polls
+                .Include(q => q.Questions)
+                .ThenInclude(a => a.Answers)
+                .FirstOrDefaultAsync();
+
+            if (poll == null)
+                throw new PollNotFoundException();
+
+            return poll;
+        }
+
         /// <summary>
         /// Return the poll matching the specified id
         /// </summary>

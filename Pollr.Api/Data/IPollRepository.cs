@@ -24,5 +24,7 @@ namespace Pollr.Api.Data
         Task<bool> ClosePollAsync(int id);
         Task<Poll> UpdatePollAsync(Poll poll);
         Task<Poll> VoteAsync(int id, int question, int answer);
+        Task<Poll> GetFirstOpenPollAsync();
+
     }
 }

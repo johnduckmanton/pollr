@@ -16,6 +16,7 @@ using Pollr.Api.Models;
 using Pollr.Api.Models.Polls;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace pollr.api.Controllers
@@ -59,6 +60,29 @@ namespace pollr.api.Controllers
             }
 
             return Ok(polls);
+        }
+
+        /// <summary>
+        /// Get the id of the first open poll
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("current", Name = "GetCurrentPoll")]
+        [ProducesResponseType(200, Type = typeof(Poll[]))]
+        public async Task<ActionResult> GetCurrentPoll()
+        {
+
+            try
+            {
+                var poll = await _pollRepository.GetFirstOpenPollAsync();
+                return Ok(poll.Id);
+
+            }
+            catch (PollNotFoundException e)
+            {
+                ApiStatusMessage a = ApiStatusMessage.CreateFromException(e);
+                return BadRequest(a);
+            }
+
         }
 
         /// <summary>
