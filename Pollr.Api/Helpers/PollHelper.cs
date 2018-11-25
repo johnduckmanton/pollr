@@ -15,7 +15,7 @@ namespace Pollr.Api.Helpers
         {
 
             PollResult result = new PollResult {
-                Id = poll.Id.ToString(),
+                Id = poll.Id,
                 Name = poll.Name,
                 PollDate = poll.PollDate,
                 TotalVotes = 0,
