@@ -92,7 +92,7 @@ export class VoteStatusComponent implements OnInit {
 
       // We will get back a result for the whole poll so we need to
       // dig out the current question from the results and update the vote counts
-      this.currentQuestion = message.questions[this.poll.currentQuestion - 1];
+      this.currentQuestion = message.questions[message.currentQuestion - 1];
     });
 
     // Subscribe to new connection messages and update the connectedUsers count
