@@ -155,27 +155,25 @@ namespace pollr.api
             // Enable Global Cors: Don't do this is a real production app!
             app.UseCors("AllowAny");
 
-            _logger.LogInformation($"### Environment: {env.EnvironmentName}");
+            _logger.LogInformation($"### Environment: {0}", env.EnvironmentName);
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
             else
             {
-                // If we are running in a Docker container we can assume that the 
-                // SSL termination will bew handled outside the container
-                if (!env.IsEnvironment("Docker"))
-                {
-                    //app.UseExceptionHandler("/Error");
-                    //app.UseHsts();
-                    //app.UseHttpsRedirection();
-                }
+                app.UseHsts();
             }
 
-			//app.UseAuthentication();
 
-			// Enable middleware to serve generated Swagger as a JSON endpoint.
-			app.UseSwagger();
+            // Enable Global Cors: Don't do this is a real production app!
+            app.UseCors("AllowAny");
+
+            app.UseHttpsRedirection();
+            //app.UseAuthentication();
+
+            // Enable middleware to serve generated Swagger as a JSON endpoint.
+            app.UseSwagger();
 
 			// Enable middleware to serve swagger-ui (HTML, JS, CSS, etc.),
 			// specifying the Swagger JSON endpoint.
