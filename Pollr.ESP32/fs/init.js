@@ -256,5 +256,4 @@ Shadow.addHandler(function(ev, obj) {
 });
 
 printStatus();
-printMessage('initializing...');
 Timer.set(1000 /* 1 sec */, Timer.REPEAT, printStatus, null);

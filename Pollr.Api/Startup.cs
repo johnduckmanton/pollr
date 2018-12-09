@@ -22,174 +22,185 @@ using System.Reflection;
 
 namespace pollr.api
 {
-    public class Startup
-    {
-        private readonly ILogger<Startup> _logger;
-        bool useAzureSignalRManagedHub = false;
+	public class Startup
+	{
+		private readonly ILogger<Startup> _logger;
+		bool useAzureSignalRManagedHub = false;
 
-        public Startup(IConfiguration configuration, ILogger<Startup> logger)
-        {
-            Configuration = configuration;
-            _logger = logger;
-        }
+		public Startup(IConfiguration configuration, ILogger<Startup> logger)
+		{
+			Configuration = configuration;
+			_logger = logger;
+		}
 
-        public IConfiguration Configuration { get; }
+		public IConfiguration Configuration { get; }
 
 
-        // This method gets called by the runtime. Use this method to add services to the container.
-        public void ConfigureServices(IServiceCollection services)
-        {
-            // Enable IOptions in the DI container
-            services.AddOptions();
+		// This method gets called by the runtime. Use this method to add services to the container.
+		public void ConfigureServices(IServiceCollection services)
+		{
+			// Enable IOptions in the DI container
+			services.AddOptions();
 
-            // SQL Server Database
-            string connectionString = Configuration.GetConnectionString("PollrDatabase");
+			// SQL Server Database
+			// string connectionString = Configuration.GetConnectionString("PollrDatabase");
+			string connectionString = Configuration["PollrDatabase"];
+            _logger.LogInformation($"### Connection String={connectionString}");
+
             if (string.IsNullOrEmpty(connectionString))
-            {
-                throw new AppConfigErrorException("Database connection string is not configured");
-            }
+			{
+				_logger.LogError("### Connection String PollrDatabase not configured.");
 
-            services.AddDbContext<PollrContext>
-                (options => options
-                .UseSqlServer(connectionString,
-                    sqlServerOptionsAction: sqlOptions =>
-                    {
-                        sqlOptions.EnableRetryOnFailure(
-                        maxRetryCount: 10,
-                        maxRetryDelay: TimeSpan.FromSeconds(30),
-                        errorNumbersToAdd: null);
-                    }));
+				throw new AppConfigErrorException("Database connection string is not configured");
+			}
 
-            // Automatically perform database migration
-            // *** You may not want to do this in a real production app ***
-            services.BuildServiceProvider().GetService<PollrContext>().Database.Migrate();
+			services.AddDbContext<PollrContext>
+					(options => options
+					.UseSqlServer(connectionString,
+							sqlServerOptionsAction: sqlOptions =>
+							{
+								sqlOptions.EnableRetryOnFailure(
+											maxRetryCount: 10,
+											maxRetryDelay: TimeSpan.FromSeconds(30),
+											errorNumbersToAdd: null);
+							}));
 
-            //services.AddAuthentication(AzureADDefaults.BearerAuthenticationScheme)
-            //    .AddAzureADBearer(options => Configuration.Bind("AzureAd", options));
+			// Automatically perform database migration
+			// *** You may not want to do this in a real production app ***
+			services.BuildServiceProvider().GetService<PollrContext>().Database.Migrate();
 
-            services.AddCors(o => o.AddPolicy("AllowAny", builder =>
-            {
-                builder.AllowAnyOrigin()
-                    .AllowAnyOrigin()
-                    .AllowAnyMethod()
-                    .AllowAnyHeader()
-                    .AllowCredentials();
-            }));
+			//services.AddAuthentication(AzureADDefaults.BearerAuthenticationScheme)
+			//    .AddAzureADBearer(options => Configuration.Bind("AzureAd", options));
 
-            // Add a SignalR hub:
-            // In production we will typically use an Azure Managed hub, but in development
-            // we''l just create a local hub
-            if (!bool.TryParse(Configuration.GetSection("SignalR:UseAzureSignalRManagedHub").Value, out useAzureSignalRManagedHub))
-            {
-                useAzureSignalRManagedHub = false;
-            }
+			services.AddCors(o => o.AddPolicy("AllowAny", builder =>
+			{
+				builder.AllowAnyOrigin()
+									.AllowAnyOrigin()
+									.AllowAnyMethod()
+									.AllowAnyHeader()
+									.AllowCredentials();
+			}));
 
-            if (useAzureSignalRManagedHub)
-            {
-                _logger.LogInformation("### Using Azure Managed SignaR hub.");
-                services.AddSignalR()
-                        .AddAzureSignalR(Configuration.GetSection("SignalR:Azure:SignalR:ConnectionString").Value);
-            }
-            else
-            {
-                _logger.LogInformation("### Using local SignaR hub.");
-                services.AddSignalR();
-            }
+			// Add a SignalR hub:
+			// In production we will typically use an Azure Managed hub, but in development
+			// we''l just create a local hub
+			if (!bool.TryParse(Configuration.GetSection("SignalR:UseAzureSignalRManagedHub").Value, out useAzureSignalRManagedHub))
+			{
+				useAzureSignalRManagedHub = false;
+			}
 
-            services.AddMvc()
-                .AddJsonOptions(options =>
-                {
-                    options.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
-                    options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
-                })
-                .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+			if (useAzureSignalRManagedHub)
+			{
+				_logger.LogInformation("### Using Azure Managed SignaR hub.");
+				services.AddSignalR()
+								.AddAzureSignalR(Configuration.GetSection("SignalR:Azure:SignalR:ConnectionString").Value);
+			}
+			else
+			{
+				_logger.LogInformation("### Using local SignaR hub.");
+				services.AddSignalR();
+			}
 
-            // Register the Swagger generator, defining 1 or more Swagger documents
-            services.AddSwaggerGen(c =>
-            {
-                c.SwaggerDoc("v1", new Info
-                {
-                    Version = "v1",
-                    Title = "Pollr API",
-                    Description = "ASP.NET Core Web API for the Pollr Demo Application",
-                    TermsOfService = "None",
-                    Contact = new Contact
-                    {
-                        Name = "John Duckmanton",
-                        Email = "john.duckmanton@microsoft.com",
-                        Url = "https://github.com/johnduckmanton/pollr"
-                    },
-                    License = new License
-                    {
-                        Name = "Licensed under the MIT License"
-                    }
-                });
+			services.AddMvc()
+					.AddJsonOptions(options =>
+					{
+						options.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+						options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+					})
+					.SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
-                // Set the comments path for the Swagger JSON and UI.
-                var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
-                var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
-                c.IncludeXmlComments(xmlPath);
+			// Register the Swagger generator, defining 1 or more Swagger documents
+			services.AddSwaggerGen(c =>
+			{
+				c.SwaggerDoc("v1", new Info
+				{
+					Version = "v1",
+					Title = "Pollr API",
+					Description = "ASP.NET Core Web API for the Pollr Demo Application",
+					TermsOfService = "None",
+					Contact = new Contact
+					{
+						Name = "John Duckmanton",
+						Email = "john.duckmanton@microsoft.com",
+						Url = "https://github.com/johnduckmanton/pollr"
+					},
+					License = new License
+					{
+						Name = "Licensed under the MIT License"
+					}
+				});
 
-            });
+				// Set the comments path for the Swagger JSON and UI.
+				var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+				var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+				c.IncludeXmlComments(xmlPath);
 
-            services.AddTransient<IPollDefinitionRepository, PollDefinitionRepository>();
-            services.AddTransient<IPollRepository, PollRepository>();
+			});
 
-        }
+			services.AddTransient<IPollDefinitionRepository, PollDefinitionRepository>();
+			services.AddTransient<IPollRepository, PollRepository>();
+
+		}
 
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
-        {
+		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+		public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
+		{
 
-            loggerFactory
-                .AddConsole()
-                .AddDebug()
-                .AddAzureWebAppDiagnostics();
+			loggerFactory
+					.AddConsole()
+					.AddDebug()
+					.AddAzureWebAppDiagnostics();
 
-            _logger.LogInformation($"### Environment: {0}", env.EnvironmentName);
+            // Enable Global Cors: Don't do this is a real production app!
+            app.UseCors("AllowAny");
+
+            _logger.LogInformation($"### Environment: {env.EnvironmentName}");
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
             else
             {
-                app.UseHsts();
-            }
-
-            // Enable Global Cors: Don't do this is a real production app!
-            app.UseCors("AllowAny");
-
-            app.UseHttpsRedirection();
-            //app.UseAuthentication();
-
-            // Enable middleware to serve generated Swagger as a JSON endpoint.
-            app.UseSwagger();
-
-            // Enable middleware to serve swagger-ui (HTML, JS, CSS, etc.), 
-            // specifying the Swagger JSON endpoint.
-            app.UseSwaggerUI(c =>
-            {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Pollr API V1");
-            });
-
-            app.UseMvc();
-
-            // Configure Signalr
-            if (useAzureSignalRManagedHub)
-            {
-                app.UseAzureSignalR(routes =>
+                // If we are running in a Docker container we can assume that the 
+                // SSL termination will bew handled outside the container
+                if (!env.IsEnvironment("Docker"))
                 {
-                    routes.MapHub<VoteHub>("/votehub");
-                });
+                    //app.UseExceptionHandler("/Error");
+                    //app.UseHsts();
+                    //app.UseHttpsRedirection();
+                }
             }
-            else
-            {
-                app.UseSignalR(routes =>
-                {
-                    routes.MapHub<VoteHub>("/votehub");
-                });
-            }
-        }
-    }
+
+			//app.UseAuthentication();
+
+			// Enable middleware to serve generated Swagger as a JSON endpoint.
+			app.UseSwagger();
+
+			// Enable middleware to serve swagger-ui (HTML, JS, CSS, etc.),
+			// specifying the Swagger JSON endpoint.
+			app.UseSwaggerUI(c =>
+			{
+				c.SwaggerEndpoint("/swagger/v1/swagger.json", "Pollr API V1");
+			});
+
+			app.UseMvc();
+
+			// Configure Signalr
+			if (useAzureSignalRManagedHub)
+			{
+				app.UseAzureSignalR(routes =>
+				{
+					routes.MapHub<VoteHub>("/votehub");
+				});
+			}
+			else
+			{
+				app.UseSignalR(routes =>
+				{
+					routes.MapHub<VoteHub>("/votehub");
+				});
+			}
+		}
+	}
 }

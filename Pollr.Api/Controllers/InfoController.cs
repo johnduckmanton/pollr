@@ -45,6 +45,7 @@ namespace Pollr.Api.Controllers
         {
             public string AppName { get; internal set; }
             public string AppVersion { get; internal set; }
+            public string Environment { get; internal set; }
             public DbConnectionInfo DataBaseInfo { get; internal set; }
         }
     }

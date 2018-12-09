@@ -5,19 +5,23 @@
  *--------------------------------------------------------------------------------------------*/
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Configuration;
+using System;
+using System.IO;
 
 namespace pollr.api
 {
-    public class Program
-    {
-        public static void Main(string[] args)
-        {
-            CreateWebHostBuilder(args).Build().Run();
-        }
+	public class Program
+	{
+		public static void Main(string[] args)
+		{
+			CreateWebHostBuilder(args).Build().Run();
+		}
 
-        public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
-            WebHost.CreateDefaultBuilder(args)
-                .UseApplicationInsights()
+		public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
+				WebHost.CreateDefaultBuilder(args)
+				.UseApplicationInsights()
+                .UseUrls("http://*:5000")   
                 .UseStartup<Startup>();
-    }
+	}
 }

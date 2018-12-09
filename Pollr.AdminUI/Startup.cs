@@ -50,15 +50,16 @@ namespace Pollr.AdminUI
 
             _logger.LogInformation($"### Environment: {0}", env.EnvironmentName);
 
-            if (env.IsDevelopment()) {
+
+            if (env.IsDevelopment())
+            {
                 app.UseDeveloperExceptionPage();
             }
-            else {
-                app.UseExceptionHandler("/Error");
+            else
+            {
                 app.UseHsts();
             }
 
-            app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseSpaStaticFiles();
 

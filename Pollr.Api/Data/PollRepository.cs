@@ -64,6 +64,7 @@ namespace Pollr.Api.Data
         public async Task<Poll> GetFirstOpenPollAsync()
         {
             var poll = await _context.Polls
+                .Where(p => p.Status == PollStatus.Open)
                 .Include(q => q.Questions)
                 .ThenInclude(a => a.Answers)
                 .FirstOrDefaultAsync();
