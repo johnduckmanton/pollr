@@ -121,7 +121,7 @@ namespace pollr.api
 					Contact = new Contact
 					{
 						Name = "John Duckmanton",
-						Email = "john.duckmanton@microsoft.com",
+						Email = "john@johnduckmanton.co.uk",
 						Url = "https://github.com/johnduckmanton/pollr"
 					},
 					License = new License

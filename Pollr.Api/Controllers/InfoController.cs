@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Pollr.Api.Data;
@@ -12,10 +13,12 @@ namespace Pollr.Api.Controllers
     public class InfoController : ControllerBase
     {
         private readonly PollrContext _context = null;
+        private readonly IHostingEnvironment _env = null;
 
-        public InfoController(DbContextOptions<PollrContext> options)
+        public InfoController(DbContextOptions<PollrContext> options, IHostingEnvironment env)
         {
             _context = new PollrContext(options);
+            _env = env;
         }
 
         /// <summary>
@@ -33,6 +36,7 @@ namespace Pollr.Api.Controllers
                 AppName = typeof(InfoController).Assembly.GetName().Name,
                 AppVersion = typeof(InfoController).Assembly
                 .GetCustomAttribute<AssemblyFileVersionAttribute>().Version,
+                Environment = _env.EnvironmentName
             };
 
             // Ping the database to check if the connection is OK

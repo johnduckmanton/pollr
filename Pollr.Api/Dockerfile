@@ -1,28 +1,24 @@
-FROM microsoft/dotnet:2.1-aspnetcore-runtime AS base
+FROM microsoft/dotnet:2.2-sdk AS build
 WORKDIR /app
-EXPOSE 5000
-EXPOSE 5001
 
-FROM microsoft/dotnet:2.1-sdk AS build
-WORKDIR /src
+# copy csproj and restore as distinct layers
 COPY *.csproj ./
 RUN dotnet restore
 
+# copy everything else and build app
 COPY . ./
-WORKDIR "/src"
-RUN dotnet build -c Release -o /app
-
-FROM build AS publish
-RUN dotnet publish -c Release -o /app
-
-FROM base AS final
 WORKDIR /app
-ENV ASPNETCORE_SignalR__UseAzureSignalRManagedHub=false
-ENV PollrDatabase='Server=tcp:demodb-jrd.database.windows.net,1433;Initial Catalog=pollr;Persist Security Info=False;User ID=duckmanj;Password=z9uWLk3$R6sqFW;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;'
-ENV ASPNETCORE_ENVIRONMENT=Docker
-COPY --from=publish /app .
 
-EXPOSE 5000
-EXPOSE 5001
+RUN dotnet publish -c Release -o out
+
+FROM microsoft/dotnet:2.2-aspnetcore-runtime AS runtime
+WORKDIR /app
+
+ENV ASPNETCORE_SignalR__UseAzureSignalRManagedHub=false
+# ENV PollrDatabase='Server=tcp:demodb-jrd.database.windows.net,1433;Initial Catalog=pollr;Persist Security Info=False;User ID=duckmanj;Password=z9uWLk3$R6sqFW;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;'
+ENV PollrDatabase='Server=tcp:jrd-sql-server.database.windows.net,1433;Initial Catalog=jrd-sqlsb;Persist Security Info=False;User ID=sqladmin;Password=N%c84c7yjAw8m8;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;'
+ENV ASPNETCORE_ENVIRONMENT=Docker
+ENV ASPNETCORE_URLS=http://+:5000
+COPY --from=build /app/out ./
 
 ENTRYPOINT ["dotnet", "Pollr.Api.dll"]
