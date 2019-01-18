@@ -7,7 +7,7 @@
     <DockerTargetOS>Linux</DockerTargetOS>
     <ApplicationIcon></ApplicationIcon>
     <Authors>John Duckmanton</Authors>
-    <Company></Company>
+    <Company>Microsoft</Company>
     <ApplicationInsightsResourceId>/subscriptions/dcf250f4-a364-4dd6-b578-de243074af48/resourcegroups/pollr-rg/providers/microsoft.insights/components/jrd-pollr-api</ApplicationInsightsResourceId>
     <ApplicationInsightsAnnotationResourceId>/subscriptions/dcf250f4-a364-4dd6-b578-de243074af48/resourcegroups/pollr-rg/providers/microsoft.insights/components/jrd-pollr-api</ApplicationInsightsAnnotationResourceId>
   </PropertyGroup>
@@ -47,8 +47,6 @@
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <NoWarn>$(NoWarn);1591</NoWarn>
     <Version>1.0.2</Version>
-    <OutputType>Exe</OutputType>
-    <StartupObject />
   </PropertyGroup>
 
 </Project>
