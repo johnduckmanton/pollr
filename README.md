@@ -5,14 +5,11 @@ This application is a full stack ASP.NET Core/Angular application. I am using it
 # Project Structure
 
 The project directory structure is as follows:
-
 ```
 /Pollr.UI - Angular Web User Interface for voting
 /Pollr.AdminUI - Angular Administration Web User Interface
 /Pollr.Api - ASP.NET Core Web Api
-
 ```
-
 # Components
 
 ## Angular Web User Interface
@@ -38,14 +35,15 @@ This project is an implementation of the REST API using ASP.NET Core 2.1 Web Api
 
 ### Swagger/OpenAPI Definition
 
-There is a [Swagger definition file for the API] and Swagger UI is also available, just use `/swagger` as the URL, e.g. **http://localhost:5000/swagger/**
+There is a Swagger definition file for the API and Swagger UI is also available, just use `/swagger` as the URL, e.g. **http://localhost:5000/swagger/**
 
 ### Building the application
 
 - `npm run build`- to build the application
 - `npm run docker:build` - to build the Docker image
 
-### Azure DevOps Status
+### Deploying the application
+#### Azure DevOps Status
 
 Project  | Build Status | Release Status |
  ------------ | :-----------: | :-----------: |
@@ -54,14 +52,8 @@ Pollr.UI       |[![Build status](https://dev.azure.com/johnduckmanton/pollr/_api
 Pollr.AdminUI  |[![Build status](https://dev.azure.com/johnduckmanton/pollr/_apis/build/status/pollr-adminUI.build)](https://dev.azure.com/johnduckmanton/pollr/_build/latest?definitionId=8) | ![Release status](https://vsrm.dev.azure.com/johnduckmanton/_apis/public/Release/badge/09f8c2ac-eb3c-4f28-b7ee-7512a43283e6/3/3)
 
 
-### Deploying the application
-#### Docker
 
-`docker compose up`
 
-# Code of Conduct
-
-This project has adopted the [Microsoft Open Source Code of Conduct](https://opensource.microsoft.com/codeofconduct/). For more information see the [Code of Conduct FAQ](https://opensource.microsoft.com/codeofconduct/faq/) or contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additional questions or comments.
 
 # License
 
