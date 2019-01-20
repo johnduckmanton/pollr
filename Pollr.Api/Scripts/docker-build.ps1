@@ -1,1 +1,0 @@
-﻿docker build . -t pollr.api -f ./Dockerfile
