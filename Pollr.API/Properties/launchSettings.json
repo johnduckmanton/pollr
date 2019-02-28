@@ -2,9 +2,13 @@
   "iisSettings": {
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
+    "iis": {
+      "applicationUrl": "http://localhost/Pollr.Api",
+      "sslPort": 0
+    },
     "iisExpress": {
-      "applicationUrl": "http://localhost:53421",
-      "sslPort": 44372
+      "applicationUrl": "http://localhost:5000",
+      "sslPort": 0
     }
   },
   "$schema": "http://json.schemastore.org/launchsettings.json",
@@ -24,12 +28,19 @@
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
-      "applicationUrl": "https://localhost:5001;http://localhost:5000"
+      "applicationUrl": "http://localhost:5000"
+    },
+    "Azure Dev Spaces": {
+      "commandName": "AzureDevSpaces",
+      "launchBrowser": true,
+      "resourceGroup": "containers-rg",
+      "aksName": "jrd-aks-cluster",
+      "subscriptionId": "49ea9d57-72cc-4a62-88f3-847f0c47c4c1"
     },
     "Docker": {
       "commandName": "Docker",
       "launchBrowser": true,
-      "launchUrl": "{Scheme}://localhost:{ServicePort}/api/polldefinitions"
+      "launchUrl": "{Scheme}://{ServiceHost}:{ServicePort}/api/polldefinitions"
     }
   }
 }

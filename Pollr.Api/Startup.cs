@@ -156,20 +156,14 @@ namespace pollr.api
             app.UseCors("AllowAny");
 
             _logger.LogInformation($"### Environment: {0}", env.EnvironmentName);
-            if (env.IsDevelopment())
+            if (env.IsDevelopment() || env.IsEnvironment("Docker"))
             {
                 app.UseDeveloperExceptionPage();
             }
-            else
-            {
-                app.UseHsts();
-            }
-
 
             // Enable Global Cors: Don't do this is a real production app!
             app.UseCors("AllowAny");
 
-            app.UseHttpsRedirection();
             //app.UseAuthentication();
 
             // Enable middleware to serve generated Swagger as a JSON endpoint.

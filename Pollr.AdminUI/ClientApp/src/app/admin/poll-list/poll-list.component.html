@@ -16,8 +16,9 @@
           <thead>
             <tr>
               <th scope="col">Name</th>
+              <th scope="col">Short Code</th>
               <th scope="col" width="50%">Description</th>
-              <th scope="col" align="center">Published</th>
+              <th scope="col" align="center">Date</th>
               <th scope="col">Actions</th>
             </tr>
           </thead>
@@ -28,9 +29,10 @@
                   <a class="link-text text-primary" (click)=" editPoll(poll.id)">{{ poll.name }}</a>
                 </p>
               </th>
+              <td>{{ poll.handle }}</td>
               <td width="50%">{{ poll.description }}</td>
               <td align="center">
-                <i class="fa fa-check text-primary" *ngIf="poll.isPublished"></i>
+                {{ poll.pollDate | date }}
               </td>
               <td>
                 <span>

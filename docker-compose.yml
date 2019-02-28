@@ -1,0 +1,42 @@
+version: '3.4'
+
+services:
+  pollr.api:
+    image: ${DOCKER_REGISTRY-}pollrapi
+    build:
+      context: .
+      dockerfile: Pollr.API/Dockerfile
+    ports:
+      - "5000:5000"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+      - PollrDatabase=Server=tcp:jrd-sql-server.database.windows.net,1433;Initial Catalog=jrd-sqlsb;Persist Security Info=False;User ID=sqladmin;Password=N%c84c7yjAw8m8;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;
+
+  pollr.ui:
+    image: ${DOCKER_REGISTRY-}pollrui
+    build:
+      context: .
+      dockerfile: Pollr.UI/Dockerfile
+    ports: 
+      - "81:80"
+    environment:
+      - ClientConfiguration__ApiUrl=http://localhost:5000/api
+      - ClientConfiguration__HubUrl=http://localhost:5000/voteHub
+      - ASPNETCORE_ENVIRONMENT=production
+    depends_on:
+      - "pollr.api"
+
+  pollr.adminui:
+    image: ${DOCKER_REGISTRY-}pollradminui
+    build:
+      context: .
+      dockerfile: Pollr.AdminUI/Dockerfile
+    ports: 
+      - "82:80"
+    environment:
+      - ClientConfiguration__ApiUrl=http://localhost:5000/api
+      - ClientConfiguration__HubUrl=http://localhost:5000/voteHub
+      - ClientConfiguration__VoteUrl=http://localhost/vote
+      - ASPNETCORE_ENVIRONMENT=production
+    depends_on:
+      - "pollr.api"

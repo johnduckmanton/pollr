@@ -21,7 +21,7 @@ namespace pollr.api
 		public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
 				WebHost.CreateDefaultBuilder(args)
 				.UseApplicationInsights()
-                //.UseUrls("http://*:5000")   
+                .UseUrls("http://*:5000")   
                 .UseStartup<Startup>();
 	}
 }

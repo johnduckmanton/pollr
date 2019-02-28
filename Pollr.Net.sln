@@ -22,6 +22,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "K8S", "K8S", "{A9556916-F25
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Basic", "Basic", "{31DA59A1-7DAB-4EF7-8D47-A739DAF4FA0C}"
 EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{4DCE45D0-9287-4B9D-84EB-4C5F0AC75DBB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -40,6 +42,10 @@ Global
 		{3DE1FE1C-02EF-4E73-9A9D-F91A3F3AFE29}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3DE1FE1C-02EF-4E73-9A9D-F91A3F3AFE29}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3DE1FE1C-02EF-4E73-9A9D-F91A3F3AFE29}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4DCE45D0-9287-4B9D-84EB-4C5F0AC75DBB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4DCE45D0-9287-4B9D-84EB-4C5F0AC75DBB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4DCE45D0-9287-4B9D-84EB-4C5F0AC75DBB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4DCE45D0-9287-4B9D-84EB-4C5F0AC75DBB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

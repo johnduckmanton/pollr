@@ -13,15 +13,16 @@ namespace Pollr.AdminUI
     public class Startup
     {
         private readonly ILogger<Startup> _logger;
+        private readonly IConfiguration _config;
 
 
         public Startup(IConfiguration configuration, ILogger<Startup> logger)
         {
-            Configuration = configuration;
+            _config = configuration;
             _logger = logger;
         }
 
-        public IConfiguration Configuration { get; }
+        //public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
@@ -30,7 +31,8 @@ namespace Pollr.AdminUI
             services.AddOptions();
 
             // Indicate how ClientConfiguration options should be constructed
-            services.Configure<ClientConfiguration>(Configuration.GetSection("ClientConfiguration"));
+            services.Configure<ClientConfiguration>(_config.GetSection("ClientConfiguration"));
+            var value = _config["ClientConfiguration:HubUrl"];
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
@@ -41,15 +43,16 @@ namespace Pollr.AdminUI
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory, IConfiguration config)
         {
             loggerFactory
                 .AddConsole()
                 .AddDebug()
                 .AddAzureWebAppDiagnostics();
 
-            _logger.LogInformation($"### Environment: {0}", env.EnvironmentName);
-
+            _logger.LogInformation("### Environment: {0}", env.EnvironmentName);
+            _logger.LogInformation("### ApiUrl: {0}", config["ClientConfiguration:ApiUrl"]);
+            _logger.LogInformation("### HubUrl: {0}", config["ClientConfiguration:HubUrl"]);
 
             if (env.IsDevelopment())
             {

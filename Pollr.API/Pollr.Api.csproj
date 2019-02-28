@@ -7,7 +7,7 @@
     <DockerTargetOS>Linux</DockerTargetOS>
     <ApplicationIcon></ApplicationIcon>
     <Authors>John Duckmanton</Authors>
-    <Company>Microsoft</Company>
+    <Company></Company>
     <ApplicationInsightsResourceId>/subscriptions/dcf250f4-a364-4dd6-b578-de243074af48/resourcegroups/pollr-rg/providers/microsoft.insights/components/jrd-pollr-api</ApplicationInsightsResourceId>
     <ApplicationInsightsAnnotationResourceId>/subscriptions/dcf250f4-a364-4dd6-b578-de243074af48/resourcegroups/pollr-rg/providers/microsoft.insights/components/jrd-pollr-api</ApplicationInsightsAnnotationResourceId>
   </PropertyGroup>
@@ -35,6 +35,7 @@
     <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="2.1.1" />
     <PackageReference Include="Microsoft.Extensions.Logging.AzureAppServices" Version="2.1.1" />
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.1.1" />
+    <PackageReference Include="Microsoft.VisualStudio.Azure.Kubernetes.Tools.Targets" Version="0.31.0" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.6" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="4.0.1" />
   </ItemGroup>
@@ -47,6 +48,10 @@
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <NoWarn>$(NoWarn);1591</NoWarn>
     <Version>1.0.2</Version>
+    <OutputType>Exe</OutputType>
+    <StartupObject />
+    <DockerComposeProjectPath>..\docker-compose.dcproj</DockerComposeProjectPath>
+    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
   </PropertyGroup>
 
 </Project>

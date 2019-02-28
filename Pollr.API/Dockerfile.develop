@@ -1,0 +1,15 @@
+FROM microsoft/dotnet:2.1-sdk
+ARG BUILD_CONFIGURATION=Debug
+ENV ASPNETCORE_ENVIRONMENT=Development
+ENV DOTNET_USE_POLLING_FILE_WATCHER=true
+EXPOSE 5000
+
+WORKDIR /src
+COPY ["Pollr.API/Pollr.Api.csproj", "Pollr.API/"]
+
+RUN dotnet restore "Pollr.API/Pollr.Api.csproj"
+COPY . .
+WORKDIR "/src/Pollr.API"
+RUN dotnet build --no-restore "Pollr.Api.csproj" -c $BUILD_CONFIGURATION
+
+ENTRYPOINT ["dotnet", "run", "--no-build", "--no-launch-profile", "-c", "$BUILD_CONFIGURATION", "--"]

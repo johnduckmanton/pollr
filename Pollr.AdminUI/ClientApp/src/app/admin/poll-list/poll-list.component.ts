@@ -86,12 +86,8 @@ export class PollListComponent implements OnInit {
     });
   }
 
-  createPoll(def: Poll): void {
-    const navigationExtras: NavigationExtras = {
-      queryParams: { pollId: def.id, pollName: def.name },
-    };
-
-    this.router.navigate(['admin/create-poll'], navigationExtras);
+  createPoll(): void {
+    this.router.navigate(['admin/create-poll']);
   }
 
   resetPoll(id: number): void {
