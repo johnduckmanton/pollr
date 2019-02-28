@@ -97,8 +97,9 @@ export class VoteStatusComponent implements OnInit {
 
     // Subscribe to new connection messages and update the connectedUsers count
     // when new messages are received
+    // (We subtract 1 from the count, since thsat's us!)
     this.signalrService.newConnection.subscribe((count) => {
-      this.connectedUserCount = count;
+      this.connectedUserCount = count -1;
     });
 
     // Event to indicate that the poll has been reset.
