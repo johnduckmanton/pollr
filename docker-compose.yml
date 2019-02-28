@@ -10,7 +10,8 @@ services:
       - "5000:5000"
     environment:
       - ASPNETCORE_ENVIRONMENT=Production
-      - PollrDatabase=Server=tcp:jrd-sql-server.database.windows.net,1433;Initial Catalog=jrd-sqlsb;Persist Security Info=False;User ID=sqladmin;Password=N%c84c7yjAw8m8;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;
+      - PollrDatabase=${POLLR_DATABASE}
+
 
   pollr.ui:
     image: ${DOCKER_REGISTRY-}pollrui
@@ -20,9 +21,10 @@ services:
     ports: 
       - "81:80"
     environment:
-      - ClientConfiguration__ApiUrl=http://localhost:5000/api
-      - ClientConfiguration__HubUrl=http://localhost:5000/voteHub
+      - ClientConfiguration__ApiUrl=${API_URL}
+      - ClientConfiguration__HubUrl=${HUB_URL}
       - ASPNETCORE_ENVIRONMENT=production
+
     depends_on:
       - "pollr.api"
 
@@ -34,9 +36,10 @@ services:
     ports: 
       - "82:80"
     environment:
-      - ClientConfiguration__ApiUrl=http://localhost:5000/api
-      - ClientConfiguration__HubUrl=http://localhost:5000/voteHub
-      - ClientConfiguration__VoteUrl=http://localhost/vote
+      - ClientConfiguration__ApiUrl=${API_URL}
+      - ClientConfiguration__HubUrl=${HUB_URL}
+      - ClientConfiguration__VoteUrl=${VOTE_URL}
       - ASPNETCORE_ENVIRONMENT=production
+
     depends_on:
       - "pollr.api"

@@ -9,6 +9,7 @@
     <DockerServiceName>pollr.api</DockerServiceName>
   </PropertyGroup>
   <ItemGroup>
+    <None Include=".env.sample" />
     <None Include="docker-compose.yml" />
     <None Include=".dockerignore" />
   </ItemGroup>
