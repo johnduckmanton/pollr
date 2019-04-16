@@ -4,10 +4,10 @@ EXPOSE 5000
 
 FROM microsoft/dotnet:2.1-sdk AS build
 WORKDIR /src
-COPY ["Pollr.API/Pollr.Api.csproj", "Pollr.API/"]
-RUN dotnet restore "Pollr.API/Pollr.Api.csproj"
+COPY ["Pollr.Api/Pollr.Api.csproj", "Pollr.Api/"]
+RUN dotnet restore "Pollr.Api/Pollr.Api.csproj"
 COPY . .
-WORKDIR "/src/Pollr.API"
+WORKDIR "/src/Pollr.Api"
 RUN dotnet build "Pollr.Api.csproj" -c Release -o /app
 
 FROM build AS publish
