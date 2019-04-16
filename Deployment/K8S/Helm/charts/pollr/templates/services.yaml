@@ -1,0 +1,60 @@
+#
+# API
+#
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Release.Name }}-pollr-api-svc
+  labels:
+    app: pollr
+    component: api
+spec:
+  type: ClusterIP
+  ports:
+    - port: 80
+      targetPort: http
+      protocol: TCP
+      name: http
+  selector:
+    app: pollr
+    component: api
+#
+# Web UI
+#
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Release.Name }}-pollr-ui-svc
+  labels:
+    app: pollr
+    component: webui
+spec:
+  type: ClusterIP
+  ports:
+    - port: 80
+      targetPort: http
+      protocol: TCP
+      name: http
+  selector:
+    app: pollr
+    component: webui
+#
+# Admin UI
+#
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Release.Name }}-pollr-admin-ui-svc
+  labels:
+    app: pollr
+    component: adminui
+spec:
+  type: ClusterIP
+  ports:
+    - port: 80
+      targetPort: http
+      protocol: TCP
+      name: http
+  selector:
+    app: pollr
+    component: adminui

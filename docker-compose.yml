@@ -1,16 +1,17 @@
 version: '3.4'
 
 services:
+  pollr.adminui:
+    image: ${DOCKER_REGISTRY-}pollradminui
+    build:
+      context: .
+      dockerfile: Pollr.AdminUI/Dockerfile
+
   pollr.api:
     image: ${DOCKER_REGISTRY-}pollrapi
     build:
       context: .
       dockerfile: Pollr.API/Dockerfile
-    ports:
-      - "5000:5000"
-    environment:
-      - ASPNETCORE_ENVIRONMENT=Production
-      - PollrDatabase=${POLLR_DATABASE}
 
 
   pollr.ui:
@@ -18,28 +19,4 @@ services:
     build:
       context: .
       dockerfile: Pollr.UI/Dockerfile
-    ports: 
-      - "81:80"
-    environment:
-      - ClientConfiguration__ApiUrl=${API_URL}
-      - ClientConfiguration__HubUrl=${HUB_URL}
-      - ASPNETCORE_ENVIRONMENT=production
 
-    depends_on:
-      - "pollr.api"
-
-  pollr.adminui:
-    image: ${DOCKER_REGISTRY-}pollradminui
-    build:
-      context: .
-      dockerfile: Pollr.AdminUI/Dockerfile
-    ports: 
-      - "82:80"
-    environment:
-      - ClientConfiguration__ApiUrl=${API_URL}
-      - ClientConfiguration__HubUrl=${HUB_URL}
-      - ClientConfiguration__VoteUrl=${VOTE_URL}
-      - ASPNETCORE_ENVIRONMENT=production
-
-    depends_on:
-      - "pollr.api"

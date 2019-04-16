@@ -12,6 +12,7 @@ import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.com
 import { ResultsComponent } from './pages/results/results.component';
 import { ViewPollDetailsComponent } from './pages/view-poll-details/view-poll-details.component';
 import { VoteStatusComponent } from './pages/vote-status/vote-status.component';
+import { MsalGuard } from '@azure/msal-angular';
 
 const routes: Routes = [
   { path: 'about', component: AboutComponent },
@@ -21,7 +22,8 @@ const routes: Routes = [
   { path: 'vote-status/:id', component: VoteStatusComponent },
   {
     path: 'admin',
-    loadChildren: './admin/admin.module#AdminModule'
+    loadChildren: './admin/admin.module#AdminModule',
+    canActivate: [MsalGuard]
   },
   { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
   { path: '**', component: PageNotFoundComponent }

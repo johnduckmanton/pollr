@@ -15,6 +15,7 @@ import { MessageService } from './core/messages/message.service';
 })
 export class AppComponent implements OnInit {
   title = 'pollr';
+  public isIframe: boolean;
 
   constructor(public configService: ConfigurationService, private messageService: MessageService) {
     console.log(`App version: ${this.configService.config.appVersion}`);
@@ -22,6 +23,9 @@ export class AppComponent implements OnInit {
     console.log(`Api URL: ${this.configService.config.apiUrl}`);
     console.log(`Hub URL: ${this.configService.config.hubUrl}`);
     console.log(`Vote URL: ${this.configService.config.voteUrl}`);
+
+    //  This is to avoid reload during acquireTokenSilent() because of hidden iframe
+    this.isIframe = window !== window.parent && !window.opener;
   }
 
   ngOnInit() { }

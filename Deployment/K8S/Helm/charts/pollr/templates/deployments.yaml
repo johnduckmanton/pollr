@@ -1,0 +1,99 @@
+#
+# API
+#
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-pollr-api
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: pollr
+        component: api
+    spec:
+      containers:
+        - name: pollr-api
+          image: "{{ .Values.image.repository }}/pollr-api:{{.Values.buildNumber}}"
+      imagePullPolicy: {{ .Values.image.pullPolicy }}
+      ports:
+        - name: http
+          containerPort: 5000
+      livenessProbe:
+        httpGet:
+          path: /api/info
+          port: http
+      readinessProbe:
+        httpGet:
+          path: /api/info
+          port: http
+      env:
+        - name: PollrDatabase
+          value: {{ .Values.pollrDatabaseConnectionString }}
+        - name: ASPNETCORE_ENVIRONMENT
+          value: {{ .Values.sapNetCoreEnvironment }}
+      imagePullSecrets:
+        - name: {{ .Values.imagePullSecret }}
+#
+# Web UI
+#
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-pollr-ui
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: pollr
+        component: webui
+    spec:
+      containers:
+        - name: pollr-ui
+          image: "{{ .Values.image.repository }}/pollr-ui:{{.Values.buildNumber}}"
+      imagePullPolicy: {{ .Values.image.pullPolicy }}
+      ports:
+        - name: http
+          containerPort: 80
+      env:
+        - name: ClientConfiguration__ApiUrl
+          value: {{ .Values.apiUrl }}
+        - name: ClientConfiguration__HubUrl
+          value: {{ .Values.hubUrl }}
+        - name: ASPNETCORE_ENVIRONMENT
+          value: {{ .Values.sapNetCoreEnvironment }}
+      imagePullSecrets:
+        - name: {{ .Values.imagePullSecret }}
+#
+# Admin UI
+#
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-pollr-admin-ui
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: pollr
+        component: admin-ui
+    spec:
+      containers:
+        - name: pollr-admin
+          image: "{{ .Values.image.repository }}/pollr-admin:{{.Values.buildNumber}}"
+      imagePullPolicy: {{ .Values.image.pullPolicy }}
+      ports:
+        - name: http
+          containerPort: 80
+      env:
+        - name: ClientConfiguration__ApiUrl
+          value: {{ .Values.apiUrl }}
+        - name: ClientConfiguration__HubUrl
+          value: {{ .Values.hubUrl }}
+        - name: ASPNETCORE_ENVIRONMENT
+          value: {{ .Values.aspNetCoreEnvironment }}
+      imagePullSecrets:
+        - name: {{ .Values.imagePullSecret }}

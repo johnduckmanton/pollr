@@ -8,6 +8,9 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { MsalModule } from "@azure/msal-angular";
+import { MsalInterceptor } from "@azure/msal-angular";
+import { LogLevel } from "msal";
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgHttpLoaderModule } from 'ng-http-loader';
 import { NgxQRCodeModule } from 'ngx-qrcode2';
@@ -31,6 +34,9 @@ import { SignalRService } from './core/signalr.service';
 import { ViewPollDetailsComponent } from './pages/view-poll-details/view-poll-details.component';
 import { VoteStatusComponent } from './pages/vote-status/vote-status.component';
 
+export function loggerCallback(logLevel, message, piiEnabled) {
+  console.log("client logging" + message);
+}
 
 @NgModule({
   declarations: [
@@ -53,6 +59,23 @@ import { VoteStatusComponent } from './pages/vote-status/vote-status.component';
     BrowserModule,
     FormsModule,
     HttpClientModule,
+    MsalModule.forRoot({
+      clientID: 'ccdbd728-bc9c-4c56-88f8-52a2c3baeccf',
+      authority: "https://login.microsoftonline.com/8406ce5f-3181-49e4-be30-e180bd3765e9",
+      validateAuthority: true,
+      redirectUri: "http://localhost:82/",
+      cacheLocation: "localStorage",
+      postLogoutRedirectUri: "http://localhost:82/",
+      navigateToLoginRequestUrl: true,
+      popUp: false,
+      consentScopes: ["user.read"],
+      unprotectedResources: ["http://localhost:82/ClientConfiguration"],
+      logger: loggerCallback,
+      correlationId: '1234',
+      level: LogLevel.Info,
+      piiLoggingEnabled: true
+    }
+    ),
     NgbModule,
     NgHttpLoaderModule,
     NgxQRCodeModule,
@@ -80,7 +103,8 @@ import { VoteStatusComponent } from './pages/vote-status/vote-status.component';
          () => configService.loadConfigurationData(),
        deps: [ConfigurationService],
        multi: true
-     },
+    },
+    //{ provide: HTTP_INTERCEPTORS, useClass: MsalInterceptor, multi: true },
     SignalRService],
   bootstrap: [AppComponent]
 })

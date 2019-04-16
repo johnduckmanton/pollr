@@ -1,0 +1,15 @@
+FROM microsoft/dotnet:2.1-sdk
+ARG BUILD_CONFIGURATION=Debug
+ENV ASPNETCORE_ENVIRONMENT=Development
+ENV DOTNET_USE_POLLING_FILE_WATCHER=true
+EXPOSE 80
+
+WORKDIR /src
+COPY ["Pollr.AdminUI/Pollr.AdminUI.csproj", "Pollr.AdminUI/"]
+
+RUN dotnet restore "Pollr.AdminUI/Pollr.AdminUI.csproj"
+COPY . .
+WORKDIR "/src/Pollr.AdminUI"
+RUN dotnet build --no-restore "Pollr.AdminUI.csproj" -c $BUILD_CONFIGURATION
+
+ENTRYPOINT ["dotnet", "run", "--no-build", "--no-launch-profile", "-c", "$BUILD_CONFIGURATION", "--"]

@@ -1,12 +1,11 @@
-# Default values for pollrapi.
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
-fullnameOverride: pollrapi
-replicaCount: 1
 image:
-  repository: pollrapi
+  #repository: pollr
+  repository: jrdacr.azurecr.io/pollr
   tag: stable
   pullPolicy: IfNotPresent
+
 imagePullSecrets: []
   # Optionally specify an array of imagePullSecrets.
   # Secrets must be manually created in the namespace.
@@ -14,6 +13,7 @@ imagePullSecrets: []
   #
   # This uses credentials from secret "myRegistryKeySecretName".
   # - name: myRegistryKeySecretName
+   
 service:
   type: ClusterIP
   port: 80
@@ -60,3 +60,10 @@ nodeSelector: {}
 tolerations: []
 
 affinity: {}
+
+# Environment Variables
+pollrDatabaseConnectionString: Server=tcp:jrd-sql-server.database.windows.net,1433;Initial Catalog=jrd-sqlsb;Persist Security Info=False;User ID=sqladmin;Password=N%c84c7yjAw8m8;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;
+ApiUrl: http://localhost:5000/api
+hubUrl: http://localhost:5000/voteHub
+voteUrl: http://localhost/vote
+aspNetCoreEnvironment: production
